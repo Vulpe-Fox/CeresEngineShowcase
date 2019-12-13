@@ -5,8 +5,6 @@
  */
 package ceresgame.graphics;
 
-import java.awt.DisplayMode;
-
 /**
  *
  * @author carmc9538
@@ -17,8 +15,6 @@ public class DisplayUpdater {
     final static int HEIGHT = 720;
     
     public void createDisplay(){
-        
-        Display.setDisplayMode(new DisplayMode(WIDTH, HEIGHT));
         
     }
     
