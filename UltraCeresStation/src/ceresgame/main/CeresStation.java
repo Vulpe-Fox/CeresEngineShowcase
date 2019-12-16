@@ -1,11 +1,11 @@
-package ceresgame;
+package ceresgame.main;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 
 import ceresgame.graphics.DisplayUpdater;
 
-public class HelloWorld{
+public class CeresStation{
 	
 	
 	public static void main(String[] args) {

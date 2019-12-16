@@ -5,8 +5,6 @@
  */
 package ceresgame.graphics.gui;
 
-import ceresgame.*;
-
 /**
  *
  * @author carmc9538

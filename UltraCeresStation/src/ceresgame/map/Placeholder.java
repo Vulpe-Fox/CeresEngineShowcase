@@ -5,8 +5,6 @@
  */
 package ceresgame.map;
 
-import ceresgame.*;
-
 /**
  *
  * @author carmc9538
