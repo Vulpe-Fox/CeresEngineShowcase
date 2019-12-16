@@ -1,6 +1,10 @@
 package ceresgame;
 
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
 import org.lwjgl.LWJGLException;
+import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.ContextAttribs;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
@@ -28,17 +32,22 @@ public class HelloWorld{
 		}
 		
 		GL11.glViewport(0, 0, WIDTH, HEIGHT);
+		GL11.glClearColor(0.6F, 1.0F, 0.0F, 1.0F);
+		
+		
 	}
 	
 	public static void updateDisplay() {
 		
+
+		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
 		Display.sync(FPS);
 		Display.update();
 		
 	}
 	
 	public static void closeDisplay() {
-		
+		Display.destroy();
 	}
 	
 	public static void main(String[] args) {
