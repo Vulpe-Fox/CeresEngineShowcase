@@ -1,10 +1,6 @@
 package ceresgame;
 
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-
 import org.lwjgl.LWJGLException;
-import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.ContextAttribs;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
