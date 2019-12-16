@@ -3,6 +3,10 @@ package ceresgame.main.userinterface;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import org.lwjgl.input.Keyboard;
+
+import ceresgame.HelloWorld;
+
 public class Input implements KeyListener {
 
 	@Override

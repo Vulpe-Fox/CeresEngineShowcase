@@ -1,6 +1,7 @@
 package ceresgame;
 
 import org.lwjgl.LWJGLException;
+import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.ContextAttribs;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
@@ -49,7 +50,7 @@ public class HelloWorld{
 	public static void main(String[] args) {
 		HelloWorld.createDisplay();
 		
-		while(!Display.isCloseRequested()) {
+		while(!Display.isCloseRequested() && !Keyboard.isKeyDown(Keyboard.KEY_F)) {
 			HelloWorld.updateDisplay();
 		}
 		
