@@ -2,43 +2,10 @@
 <classpath>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="src" path="UltraCeresStation/src"/>
-	<classpathentry kind="lib" path="UltraCeresStation/libraries/lwjgl-3.2.3/lwjgl-egl/lwjgl-egl-javadoc.jar"/>
-	<classpathentry kind="lib" path="UltraCeresStation/libraries/lwjgl-3.2.3/lwjgl-egl/lwjgl-egl-sources.jar"/>
-	<classpathentry kind="lib" path="UltraCeresStation/libraries/lwjgl-3.2.3/lwjgl-egl/lwjgl-egl.jar"/>
-	<classpathentry kind="lib" path="UltraCeresStation/libraries/lwjgl-3.2.3/lwjgl-glfw/lwjgl-glfw-javadoc.jar"/>
-	<classpathentry kind="lib" path="UltraCeresStation/libraries/lwjgl-3.2.3/lwjgl-glfw/lwjgl-glfw-natives-windows.jar"/>
-	<classpathentry kind="lib" path="UltraCeresStation/libraries/lwjgl-3.2.3/lwjgl-glfw/lwjgl-glfw-sources.jar"/>
-	<classpathentry kind="lib" path="UltraCeresStation/libraries/lwjgl-3.2.3/lwjgl-glfw/lwjgl-glfw.jar"/>
-	<classpathentry kind="lib" path="UltraCeresStation/libraries/lwjgl-3.2.3/lwjgl-jawt/lwjgl-jawt-javadoc.jar"/>
-	<classpathentry kind="lib" path="UltraCeresStation/libraries/lwjgl-3.2.3/lwjgl-jawt/lwjgl-jawt-sources.jar"/>
-	<classpathentry kind="lib" path="UltraCeresStation/libraries/lwjgl-3.2.3/lwjgl-jawt/lwjgl-jawt.jar"/>
-	<classpathentry kind="lib" path="UltraCeresStation/libraries/lwjgl-3.2.3/lwjgl-nanovg/lwjgl-nanovg-javadoc.jar"/>
-	<classpathentry kind="lib" path="UltraCeresStation/libraries/lwjgl-3.2.3/lwjgl-nanovg/lwjgl-nanovg-natives-windows.jar"/>
-	<classpathentry kind="lib" path="UltraCeresStation/libraries/lwjgl-3.2.3/lwjgl-nanovg/lwjgl-nanovg-sources.jar"/>
-	<classpathentry kind="lib" path="UltraCeresStation/libraries/lwjgl-3.2.3/lwjgl-nanovg/lwjgl-nanovg.jar"/>
-	<classpathentry kind="lib" path="UltraCeresStation/libraries/lwjgl-3.2.3/lwjgl-nuklear/lwjgl-nuklear-javadoc.jar"/>
-	<classpathentry kind="lib" path="UltraCeresStation/libraries/lwjgl-3.2.3/lwjgl-nuklear/lwjgl-nuklear-natives-windows.jar"/>
-	<classpathentry kind="lib" path="UltraCeresStation/libraries/lwjgl-3.2.3/lwjgl-nuklear/lwjgl-nuklear-sources.jar"/>
-	<classpathentry kind="lib" path="UltraCeresStation/libraries/lwjgl-3.2.3/lwjgl-nuklear/lwjgl-nuklear.jar"/>
-	<classpathentry kind="lib" path="UltraCeresStation/libraries/lwjgl-3.2.3/lwjgl-openal/lwjgl-openal-javadoc.jar"/>
-	<classpathentry kind="lib" path="UltraCeresStation/libraries/lwjgl-3.2.3/lwjgl-openal/lwjgl-openal-natives-windows.jar"/>
-	<classpathentry kind="lib" path="UltraCeresStation/libraries/lwjgl-3.2.3/lwjgl-openal/lwjgl-openal-sources.jar"/>
-	<classpathentry kind="lib" path="UltraCeresStation/libraries/lwjgl-3.2.3/lwjgl-openal/lwjgl-openal.jar"/>
-	<classpathentry kind="lib" path="UltraCeresStation/libraries/lwjgl-3.2.3/lwjgl-opengl/lwjgl-opengl-javadoc.jar"/>
-	<classpathentry kind="lib" path="UltraCeresStation/libraries/lwjgl-3.2.3/lwjgl-opengl/lwjgl-opengl-natives-windows.jar"/>
-	<classpathentry kind="lib" path="UltraCeresStation/libraries/lwjgl-3.2.3/lwjgl-opengl/lwjgl-opengl-sources.jar"/>
-	<classpathentry kind="lib" path="UltraCeresStation/libraries/lwjgl-3.2.3/lwjgl-opengl/lwjgl-opengl.jar"/>
-	<classpathentry kind="lib" path="UltraCeresStation/libraries/lwjgl-3.2.3/lwjgl-opengles/lwjgl-opengles-javadoc.jar"/>
-	<classpathentry kind="lib" path="UltraCeresStation/libraries/lwjgl-3.2.3/lwjgl-opengles/lwjgl-opengles-natives-windows.jar"/>
-	<classpathentry kind="lib" path="UltraCeresStation/libraries/lwjgl-3.2.3/lwjgl-opengles/lwjgl-opengles-sources.jar"/>
-	<classpathentry kind="lib" path="UltraCeresStation/libraries/lwjgl-3.2.3/lwjgl-opengles/lwjgl-opengles.jar"/>
-	<classpathentry kind="lib" path="UltraCeresStation/libraries/lwjgl-3.2.3/lwjgl-par/lwjgl-par-javadoc.jar"/>
-	<classpathentry kind="lib" path="UltraCeresStation/libraries/lwjgl-3.2.3/lwjgl-par/lwjgl-par-natives-windows.jar"/>
-	<classpathentry kind="lib" path="UltraCeresStation/libraries/lwjgl-3.2.3/lwjgl-par/lwjgl-par-sources.jar"/>
-	<classpathentry kind="lib" path="UltraCeresStation/libraries/lwjgl-3.2.3/lwjgl-par/lwjgl-par.jar"/>
-	<classpathentry kind="lib" path="UltraCeresStation/libraries/lwjgl-3.2.3/lwjgl/lwjgl-javadoc.jar"/>
-	<classpathentry kind="lib" path="UltraCeresStation/libraries/lwjgl-3.2.3/lwjgl/lwjgl-natives-windows.jar"/>
-	<classpathentry kind="lib" path="UltraCeresStation/libraries/lwjgl-3.2.3/lwjgl/lwjgl-sources.jar"/>
-	<classpathentry kind="lib" path="UltraCeresStation/libraries/lwjgl-3.2.3/lwjgl/lwjgl.jar"/>
+	<classpathentry kind="lib" path="C:/Users/camer/git/final-project-ceres-station-masters/UltraCeresStation/libraries/lwjgl-2.9.3/jar/lwjgl.jar">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="C:/Users/camer/git/final-project-ceres-station-masters/UltraCeresStation/libraries/lwjgl-2.9.3/native/windows"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
