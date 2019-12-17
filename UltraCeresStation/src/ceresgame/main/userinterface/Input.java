@@ -1,27 +1,34 @@
 package ceresgame.main.userinterface;
 
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.lwjgl.input.Keyboard;
 
 
-public class Input implements KeyListener {
+public class Input extends Thread{
+    
+        public boolean running = true;
+    
+        public Input(){
+            
+        }
+    
+        @Override
+        public void run(){
+            while(running){
+                keyPressed();
+                
+                try {
+                    sleep(100);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(Input.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
 
-	@Override
-	public void keyPressed(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
+        public void keyPressed() {
+                if(Keyboard.isKeyDown(Keyboard.KEY_D)){
+                    
+                }
+        }
 }
