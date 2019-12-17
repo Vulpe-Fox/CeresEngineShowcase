@@ -127,15 +127,26 @@ public class GraphicalComponent {
         return height;
     }
     
-
+    /**
+     * Gets path of image
+     * @return The path of the image file
+     */
     public String getImgPath() {
         return imgPath;
     }
 
+    /**
+     * Gets colour of component
+     * @return The colour of the component
+     */
     public Color getC() {
         return c;
     }
 
+    /**
+     * Sets colour of component
+     * @param c The colour to shift to
+     */
     public void setC(Color c) {
         this.c = c;
     }
