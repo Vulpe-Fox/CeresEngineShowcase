@@ -3,12 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ceresgame.graphics.gui;
+package ceresgame.map;
 
 /**
  *
  * @author carmc9538
  */
-public class Placeholder {
+public class GraphicalComponent {
+    
+    private int xPos;
+    private int yPos;
+    private int zPos;
+    
+    public GraphicalComponent(int LocationX, int LocationY, int LocationZ){
+        
+    }
     
 }
