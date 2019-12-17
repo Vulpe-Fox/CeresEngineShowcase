@@ -32,8 +32,8 @@ public class DisplayUpdater {
 			Display.setDisplayMode(new DisplayMode(WIDTH, HEIGHT));
 			Display.create(new PixelFormat(), cA);
 		} catch (LWJGLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+                    // TODO Auto-generated catch block
+
 		}
 		
 		GL11.glViewport(0, 0, WIDTH, HEIGHT);
