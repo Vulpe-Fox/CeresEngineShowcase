@@ -5,6 +5,8 @@
  */
 package ceresgame.graphics;
 
+import ceresgame.map.GraphicalComponent;
+import java.util.ArrayList;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.ContextAttribs;
 import org.lwjgl.opengl.Display;
@@ -21,6 +23,7 @@ public class DisplayUpdater {
     final static int WIDTH = 1080;
     final static int HEIGHT = 720;
     private static final int FPS = 60;
+    private static ArrayList<GraphicalComponent> components = new ArrayList<>();
 	
 	public static void createDisplay() {
 		
@@ -32,7 +35,7 @@ public class DisplayUpdater {
 			Display.setDisplayMode(new DisplayMode(WIDTH, HEIGHT));
 			Display.create(new PixelFormat(), cA);
 		} catch (LWJGLException e) {
-                    // TODO Auto-generated catch block
+                    System.out.println("something went wrong lol");
 
 		}
 		
@@ -42,10 +45,16 @@ public class DisplayUpdater {
 		
 	}
 	
+        public static void addComponent(GraphicalComponent gc) {
+            components.add(gc);
+        }
+        
 	public static void updateDisplay() {
-		
-
+            
 		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
+                
+                
+                
 		Display.sync(FPS);
 		Display.update();
 		

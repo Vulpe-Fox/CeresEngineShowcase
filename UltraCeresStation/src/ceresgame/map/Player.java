@@ -5,6 +5,7 @@
  */
 package ceresgame.map;
 
+import ceresgame.enumeration.Direction;
 import org.lwjgl.input.Keyboard;
 
 /**
@@ -18,7 +19,18 @@ public class Player extends GraphicalComponent {
         zPos = 0;
     }
     
-    private void movement() {
-        
+    public void movement(Direction dir) {
+        if (dir.equals(Direction.UP)) {
+            
+        }
+        if (dir.equals(Direction.DOWN)) {
+            
+        }
+        if (dir.equals(Direction.LEFT)) {
+            
+        }
+        if (dir.equals(Direction.RIGHT)) {
+            
+        }
     }
 }
