@@ -8,13 +8,20 @@ import org.lwjgl.openal.AL10;
  *
  */
 public class AudioLoop extends Thread {
-	private static boolean gameRunning = true;
-	private static boolean mainMusicPlaying = false;
-	private static boolean soundEffectPlaying = false;
+	private boolean gameRunning = true;
+	private boolean mainMusicPlaying = false;
+	private boolean soundEffectPlaying = false;
 	private static boolean audioSystemInitialized = false;
 	
 	private static String path = new String();
 	
+        /**
+         * Creating an instanced AudioLoop object
+         */
+        public AudioLoop(){
+            
+        }
+        
 	/**
 	 * Runs the looping main audio sound system, by first creating the audio system itself
 	 */
