@@ -41,8 +41,8 @@ public class DisplayUpdater {
 		
 		GL11.glViewport(0, 0, WIDTH, HEIGHT);
 		GL11.glClearColor(0.6F, 1.0F, 0.0F, 1.0F);
-		
-		
+                
+                GL11.glEnable(GL11.GL_DEPTH_TEST);
 	}
 	
         public static void addComponent(GraphicalComponent gc) {

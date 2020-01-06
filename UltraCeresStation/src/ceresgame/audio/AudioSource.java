@@ -52,6 +52,7 @@ public class AudioSource {
 	
 	/**
 	 * Get sourceid of a source
+         * @return this sourceid
 	 */
 	public int getSourceId() {
 		return this.sourceId;
