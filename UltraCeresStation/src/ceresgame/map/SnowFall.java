@@ -14,15 +14,24 @@ import org.lwjgl.opengl.Display;
 public class SnowFall extends GraphicalComponent {
     
     private int amp;
+    private int xPos;
+    private int yPos;
+    long time;
     
     public SnowFall(int xPos, int yPos, int zPos, int width, int height, String imgPath) {
         super(xPos, yPos, zPos, width, height, imgPath);
+        amp = (int) (Math.random() * 100) + 10;
         xPos = (int) Math.random() * Display.getWidth();
-        amp = (int) Math.random() * 10;
+        yPos = 0;
         zPos = -1;
+        this.xPos = xPos;
+        this.yPos = yPos;
+        this.time = System.currentTimeMillis();
     }
     
-    private void fall(int xPos, int yPos) {
-        
+    private void fall() {
+        long currentTime = System.currentTimeMillis();
+        yPos += (int) (currentTime - time);
+        xPos = (int) (amp * Math.sin(currentTime - time));
     }
 }
