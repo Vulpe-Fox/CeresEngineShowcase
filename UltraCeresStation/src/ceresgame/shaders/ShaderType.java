@@ -72,7 +72,7 @@ public abstract class ShaderType {
         GL20.glUseProgram(0);
     }
      
-    public void cleanUp(){
+    public void delete(){
         stop();
         GL20.glDetachShader(typeID, vertexShaderID);
         GL20.glDetachShader(typeID, fragmentShaderID);
