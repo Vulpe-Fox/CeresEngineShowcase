@@ -5,6 +5,10 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.nio.IntBuffer;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.lwjgl.LWJGLException;
+import org.lwjgl.openal.AL;
 
 import org.lwjgl.openal.AL10;
 import org.lwjgl.openal.ALC10;
@@ -29,6 +33,12 @@ public class AudioHandler {
 	 * Initializes the audiosystem
 	 */
 	public static void initialization() {
+                try {
+                    AL.create();
+                } catch (LWJGLException ex) {
+                    Logger.getLogger(AudioHandler.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            
 		//Opens the audio device
 		device = ALC10.alcOpenDevice(null);
 		//Creates the audio context
