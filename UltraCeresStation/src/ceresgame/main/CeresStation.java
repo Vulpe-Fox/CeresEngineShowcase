@@ -25,6 +25,7 @@ public class CeresStation{
 		
                 inputThread.stop();
                 audioThread.stop();
+		//TODO: Add all delete methods here^^
 		DisplayUpdater.closeDisplay();
 	}
 	
