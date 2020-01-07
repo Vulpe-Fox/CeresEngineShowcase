@@ -10,9 +10,10 @@ import ceresgame.map.Player;
 
 public class CeresStation{
 	
-        private static Player player = new Player(0, 0, 0, 50, 50, "resources\\images\\God.png");
-        private static Input inputThread = new Input(player);
-        private static AudioLoop audioThread = new AudioLoop();
+        private Player player = new Player(0, 0, 0, 50, 50, "resources/images/God.png");
+        private Input inputThread = new Input(player);
+        private AudioLoop audioThread = new AudioLoop();
+	//private Camera camera = new Camera(this); //Please feed in a CeresStation object so you can reference the player
 	
 	public static void main(String[] args) {
 		DisplayUpdater.createDisplay();
@@ -27,6 +28,10 @@ public class CeresStation{
                 audioThread.stop();
 		//TODO: Add all delete methods here^^
 		DisplayUpdater.closeDisplay();
+	}
+	
+	public void getPlayer(){
+		return this.player;	
 	}
 	
 }
