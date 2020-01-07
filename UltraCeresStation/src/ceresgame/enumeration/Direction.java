@@ -6,7 +6,7 @@
 package ceresgame.enumeration;
 
 /**
- * The directions a person can feasably travel
+ * The directions a person can feasibly travel
  * @author pintt3963
  */
 public enum Direction {
