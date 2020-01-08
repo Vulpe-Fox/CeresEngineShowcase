@@ -5,6 +5,8 @@
  */
 package ceresgame.graphics.gui;
 
+import org.lwjgl.util.vector.Vector3f;
+
 /**
  *
  * @author bartm6529
@@ -13,7 +15,7 @@ public class Camera {
     private Float posX;
     private Float posY;
     private Float posZ;
-    
+
     /**
      * Assign starting camera values
      */
@@ -22,6 +24,15 @@ public class Camera {
         this.posY = 0F;
         this.posZ = -1.0F;
     }
+    
+    /**
+     * Get new x, y, and x positions for vector3f
+     * @return new vector3f
+     */
+    public Vector3f getPosition() {
+        return new Vector3f(this.posX, this.posY, this.posZ);
+    }
+    
     
     /**
      * Move up by adding to cameras x position
