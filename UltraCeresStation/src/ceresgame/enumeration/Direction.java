@@ -3,12 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ceresgame.map;
+package ceresgame.enumeration;
 
 /**
- *
- * @author carmc9538
+ * The directions a person can feasibly travel
+ * @author pintt3963
  */
-public class Placeholder {
-    
+public enum Direction {
+    UP,
+    DOWN,
+    LEFT,
+    RIGHT
 }

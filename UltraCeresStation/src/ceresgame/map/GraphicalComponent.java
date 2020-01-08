@@ -5,7 +5,7 @@
  */
 package ceresgame.map;
 
-import org.lwjgl.util.Color;
+import java.awt.Color;
 
 /**
  * This is a graphical component which will be able to appear on screen
