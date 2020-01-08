@@ -2,16 +2,13 @@ package ceresgame.audio;
 
 import org.lwjgl.openal.AL;
 import org.lwjgl.openal.AL10;
-import org.lwjgl.openal.ALC10;
-import org.lwjgl.openal.ALCcontext;
-import org.lwjgl.openal.ALCdevice;
 
 import ceresgame.main.CeresStation;
+import org.lwjgl.openal.ALC10;
 
 /**
  * This is the file which loops the main audio system, as well as allows other classes to access the audio system
- * @author camer
- *
+ * @author ivary45
  */
 public class AudioLoop extends Thread {
 	private boolean gameRunning = true;
@@ -93,7 +90,7 @@ public class AudioLoop extends Thread {
 	 * Deletes the audio system
 	 */
 	public void delete() {
-		AL.destroy();
+            AL.destroy();
 	}
 	
 	/**

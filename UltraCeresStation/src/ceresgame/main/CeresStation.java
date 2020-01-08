@@ -7,8 +7,6 @@ import org.lwjgl.opengl.Display;
 import ceresgame.graphics.DisplayUpdater;
 import ceresgame.main.userinterface.Input;
 import ceresgame.map.Player;
-import ceresgame.models.RawModel;
-import ceresgame.models.TexturedModel;
 
 /**
 *The main class containing the runner object which contains all the relevant objects, so they can all be connected together (avoiding static issues)
@@ -56,7 +54,7 @@ public class CeresStation{
         
 	public static void main(String[] args) {
 		DisplayUpdater.createDisplay();
-        CeresStation game = new CeresStation();
+                CeresStation game = new CeresStation();
 		
 		while(!Display.isCloseRequested() && !Keyboard.isKeyDown(Keyboard.KEY_F)) {
 			DisplayUpdater.updateDisplay();
