@@ -2,11 +2,9 @@ package ceresgame.audio;
 
 import org.lwjgl.openal.AL;
 import org.lwjgl.openal.AL10;
-import org.lwjgl.openal.ALC10;
-import org.lwjgl.openal.ALCcontext;
-import org.lwjgl.openal.ALCdevice;
 
 import ceresgame.main.CeresStation;
+import org.lwjgl.openal.ALC10;
 
 /**
  * This is the file which loops the main audio system, as well as allows other
