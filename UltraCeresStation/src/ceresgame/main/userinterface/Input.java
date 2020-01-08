@@ -1,6 +1,7 @@
 package ceresgame.main.userinterface;
 
 import ceresgame.enumeration.Direction;
+import ceresgame.main.CeresStation;
 import ceresgame.map.Player;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -12,8 +13,8 @@ public class Input extends Thread{
         public boolean running = true;
         private Player player;
         
-        public Input(Player player){
-            this.player = player;
+        public Input(CeresStation game){
+            this.player = game.getPlayer();
         }
     
         @Override

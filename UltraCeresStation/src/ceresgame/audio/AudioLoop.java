@@ -1,6 +1,12 @@
 package ceresgame.audio;
 
+import org.lwjgl.openal.AL;
 import org.lwjgl.openal.AL10;
+import org.lwjgl.openal.ALC10;
+import org.lwjgl.openal.ALCcontext;
+import org.lwjgl.openal.ALCdevice;
+
+import ceresgame.main.CeresStation;
 
 /**
  * This is the file which loops the main audio system, as well as allows other classes to access the audio system
@@ -11,15 +17,17 @@ public class AudioLoop extends Thread {
 	private boolean gameRunning = true;
 	private boolean mainMusicPlaying = false;
 	private boolean soundEffectPlaying = false;
-	private static boolean audioSystemInitialized = false;
+	private boolean audioSystemInitialized = false;
 	
-	private static String path = new String();
+	private CeresStation game;
+	
+	private String path = new String();
 	
         /**
          * Creating an instanced AudioLoop object
          */
-        public AudioLoop(){
-            
+        public AudioLoop(CeresStation game){
+            this.game = game;
         }
         
 	/**
@@ -80,11 +88,19 @@ public class AudioLoop extends Thread {
 		}
 	}
 	
+	
+	/**
+	 * Deletes the audio system
+	 */
+	public void delete() {
+		AL.destroy();
+	}
+	
 	/**
 	 * Checks if the music system has been initialized (for external classes)
 	 * @return The Audio System initialization state
 	 */
-	public static boolean getInitializationState() {
+	public boolean getInitializationState() {
 		return audioSystemInitialized;
 	}
 

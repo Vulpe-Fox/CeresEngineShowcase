@@ -5,10 +5,16 @@
  */
 package ceresgame.graphics.gui;
 
+import org.lwjgl.util.vector.Vector3f;
+
 /**
  *
  * @author carmc9538
  */
 public class Camera {
+
+	public Vector3f getPosition() {
+		return null;
+	}
     
 }

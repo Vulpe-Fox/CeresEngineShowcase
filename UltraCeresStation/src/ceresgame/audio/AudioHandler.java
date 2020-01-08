@@ -33,11 +33,11 @@ public class AudioHandler {
 	 * Initializes the audiosystem
 	 */
 	public static void initialization() {
-                try {
-                    AL.create();
-                } catch (LWJGLException ex) {
-                    Logger.getLogger(AudioHandler.class.getName()).log(Level.SEVERE, null, ex);
-                }
+        try {
+            AL.create();
+        } catch (LWJGLException ex) {
+            ex.printStackTrace();
+        }
             
 		//Opens the audio device
 		device = ALC10.alcOpenDevice(null);
