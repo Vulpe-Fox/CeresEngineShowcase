@@ -53,7 +53,7 @@ public class DisplayUpdater {
             
 		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
                 
-                
+                //please work on
                 
 		Display.sync(FPS);
 		Display.update();
