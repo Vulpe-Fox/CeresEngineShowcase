@@ -17,6 +17,16 @@ public class CeresStation{
     private Player player;
     private Input inputThread;
     private AudioLoop audioThread;
+    private float[] imageUVVerticies = {
+	//Top left point
+    	0,0,
+	//Bottom left point
+	0,1,
+	//Bottom right point
+	1,1,
+	//Top right point
+	1,0
+    };
     //private Camera camera = new Camera(this); //Please feed in a CeresStation object so you can reference the player
 	
     /**
@@ -57,6 +67,11 @@ public class CeresStation{
                 CeresStation game = new CeresStation();
 		
 		while(!Display.isCloseRequested() && !Keyboard.isKeyDown(Keyboard.KEY_F)) {
+			//Update saved positions of graphicalComponents
+			//Prep renderer
+			//Start shader
+			//Render graphicalComponents
+			//Stop shader
 			DisplayUpdater.updateDisplay();
 		}
 		
