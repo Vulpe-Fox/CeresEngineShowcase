@@ -81,7 +81,7 @@ public class VectorMath {
 		//Point bottom right
 		vector.x + width, vector.y - height, vector.z, 
 		//Point top right
-		vector.x + width, vector.y, vector.z;
-	}
+		vector.x + width, vector.y, vector.z
+	};
    }
 }
