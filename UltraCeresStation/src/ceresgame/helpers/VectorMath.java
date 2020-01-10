@@ -11,6 +11,7 @@ import ceresgame.graphics.gui.Camera;
 *[x2 y2 z2 | d2]
 *[x3 y3 z3 | d3]
 *[x4 y4 z4 | d4]
+*AMMENDMENT: Will also help you generate 3D coordinate vectors using positions
 *@author ivary45
 */
 public class VectorMath {
@@ -48,4 +49,39 @@ public class VectorMath {
         Matrix4f.translate(negativeCameraPos, viewMatrix, viewMatrix);
         return viewMatrix;
     }
+	
+   /**
+   *Generates vector positions using input coordinates
+   *@param coordX The X coordinate of the object
+   *@param coordY The Y coordinate of the object
+   *@param coordZ The Z coordinate of the object
+   *@param width The width of the object
+   *@param height The height of the object
+   *@return The vector created for the top left position of the texture
+   */
+   public static Vector3f genVector(float coordX, float coordY, float coordZ, float width, float height){
+	posX0 = coordsX - width/2;
+	poxY0 = coordsY + height/2;
+	Vector3f vector = new Vector3f(posX0, posY0, coordZ);
+	return vector;
+   }
+	
+   /**
+   *Generates a list of points to render and object with in a float array using a vector and size of object
+   *@param vector The vector of the top left point of the object
+   *@param width The width of the object
+   *@param height the height of the object
+   */
+   public static float[] genVertices(Vector3f vector, float width, float height){
+	float[] vertices = {
+		//Point top left
+		vector.x, vector.y, vector.z,
+		//Point bottom left
+		vector.x, vector.y - height, vector.z,
+		//Point bottom right
+		vector.x + width, vector.y - height, vector.z, 
+		//Point top right
+		vector.x + width, vector.y, vector.z;
+	}
+   }
 }
