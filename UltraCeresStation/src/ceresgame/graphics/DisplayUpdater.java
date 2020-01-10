@@ -23,8 +23,10 @@ public class DisplayUpdater {
     private final static int WIDTH = 1080;
     private final static int HEIGHT = 720;
     private static final int FPS = 60;
-    private static ArrayList<GraphicalComponent> components = new ArrayList<>();
 	
+    /**
+    *Creates the display and generates the opengl version context for version 3.2
+    */
     public static void createDisplay() {
 
         //Sets opengl version context to use version 3.2, which is forward compatible and a core profile
@@ -47,11 +49,10 @@ public class DisplayUpdater {
         //Enables the openGL depth test, so object behind other objects won't render (stops overlapping conflicts)
         GL11.glEnable(GL11.GL_DEPTH_TEST);
     }
-
-    public static void addComponent(GraphicalComponent gc) {
-        components.add(gc);
-    }
-
+	
+    /**
+    *Updates the display by erasing old information and loading new information at the rate of fps
+    */
     public static void updateDisplay() {
         //Clears the screen to the unrendered colour
         GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
