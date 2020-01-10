@@ -19,6 +19,8 @@ public class AudioLoop extends Thread {
     private boolean mainMusicPlaying = false;
     private boolean soundEffectPlaying = false;
     private boolean audioSystemInitialized = false;
+    private AudioSource soundEffectSource;
+    private AudioSource mainSource;
 
     private CeresStation game;
 
@@ -42,8 +44,12 @@ public class AudioLoop extends Thread {
         AudioHandler.initialization();
         AudioHandler.setListenerData();
         System.out.println("... audio system has been initialized successfully!");
-
+	    
+	soundEffectSource = new AudioSource();
+	mainSource = new AudioSource();
+	    
         audioSystemInitialized = true;
+	    
 
         /*while(gameRunning) {
 			//Path of wav file for main game audio
@@ -51,7 +57,6 @@ public class AudioLoop extends Thread {
 			//Buffer of the sound collected from the AudioHandler
 			int buffer = AudioHandler.loadSound(path);
 			//The main source of the audio to be played to the listener
-			AudioSource mainSource = new AudioSource();
 			//Plays the buffer from the source
 			mainSource.play(buffer);
 			mainMusicPlaying = true;
@@ -72,32 +77,31 @@ public class AudioLoop extends Thread {
      * @param path The path of the sound effect to be played
      */
     public void playSoundEffect(String path) {
-        AudioSource soundEffectSource = new AudioSource();
-
-        if (soundEffectPlaying) {
-            //If sound effect has stopped, delete the source and buffers
-            if (AL10.alGetSourcei(soundEffectSource.getSourceId(), AL10.AL_SOURCE_STATE) == AL10.AL_STOPPED) {
-                soundEffectSource.delete();
-                AudioHandler.delete();
-                soundEffectPlaying = false;
-                
-            } else {
-                //Buffer of the sound collected from the AudioHandler
-                int buffer = AudioHandler.loadSound(path);
-                //The main source of the audio to be played to the listener
-                soundEffectSource = new AudioSource();
-                //Plays the buffer from the source
-                soundEffectSource.play(buffer);
-                soundEffectPlaying = true;
-                //Keep waiting for the sound effect has finished
-            }
-        }
+	if (soundEffectPlaying) {
+		//If sound effect has stopped, delete the source and buffers
+		if (AL10.alGetSourcei(soundEffectSource.getSourceId(), AL10.AL_SOURCE_STATE) == AL10.AL_STOPPED) {
+			soundEffectSource.delete();
+			AudioHandler.delete();
+			soundEffectPlaying = false;
+	    	} else {
+			//Buffer of the sound collected from the AudioHandler
+			int buffer = AudioHandler.loadSound(path);
+			//The main source of the audio to be played to the listener
+			soundEffectSource = new AudioSource();
+			//Plays the buffer from the source
+			soundEffectSource.play(buffer);
+			soundEffectPlaying = true;
+			//Keep waiting for the sound effect has finished
+		}
+	}
     }
 
     /**
-     * Deletes the audio system
+     * Deletes the audio system and sources
      */
     public void delete() {
+	soundEffectSource.delete();
+	mainSource.delete();
         AL.destroy();
     }
 
