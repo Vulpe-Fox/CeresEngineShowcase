@@ -1,9 +1,9 @@
 #version 420 core
 
 in vec3 position;
-in vec2 textureCoords
+in vec2 textureCoordinates;
 
-out vec2 pass_textureCoords;
+out vec2 pass_textureCoordinates;
 
 uniform mat4 transformationMatrix;
 uniform mat4 projectionMatrix;

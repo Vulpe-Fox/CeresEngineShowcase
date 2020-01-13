@@ -68,7 +68,7 @@ public class Input extends Thread{
                 
                 //If player is on the ground, play sound effect
                 while(game.getPlayer().getyPos() == 0){
-                    game.getAudioLoop().playSoundEffect(null);
+                    game.getAudioLoop().playSoundEffect("resources/audio/step.wav");
                 }
             }
         }
