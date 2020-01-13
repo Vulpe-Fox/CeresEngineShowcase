@@ -18,7 +18,7 @@ public class SnowFall extends GraphicalComponent {
     private int amp;
     private int xPos;
     private int yPos;
-    long time;
+    /* its been a */ long time;
     
     public SnowFall(int xPos, int yPos, int zPos, int width, int height, Color c) {
         super(xPos, yPos, zPos, width, height, c);
