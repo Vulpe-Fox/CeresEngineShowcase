@@ -74,16 +74,16 @@ public class CeresStation{
         
 	public static void main(String[] args) {
 		DisplayUpdater.createDisplay();
-		StaticShader shader = new StaticShader();
-		Renderer renderer = new Renderer(shader);
+		//StaticShader shader = new StaticShader();
+		//Renderer renderer = new Renderer(shader);
                 CeresStation game = new CeresStation();
 		
 		while(!Display.isCloseRequested() && !Keyboard.isKeyDown(Keyboard.KEY_F)) {
 			//Update saved positions of graphicalComponents
-			renderer.prepare();
+			/*renderer.prepare();
 			shader.start();
 			game.render(renderer, shader);
-			shader.stop();
+			shader.stop();*/
 			DisplayUpdater.updateDisplay();
 		}
 		
