@@ -8,31 +8,42 @@ package ceresgame.map;
 import ceresgame.enumeration.Direction;
 import ceresgame.models.TexturedModel;
 
-import org.lwjgl.input.Keyboard;
-
 /**
  *
  * @author pintt3963
  */
 public class Player extends GraphicalComponent {
     
-    public Player(int xPos, int yPos, int zPos, int width, int height, String imgPath, TexturedModel model) {
+    private float xPos;
+    private float yPos;
+    
+    public Player(float xPos, float yPos, float zPos, float width, float height, String imgPath, TexturedModel model) {
         super(xPos, yPos, zPos, width, height, imgPath, model);
+        this.xPos = xPos;
+        this.yPos = yPos;
         zPos = 0;
     }
     
     public void movement(Direction dir) {
         if (dir.equals(Direction.UP)) {
-            
+            yPos -= 1;
         }
         if (dir.equals(Direction.DOWN)) {
-            
+            yPos += 1;
         }
         if (dir.equals(Direction.LEFT)) {
-            
+            xPos -= 1;
         }
         if (dir.equals(Direction.RIGHT)) {
-            
+            xPos += 1;
         }
+    }
+    
+    public float getXPos() {
+        return xPos;
+    }
+    
+    public float getYPos() {
+        return yPos;
     }
 }
