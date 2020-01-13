@@ -7,6 +7,9 @@ package ceresgame.map;
 
 import org.lwjgl.opengl.Display;
 
+import ceresgame.models.TexturedModel;
+import java.awt.Color;
+
 /**
  *
  * @author pintt3963
@@ -18,8 +21,8 @@ public class SnowFall extends GraphicalComponent {
     private int yPos;
     long time;
     
-    public SnowFall(int xPos, int yPos, int zPos, int width, int height, String imgPath) {
-        super(xPos, yPos, zPos, width, height, imgPath);
+    public SnowFall(int xPos, int yPos, int zPos, int width, int height, Color c) {
+        super(xPos, yPos, zPos, width, height, c);
         amp = (int) (Math.random() * 100) + 10;
         xPos = (int) Math.random() * Display.getWidth();
         yPos = 0;

@@ -5,14 +5,16 @@
  */
 package ceresgame.map;
 
+import ceresgame.models.TexturedModel;
+
 /**
  *
  * @author pintt3963
  */
 public class Foreground extends GraphicalComponent {
     
-    public Foreground(int xPos, int yPos, int zPos, int width, int height, String imgPath) {
-        super(xPos, yPos, zPos, width, height, imgPath);
+    public Foreground(int xPos, int yPos, int zPos, int width, int height, String imgPath, TexturedModel model) {
+        super(xPos, yPos, zPos, width, height, imgPath, model);
         zPos = 0;
     }
 }

@@ -7,21 +7,27 @@ package ceresgame.map;
 
 import java.awt.Color;
 
+import org.lwjgl.util.vector.Vector3f;
+
+import ceresgame.models.TexturedModel;
+
 /**
  * This is a graphical component which will be able to appear on screen
  * @author ivary45
  */
 public class GraphicalComponent {
     
-    private int xPos;
-    private int yPos;
-    private int zPos;
+    private float xPos;
+    private float yPos;
+    private float zPos;
     
-    private final int width;
-    private final int height;
+    private final float width;
+    private final float height;
     
     private String imgPath;
     private Color c;
+    
+    private TexturedModel model;
         
     /**
      * A constructor for a graphical component using an image
@@ -32,7 +38,7 @@ public class GraphicalComponent {
      * @param height The height of the component
      * @param imgPath The path of the image file
      */
-    public GraphicalComponent(int xPos, int yPos, int zPos, int width, int height, String imgPath){
+    public GraphicalComponent(float xPos, float yPos, float zPos, float width, float height, String imgPath, TexturedModel model){
         this.xPos = xPos;
         this.yPos = yPos;
         this.zPos = zPos;
@@ -41,6 +47,8 @@ public class GraphicalComponent {
         this.height = height;
         
         this.imgPath = imgPath;
+        
+        this.model = model;
     }
     
     /**
@@ -52,7 +60,7 @@ public class GraphicalComponent {
      * @param height The height of the component
      * @param c The colour of the component
      */
-    public GraphicalComponent(int xPos, int yPos, int zPos, int width, int height, Color c){
+    public GraphicalComponent(float xPos, float yPos, float zPos, float width, float height, Color c){
         this.xPos = xPos;
         this.yPos = yPos;
         this.zPos = zPos;
@@ -67,7 +75,7 @@ public class GraphicalComponent {
      * Gets x position
      * @return x position
      */
-    public int getxPos() {
+    public float getxPos() {
         return xPos;
     }
     
@@ -75,7 +83,7 @@ public class GraphicalComponent {
      * Gets y position
      * @return y position
      */
-    public int getyPos() {
+    public float getyPos() {
         return yPos;
     }
     
@@ -83,7 +91,7 @@ public class GraphicalComponent {
      * Gets z position
      * @return z position
      */
-    public int getzPos() {
+    public float getzPos() {
         return zPos;
     }
 
@@ -91,7 +99,7 @@ public class GraphicalComponent {
      * Sets x position
      * @param xPos The x position to set to
      */
-    public void setxPos(int xPos) {
+    public void setxPos(float xPos) {
         this.xPos = xPos;
     }
 
@@ -99,7 +107,7 @@ public class GraphicalComponent {
      * Sets y position
      * @param yPos The y position to set to
      */
-    public void setyPos(int yPos) {
+    public void setyPos(float yPos) {
         this.yPos = yPos;
     }
 
@@ -107,7 +115,7 @@ public class GraphicalComponent {
      * Sets z position
      * @param zPos The z position to set to
      */
-    public void setzPos(int zPos) {
+    public void setzPos(float zPos) {
         this.zPos = zPos;
     }
 
@@ -115,7 +123,7 @@ public class GraphicalComponent {
      * Gets the width of the component
      * @return The width of the component
      */
-    public int getWidth() {
+    public float getWidth() {
         return width;
     }
 
@@ -123,7 +131,7 @@ public class GraphicalComponent {
      * Gets the height of the component
      * @return The width of the component
      */
-    public int getHeight() {
+    public float getHeight() {
         return height;
     }
     
@@ -150,5 +158,19 @@ public class GraphicalComponent {
     public void setC(Color c) {
         this.c = c;
     }
+    
+    public Vector3f getPos() {
+    	Vector3f vector = new Vector3f(this.getxPos(), this.getyPos(), this.getzPos());
+    	return vector;
+    }
+
+	public TexturedModel getModel() {
+		// TODO Auto-generated method stub
+		return this.model;
+	}
+	
+	public void setModel(TexturedModel model) {
+		this.model = model;
+	}
     
 }

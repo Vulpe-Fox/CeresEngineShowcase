@@ -6,7 +6,7 @@
 package ceresgame.map;
 
 import ceresgame.enumeration.Direction;
-import org.lwjgl.input.Keyboard;
+import ceresgame.models.TexturedModel;
 
 /**
  *
@@ -14,11 +14,11 @@ import org.lwjgl.input.Keyboard;
  */
 public class Player extends GraphicalComponent {
     
-    private int xPos;
-    private int yPos;
+    private float xPos;
+    private float yPos;
     
-    public Player(int xPos, int yPos, int zPos, int width, int height, String imgPath) {
-        super(xPos, yPos, zPos, width, height, imgPath);
+    public Player(float xPos, float yPos, float zPos, float width, float height, String imgPath, TexturedModel model) {
+        super(xPos, yPos, zPos, width, height, imgPath, model);
         this.xPos = xPos;
         this.yPos = yPos;
         zPos = 0;
@@ -39,11 +39,11 @@ public class Player extends GraphicalComponent {
         }
     }
     
-    public int getXPos() {
+    public float getXPos() {
         return xPos;
     }
     
-    public int getYPos() {
+    public float getYPos() {
         return yPos;
     }
 }
