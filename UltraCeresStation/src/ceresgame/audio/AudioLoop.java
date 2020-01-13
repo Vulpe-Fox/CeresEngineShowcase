@@ -40,9 +40,9 @@ public class AudioLoop extends Thread {
 		
 		audioSystemInitialized = true;
 		
-		/*while(gameRunning) {
+		while(gameRunning) {
 			//Path of wav file for main game audio
-			path = "";
+			path = "resources/audio/soundtrack.wav";
 			//Buffer of the sound collected from the AudioHandler
 			int buffer = AudioHandler.loadSound(path);
 			//The main source of the audio to be played to the listener
@@ -59,7 +59,7 @@ public class AudioLoop extends Thread {
 					mainMusicPlaying = false;
 				}
 			}
-		}*/
+		}
 	}
 	
 	/**
