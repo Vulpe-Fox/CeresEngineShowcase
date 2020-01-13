@@ -80,10 +80,10 @@ public class CeresStation{
 		
 		while(!Display.isCloseRequested() && !Keyboard.isKeyDown(Keyboard.KEY_F)) {
 			//Update saved positions of graphicalComponents
-			renderer.prepare();
+			/*renderer.prepare();
 			shader.start();
 			game.render(renderer, shader);
-			shader.stop();
+			shader.stop();*/
 			DisplayUpdater.updateDisplay();
 		}
 		
