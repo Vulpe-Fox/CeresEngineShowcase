@@ -7,7 +7,6 @@ package ceresgame.map;
 
 import org.lwjgl.opengl.Display;
 
-import ceresgame.models.TexturedModel;
 import java.awt.Color;
 
 /**
