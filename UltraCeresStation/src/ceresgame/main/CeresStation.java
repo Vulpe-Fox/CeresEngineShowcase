@@ -5,8 +5,12 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 
 import ceresgame.graphics.DisplayUpdater;
+import ceresgame.graphics.Renderer;
 import ceresgame.main.userinterface.Input;
+import ceresgame.map.GraphicalComponent;
 import ceresgame.map.Player;
+import ceresgame.shaders.StaticShader;
+import java.util.ArrayList;
 
 /**
 *The main class containing the runner object which contains all the relevant objects, so they can all be connected together (avoiding static issues)
@@ -17,6 +21,18 @@ public class CeresStation{
     private Player player;
     private Input inputThread;
     private AudioLoop audioThread;
+    private float[] imageUVVerticies = {
+	//Top left point
+    	0,0,
+	//Bottom left point
+	0,1,
+	//Bottom right point
+	1,1,
+	//Top right point
+	1,0
+    };
+    private ArrayList<GraphicalComponent> components = new ArrayList<>();	
+    
     //private Camera camera = new Camera(this); //Please feed in a CeresStation object so you can reference the player
 	
     /**
@@ -32,7 +48,11 @@ public class CeresStation{
     *
     */
     public void start() {
-    	player = new Player(0, 0, 0, 50, 50, "resources/images/God.png", null);
+    	player = new Player(0, 0, 0, 50, 50, "resources/images/God.png", null); //Still need a model, so that's my next step
+	    
+	//Player component is at first position
+	addComponent(player);
+		
     	inputThread = new Input(this);
     	audioThread = new AudioLoop(this);
     	
@@ -54,9 +74,16 @@ public class CeresStation{
         
 	public static void main(String[] args) {
 		DisplayUpdater.createDisplay();
+		StaticShader shader = new StaticShader();
+		Renderer renderer = new Renderer(shader);
                 CeresStation game = new CeresStation();
 		
 		while(!Display.isCloseRequested() && !Keyboard.isKeyDown(Keyboard.KEY_F)) {
+			//Update saved positions of graphicalComponents
+			renderer.prepare();
+			shader.start();
+			game.render(renderer, shader);
+			shader.stop();
 			DisplayUpdater.updateDisplay();
 		}
 		
@@ -90,4 +117,22 @@ public class CeresStation{
 		return this.audioThread;
 	}
 	
+	/**
+	*Adds graphical components to the list of components being used
+	*@param gc The graphical component being added
+	*/
+        public void addComponent(GraphicalComponent gc) {
+            components.add(gc);
+        }
+	
+	/**
+	*Renders all graphicalComponents in the list
+	*@param renderer The renderer used to render the graphical components
+	*@param shader The shader used to position the graphical components onto the visual plane
+	*/
+	public void render(Renderer renderer, StaticShader shader){
+		for(int i = 0; i < components.size(); i++){
+		    renderer.render(components.get(i), shader);
+		}
+	}
 }

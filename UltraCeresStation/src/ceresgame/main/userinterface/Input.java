@@ -9,12 +9,13 @@ import org.lwjgl.input.Keyboard;
 
 /**
 *The input class which runs events based on whether different keys are down.
-*@author ivary45, pintt3963
+*@author ivary45, pintt3963, bartm6529
 */
 public class Input extends Thread{
     
-        public boolean running = true;
+        private boolean running = true;
         private Player player;
+        private CeresStation game;
         
         /**
         *The constructor of the input class which assigns the current player to be the actual player entity
@@ -54,9 +55,21 @@ public class Input extends Thread{
             }
             if(Keyboard.isKeyDown(Keyboard.KEY_A)){
                 player.movement(Direction.LEFT);
+                
+                //If player is on the ground, play sound effect
+                while(game.getPlayer().getyPos() == 0){
+                    game.getAudioLoop().playSoundEffect(null);
+                }
+                
             }
             if(Keyboard.isKeyDown(Keyboard.KEY_D)){
                 player.movement(Direction.RIGHT);
+                
+                
+                //If player is on the ground, play sound effect
+                while(game.getPlayer().getyPos() == 0){
+                    game.getAudioLoop().playSoundEffect(null);
+                }
             }
         }
 }
