@@ -52,24 +52,25 @@ public class AudioLoop extends Thread {
 	    
 
         while(gameRunning) {
-			//Path of wav file for main game audio
-			path = "resources/audio/soundtrack.wav";
-			//Buffer of the sound collected from the AudioHandler
-			int buffer = AudioHandler.loadSound(path);
-			//The main source of the audio to be played to the listener
-			//Plays the buffer from the source
-			mainSource.play(buffer);
-			mainMusicPlaying = true;
-			//Keep waiting for the music loop to finish
-			while(mainMusicPlaying) {
-				//If music has stopped, delete the source and buffers
-				if(AL10.alGetSourcei(mainSource.getSourceId(), AL10.AL_SOURCE_STATE) == AL10.AL_STOPPED){
-					mainSource.delete();
-					AudioHandler.delete();
-					mainMusicPlaying = false;
-				}
-			}
-		}
+            //Path of wav file for main game audio
+            path = "resources/audio/soundtrack.wav";
+            //Buffer of the sound collected from the AudioHandler
+            int buffer = AudioHandler.loadSound(path);
+            //The main source of the audio to be played to the listener
+            //Plays the buffer from the source
+            mainSource.play(buffer);
+            System.out.println("Now Playing: " + path);
+            mainMusicPlaying = true;
+            //Keep waiting for the music loop to finish
+            while(mainMusicPlaying) {
+                //If music has stopped, delete the source and buffers
+                if(AL10.alGetSourcei(mainSource.getSourceId(), AL10.AL_SOURCE_STATE) == AL10.AL_STOPPED){
+                    mainSource.delete();
+                    AudioHandler.delete();
+                    mainMusicPlaying = false;
+                }
+            }
+        }
     }
 
     /**
@@ -78,22 +79,23 @@ public class AudioLoop extends Thread {
      */
     public void playSoundEffect(String path) {
 	if (soundEffectPlaying) {
-		//If sound effect has stopped, delete the source and buffers
-		if (AL10.alGetSourcei(soundEffectSource.getSourceId(), AL10.AL_SOURCE_STATE) == AL10.AL_STOPPED) {
-			soundEffectSource.delete();
-			AudioHandler.delete();
-			soundEffectPlaying = false;
-	    	} else {
-			//Buffer of the sound collected from the AudioHandler
-			int buffer = AudioHandler.loadSound(path);
-			//The main source of the audio to be played to the listener
-			soundEffectSource = new AudioSource();
-			//Plays the buffer from the source
-			soundEffectSource.play(buffer);
-			soundEffectPlaying = true;
-			//Keep waiting for the sound effect has finished
-		}
-	}
+            //If sound effect has stopped, delete the source and buffers
+            if (AL10.alGetSourcei(soundEffectSource.getSourceId(), AL10.AL_SOURCE_STATE) == AL10.AL_STOPPED) {
+                soundEffectSource.delete();
+                AudioHandler.delete();
+                soundEffectPlaying = false;
+            }
+	} else {
+            //Buffer of the sound collected from the AudioHandler
+            int buffer = AudioHandler.loadSound(path);
+            System.out.println("Now Playing: " + path);
+            //The main source of the audio to be played to the listener
+            soundEffectSource = new AudioSource();
+            //Plays the buffer from the source
+            soundEffectSource.play(buffer);
+            soundEffectPlaying = true;
+            //Keep waiting for the sound effect has finished
+        }
     }
 
     /**
