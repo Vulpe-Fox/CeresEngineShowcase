@@ -71,6 +71,7 @@ public class VectorMath {
    *@param vector The vector of the top left point of the object
    *@param width The width of the object
    *@param height the height of the object
+   *@return The vertex array
    */
    public static float[] genVertices(Vector3f vector, float width, float height){
 	float[] vertices = {
