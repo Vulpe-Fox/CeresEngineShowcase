@@ -5,8 +5,6 @@
  */
 package ceresgame.graphics;
 
-import ceresgame.map.GraphicalComponent;
-import java.util.ArrayList;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.ContextAttribs;
 import org.lwjgl.opengl.Display;

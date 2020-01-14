@@ -37,6 +37,7 @@ public class GraphicalComponent {
      * @param width The width of the component
      * @param height The height of the component
      * @param imgPath The path of the image file
+     * @param model The model of the component; if applicable
      */
     public GraphicalComponent(float xPos, float yPos, float zPos, float width, float height, String imgPath, TexturedModel model){
         this.xPos = xPos;

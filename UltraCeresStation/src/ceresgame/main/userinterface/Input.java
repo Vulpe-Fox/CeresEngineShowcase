@@ -3,8 +3,6 @@ package ceresgame.main.userinterface;
 import ceresgame.enumeration.Direction;
 import ceresgame.main.CeresStation;
 import ceresgame.map.Player;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.lwjgl.input.Keyboard;
 
 /**

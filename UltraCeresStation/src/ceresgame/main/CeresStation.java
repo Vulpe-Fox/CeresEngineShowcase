@@ -6,6 +6,7 @@ import org.lwjgl.opengl.Display;
 
 import ceresgame.graphics.DisplayUpdater;
 import ceresgame.graphics.Renderer;
+import ceresgame.graphics.gui.Camera;
 import ceresgame.helpers.VectorMath;
 import ceresgame.main.userinterface.Input;
 import ceresgame.map.GraphicalComponent;
@@ -19,8 +20,6 @@ import java.io.IOException;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL15;
@@ -38,8 +37,9 @@ public class CeresStation{
     private Player player;
     private Input inputThread;
     private AudioLoop audioThread;
+    private Camera camera;
 	
-    private float[] imageUVVerticies = {
+    private final float[] imageUVVerticies = {
 	//Top left point
     	0,0,
 	//Bottom left point
@@ -50,7 +50,7 @@ public class CeresStation{
 	1,0
     };
 
-    private int[] indiciesForRendering = {
+    private final int[] indiciesForRendering = {
 	//Top left triangle
     	0,1,3,
 	//Bottom right triangle
@@ -118,7 +118,8 @@ public class CeresStation{
 		DisplayUpdater.createDisplay();
 		
                 CeresStation game = new CeresStation();
-		game.shader = new StaticShader();
+                game.camera = new Camera();
+		game.shader = new StaticShader(game);
                 game.renderer = new Renderer(game.shader);
                 
 		while(!Display.isCloseRequested() && !Keyboard.isKeyDown(Keyboard.KEY_F)) {
@@ -143,6 +144,14 @@ public class CeresStation{
 	public Player getPlayer(){
 		return this.player;	
 	}
+        
+        /**
+         * The method which gets the camera object
+         * @return The camera object
+         */
+        public Camera getCamera(){
+            return this.camera;
+        }
 	
 	/**
 	*The method which gets the input thread object
@@ -256,6 +265,7 @@ public class CeresStation{
             textures.add(textureID);
             return textureID;
         }
+        
 
     
 }

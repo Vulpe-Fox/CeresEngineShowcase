@@ -4,7 +4,6 @@ import org.lwjgl.openal.AL;
 import org.lwjgl.openal.AL10;
 
 import ceresgame.main.CeresStation;
-import org.lwjgl.openal.ALC10;
 
 /**
  * This is the file which loops the main audio system, as well as allows other
@@ -28,6 +27,7 @@ public class AudioLoop extends Thread {
 
     /**
      * Creating an instanced AudioLoop object
+     * @param game The instanced game
      */
     public AudioLoop(CeresStation game) {
         this.game = game;
@@ -45,6 +45,7 @@ public class AudioLoop extends Thread {
         AudioHandler.setListenerData();
         System.out.println("... audio system has been initialized successfully!");
 	    
+        soundEffectSource = new AudioSource();
 	mainSource = new AudioSource();
 	    
         audioSystemInitialized = true;
