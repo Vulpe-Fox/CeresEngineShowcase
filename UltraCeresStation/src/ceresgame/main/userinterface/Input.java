@@ -22,6 +22,7 @@ public class Input extends Thread{
         *@param game the runner class being input
         */
         public Input(CeresStation game){
+            this.game = game;
             this.player = game.getPlayer();
         }
     
@@ -34,11 +35,6 @@ public class Input extends Thread{
             while(running){
                 keyPressed();
                 //TODO change input scheme to reflect delta time changes instead of waiting
-                try {
-                    sleep(100);
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(Input.class.getName()).log(Level.SEVERE, null, ex);
-                }
             }
         }
 
@@ -57,8 +53,8 @@ public class Input extends Thread{
                 player.movement(Direction.LEFT);
                 
                 //If player is on the ground, play sound effect
-                while(game.getPlayer().getyPos() == 0){
-                    game.getAudioLoop().playSoundEffect(null);
+                if(player.getyPos() == 0){
+                    game.getAudioLoop().playSoundEffect("resources/audio/step.wav");
                 }
                 
             }
@@ -67,7 +63,7 @@ public class Input extends Thread{
                 
                 
                 //If player is on the ground, play sound effect
-                while(game.getPlayer().getyPos() == 0){
+                if(player.getyPos() == 0){
                     game.getAudioLoop().playSoundEffect("resources/audio/step.wav");
                 }
             }
