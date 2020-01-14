@@ -11,9 +11,9 @@ import ceresgame.main.userinterface.Input;
 import ceresgame.map.GraphicalComponent;
 import ceresgame.map.Player;
 import ceresgame.models.RawModel;
-import ceresgame.models.TexturedModel;
 import ceresgame.shaders.StaticShader;
 import java.nio.FloatBuffer;
+import java.nio.IntBuffer;
 import java.util.ArrayList;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
@@ -166,12 +166,12 @@ public class CeresStation{
             }
 	}
         
-        private RawModel generateRawModel(float[] verticies, int[] indices) {
+        private RawModel generateRawModel(float[] verticies, int[] indicies) {
             int vaoID = createVAO();
 	    bindIndicesBuffer(indicies);
             storeAttributeData(0, verticies);
             unbindVAO();
-            return new RawModel(vaoID, indices.length);
+            return new RawModel(vaoID, indicies.length);
         }
 
         private int createVAO() {
@@ -204,7 +204,7 @@ public class CeresStation{
 	}
 	
 	private IntBuffer storeVerticiesInIntBuffer(int[] verticies){
-		IntBuffer buffer = BufferUtils.createIntBuffer(data.length);
+		IntBuffer buffer = BufferUtils.createIntBuffer(verticies.length);
 		buffer.put(verticies);
             	buffer.flip();
             	return buffer;
