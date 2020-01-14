@@ -30,6 +30,7 @@ public class CeresStation{
     private Player player;
     private Input inputThread;
     private AudioLoop audioThread;
+	
     private float[] imageUVVerticies = {
 	//Top left point
     	0,0,
@@ -39,6 +40,13 @@ public class CeresStation{
 	1,1,
 	//Top right point
 	1,0
+    };
+
+    private int[] indiciesForRendering = {
+	//Top left triangle
+    	0,1,3,
+	//Bottom right triangle
+    	3,1,2
     };
     
     private ArrayList<Integer> vaos = new ArrayList<>();
@@ -63,7 +71,7 @@ public class CeresStation{
     */
     public void start() {
         float[] playerVerticies = VectorMath.genVertices(VectorMath.genVector(0, 0, 0, 5f, 5f), 5f, 5f);
-        RawModel rawPlayerModel = generateRawModel(playerVerticies);
+        RawModel rawPlayerModel = generateRawModel(playerVerticies, indiciesForRendering);
         //TexturedModel playerModel = new TexturedModel(rawPlayerModel, );
     	player = new Player(0, 0, 0, 5f, 5f, "resources/images/God.png", null); //Still need a model, so that's my next step
 	    
