@@ -163,8 +163,15 @@ public class CeresStation{
 	*@param shader The shader used to position the graphical components onto the visual plane
 	*/
 	public void render(Renderer renderer, StaticShader shader){
-            for(int i = 0; i < components.size(); i++){
-                renderer.render(components.get(i), shader);
+            if(area == 0){
+                for(int i = 0; i < components.size(); i++){
+                    renderer.render(components.get(i), shader);
+                }
+            } else if (area == 1){
+                //Render different image ?
+                for(int i = 0; i < components.size(); i++){
+                    renderer.render(components.get(i), shader);
+                }
             }
 	}
         

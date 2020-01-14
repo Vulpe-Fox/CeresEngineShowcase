@@ -8,7 +8,7 @@ package ceresgame.graphics.gui;
 import org.lwjgl.util.vector.Vector3f;
 
 /**
- *
+ * Main class which returns player positions in order and assigns corresponding camera positions
  * @author bartm6529
  */
 public class Camera {
