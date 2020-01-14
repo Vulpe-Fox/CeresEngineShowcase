@@ -2,7 +2,7 @@ package ceresgame.models;
 
 public class RawModel {
 	
-	private int vaoID;
+    private int vaoID;
     private int vertexCount;
      
     public RawModel(int vaoID, int vertexCount){

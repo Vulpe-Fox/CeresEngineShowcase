@@ -12,7 +12,6 @@ import org.lwjgl.input.Keyboard;
 *@author ivary45, pintt3963, bartm6529
 */
 public class Input extends Thread{
-    
         private boolean running = true;
         private Player player;
         private CeresStation game;
@@ -60,16 +59,18 @@ public class Input extends Thread{
                 while(game.getPlayer().getyPos() == 0){
                     game.getAudioLoop().playSoundEffect(null);
                 }
-                
             }
             if(Keyboard.isKeyDown(Keyboard.KEY_D)){
                 player.movement(Direction.RIGHT);
                 
-                
                 //If player is on the ground, play sound effect
                 while(game.getPlayer().getyPos() == 0){
-                    game.getAudioLoop().playSoundEffect(null);
+                    game.getAudioLoop().playSoundEffect("resources/audio/step.wav");
                 }
+            }
+            if(Keyboard.isKeyDown(Keyboard.KEY_SPACE)){
+                //Temporarily set a new area when space is pressed
+                game.setArea(1);
             }
         }
 }

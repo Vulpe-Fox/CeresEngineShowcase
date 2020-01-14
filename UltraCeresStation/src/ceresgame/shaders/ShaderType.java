@@ -60,7 +60,7 @@ public abstract class ShaderType {
         GL20.glUseProgram(0);
     }
      
-    public void cleanUp(){
+    public void delete(){
         stop();
         GL20.glDetachShader(typeID, vertexShaderID);
         GL20.glDetachShader(typeID, fragmentShaderID);
@@ -115,8 +115,7 @@ public abstract class ShaderType {
         GL20.glCompileShader(shaderID);
         if(GL20.glGetShader(shaderID, GL20.GL_COMPILE_STATUS )== GL11.GL_FALSE){
             System.out.println(GL20.glGetShaderInfoLog(shaderID, 500));
-            System.err.println("Could not compile shader!");
-            System.exit(-1);
+            System.err.println("Could not compile shader!!!!!!");
         }
         return shaderID;
     }
