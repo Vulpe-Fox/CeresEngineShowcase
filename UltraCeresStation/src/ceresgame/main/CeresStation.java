@@ -8,9 +8,11 @@ import ceresgame.graphics.DisplayUpdater;
 import ceresgame.graphics.Renderer;
 import ceresgame.helpers.VectorMath;
 import ceresgame.main.userinterface.Input;
+import ceresgame.map.Background;
 import ceresgame.map.GraphicalComponent;
 import ceresgame.map.Player;
 import ceresgame.models.RawModel;
+import ceresgame.models.TexturedModel;
 import ceresgame.shaders.StaticShader;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
@@ -74,7 +76,8 @@ public class CeresStation{
         RawModel rawPlayerModel = generateRawModel(playerVerticies, indiciesForRendering);
         //TexturedModel playerModel = new TexturedModel(rawPlayerModel, );
     	player = new Player(0, 0, 0, 5f, 5f, "resources/images/God.png", null); //Still need a model, so that's my next step
-	    
+	
+        
 	//Player component is at first position
 	//addComponent(player);
 		
