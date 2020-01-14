@@ -11,15 +11,23 @@ import ceresgame.main.userinterface.Input;
 import ceresgame.map.GraphicalComponent;
 import ceresgame.map.Player;
 import ceresgame.models.RawModel;
+import ceresgame.models.TexturedModel;
 import ceresgame.shaders.StaticShader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL15;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
+import org.newdawn.slick.opengl.Texture;
+import org.newdawn.slick.opengl.TextureLoader;
 
 /**
 *The main class containing the runner object which contains all the relevant objects, so they can all be connected together (avoiding static issues)
@@ -51,6 +59,8 @@ public class CeresStation{
     
     private ArrayList<Integer> vaos = new ArrayList<>();
     private ArrayList<Integer> vbos = new ArrayList<>();
+    private ArrayList<Integer> textures = new ArrayList<>();
+    
     private ArrayList<GraphicalComponent> components = new ArrayList<>();
     private StaticShader shader;
     private Renderer renderer;
@@ -70,13 +80,16 @@ public class CeresStation{
     *
     */
     public void start() {
+        ceresgame.textures.Texture playerTexture = new ceresgame.textures.Texture(loadTexture("resources/images/Ariff.png"));
+        
         float[] playerVerticies = VectorMath.genVertices(VectorMath.genVector(0, 0, 0, 5f, 5f), 5f, 5f);
+        
         RawModel rawPlayerModel = generateRawModel(playerVerticies, indiciesForRendering);
-        //TexturedModel playerModel = new TexturedModel(rawPlayerModel, );
-    	player = new Player(0, 0, 0, 5f, 5f, "resources/images/God.png", null); //Still need a model, so that's my next step
+        TexturedModel playerModel = new TexturedModel(rawPlayerModel, playerTexture);
+        
+    	player = new Player(0, 0, 0, 5f, 5f, "resources/images/Ariff.png", playerModel); //Still need a model, so that's my next step
 	    
 	//Player component is at first position
-	//addComponent(player);
 		
     	inputThread = new Input(this);
     	audioThread = new AudioLoop(this);
@@ -94,7 +107,7 @@ public class CeresStation{
     	audioThread.delete();
         audioThread.stop();
         
-        this.deleteVAOVBO();
+        this.deleteVAOVBOTEXTURE();
         shader.delete();
         
         
@@ -164,6 +177,7 @@ public class CeresStation{
             for(int i = 0; i < components.size(); i++){
                 renderer.render(components.get(i), shader);
             }
+            renderer.render(player, shader);
 	}
         
         private RawModel generateRawModel(float[] verticies, int[] indicies) {
@@ -217,13 +231,30 @@ public class CeresStation{
             return buffer;
         }
         
-        private void deleteVAOVBO(){
+        private void deleteVAOVBOTEXTURE(){
             vaos.forEach((vao) -> {
                 GL30.glDeleteVertexArrays(vao);
-        });
+            });
             vbos.forEach((vbo) -> {
                 GL15.glDeleteBuffers(vbo);
-        });
+            });
+            textures.forEach((texture) -> {
+                GL11.glDeleteTextures(texture);
+            });
+        }
+        
+        private int loadTexture(String path){
+            Texture texture = null;
+            try {
+                texture = TextureLoader.getTexture("png", new FileInputStream(path));
+            } catch (FileNotFoundException ex) {
+                System.out.println("Image: " + path + " cannot be found!");
+            } catch (IOException ex) {
+                System.out.println("IO Error loading: " + path);
+            }
+            int textureID = texture.getTextureID();
+            textures.add(textureID);
+            return textureID;
         }
 
     
