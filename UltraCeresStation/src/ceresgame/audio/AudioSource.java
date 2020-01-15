@@ -14,7 +14,7 @@ public class AudioSource {
 	private final int sourceId;
 	
 	/**
-	 * Constructor of an audiosource object
+	 * Constructor of an audio source object
 	 */
 	public AudioSource() {
 		//Generates sourceid as a valid source

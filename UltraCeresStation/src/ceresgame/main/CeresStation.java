@@ -6,12 +6,18 @@ import org.lwjgl.opengl.Display;
 
 import ceresgame.graphics.DisplayUpdater;
 import ceresgame.graphics.Renderer;
+import ceresgame.graphics.gui.Camera;
 import ceresgame.helpers.VectorMath;
 import ceresgame.main.userinterface.Input;
+import ceresgame.map.Background;
 import ceresgame.map.GraphicalComponent;
 import ceresgame.map.Player;
 import ceresgame.models.RawModel;
+import ceresgame.models.TexturedModel;
 import ceresgame.shaders.StaticShader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 import java.util.ArrayList;
@@ -20,6 +26,8 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL15;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
+import org.newdawn.slick.opengl.Texture;
+import org.newdawn.slick.opengl.TextureLoader;
 
 /**
 *The main class containing the runner object which contains all the relevant objects, so they can all be connected together (avoiding static issues)
@@ -27,11 +35,17 @@ import org.lwjgl.opengl.GL30;
 */
 public class CeresStation{
 	
+    //initialize graphical components
     private Player player;
+    private Background background;
+    private Background background2;
+    
+    //initialize threads
     private Input inputThread;
     private AudioLoop audioThread;
+    private Camera camera;
 	
-    private float[] imageUVVerticies = {
+    private final float[] imageUVVerticies = {
 	//Top left point
     	0,0,
 	//Bottom left point
@@ -42,7 +56,7 @@ public class CeresStation{
 	1,0
     };
 
-    private int[] indiciesForRendering = {
+    private final int[] indiciesForRendering = {
 	//Top left triangle
     	0,1,3,
 	//Bottom right triangle
@@ -51,6 +65,8 @@ public class CeresStation{
     
     private ArrayList<Integer> vaos = new ArrayList<>();
     private ArrayList<Integer> vbos = new ArrayList<>();
+    private ArrayList<Integer> textures = new ArrayList<>();
+    
     private ArrayList<GraphicalComponent> components = new ArrayList<>();
     private StaticShader shader;
     private Renderer renderer;
@@ -72,13 +88,26 @@ public class CeresStation{
     *
     */
     public void start() {
+        //create textures for graphical components
+        ceresgame.textures.Texture playerTexture = new ceresgame.textures.Texture(loadTexture("resources/images/Ariff.png"));
+        ceresgame.textures.Texture backgroundTexture = new ceresgame.textures.Texture(loadTexture("resources/images/Background.png"));
+        
+        //create verticies for graphical components
         float[] playerVerticies = VectorMath.genVertices(VectorMath.genVector(0, 0, 0, 5f, 5f), 5f, 5f);
+        float[] backgroundVerticies = VectorMath.genVertices(VectorMath.genVector(0, 0, 1, 1080f, 720f), 1080f, 720f);
+        
+        //generate the models for each graphical components
         RawModel rawPlayerModel = generateRawModel(playerVerticies, indiciesForRendering);
-        //TexturedModel playerModel = new TexturedModel(rawPlayerModel, );
-    	player = new Player(0, 0, 0, 5f, 5f, "resources/images/God.png", null); //Still need a model, so that's my next step
+        TexturedModel playerModel = new TexturedModel(rawPlayerModel, playerTexture);
+        RawModel rawBackgroundModel = generateRawModel(backgroundVerticies, indiciesForRendering);
+        TexturedModel backgroundModel = new TexturedModel(rawBackgroundModel, backgroundTexture);
+        
+        //create the objects out of the graphical components
+    	player = new Player(0, 0, 0, 5f, 5f, "resources/images/Ariff.png", playerModel); 
+        background = new Background(0, 0, 0, 1080f, 720F, "resources/images/Background.png", backgroundModel);
+        background2 = new Background(0, 0, 0, 1080f, 720F, "resources/image/firebackground.png", backgroundModel);
 	    
 	//Player component is at first position
-	//addComponent(player);
 		
     	inputThread = new Input(this);
     	audioThread = new AudioLoop(this);
@@ -96,7 +125,7 @@ public class CeresStation{
     	audioThread.delete();
         audioThread.stop();
         
-        this.deleteVAOVBO();
+        this.deleteVAOVBOTEXTURE();
         shader.delete();
         
         
@@ -107,7 +136,8 @@ public class CeresStation{
 		DisplayUpdater.createDisplay();
 		
                 CeresStation game = new CeresStation();
-		game.shader = new StaticShader();
+                game.camera = new Camera();
+		game.shader = new StaticShader(game);
                 game.renderer = new Renderer(game.shader);
                 
 		while(!Display.isCloseRequested() && !Keyboard.isKeyDown(Keyboard.KEY_F)) {
@@ -132,6 +162,14 @@ public class CeresStation{
 	public Player getPlayer(){
 		return this.player;	
 	}
+        
+        /**
+         * The method which gets the camera object
+         * @return The camera object
+         */
+        public Camera getCamera(){
+            return this.camera;
+        }
 	
 	/**
 	*The method which gets the input thread object
@@ -173,6 +211,7 @@ public class CeresStation{
                     renderer.render(components.get(i), shader);
                 }
             }
+            renderer.render(player, shader);
 	}
         
         private RawModel generateRawModel(float[] verticies, int[] indicies) {
@@ -226,14 +265,32 @@ public class CeresStation{
             return buffer;
         }
         
-        private void deleteVAOVBO(){
+        private void deleteVAOVBOTEXTURE(){
             vaos.forEach((vao) -> {
                 GL30.glDeleteVertexArrays(vao);
-        });
+            });
             vbos.forEach((vbo) -> {
                 GL15.glDeleteBuffers(vbo);
-        });
+            });
+            textures.forEach((texture) -> {
+                GL11.glDeleteTextures(texture);
+            });
         }
+        
+        private int loadTexture(String path){
+            Texture texture = null;
+            try {
+                texture = TextureLoader.getTexture("png", new FileInputStream(path));
+            } catch (FileNotFoundException ex) {
+                System.out.println("Image: " + path + " cannot be found!");
+            } catch (IOException ex) {
+                System.out.println("IO Error loading: " + path);
+            }
+            int textureID = texture.getTextureID();
+            textures.add(textureID);
+            return textureID;
+        }
+        
 
         /**
          * Set the area to a given integer

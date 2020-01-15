@@ -25,9 +25,9 @@ import com.sun.media.sound.WaveFileReader;
 
 /**
  *
- * Utitlity class for loading wavefiles.
+ * Utility class for loading wavefiles.
  *
- * @author Brian Matzon <brian@matzon.dk>
+ * @author Brian Matzon brian@matzon.dk
  * @version $Revision$
  * $Id$
  */

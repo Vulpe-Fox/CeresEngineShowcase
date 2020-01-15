@@ -4,7 +4,7 @@ import ceresgame.textures.Texture;
 
 public class TexturedModel {
 	
-	private RawModel rawModel;
+    private RawModel rawModel;
     private Texture texture;
      
     public TexturedModel(RawModel model, Texture texture){
