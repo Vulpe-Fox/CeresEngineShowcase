@@ -160,7 +160,7 @@ public class GraphicalComponent {
         this.c = c;
     }
     
-    public Vector3f getPos() {
+    public Vector3f getPosition() {
     	Vector3f vector = new Vector3f(this.getxPos(), this.getyPos(), this.getzPos());
     	return vector;
     }
