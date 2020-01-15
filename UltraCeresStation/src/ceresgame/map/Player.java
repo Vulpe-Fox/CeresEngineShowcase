@@ -26,17 +26,21 @@ public class Player extends GraphicalComponent {
     
     public void movement(Direction dir) {
         if (dir.equals(Direction.UP)) {
-            yPos -= 1;
+            yPos -= 1f;
         }
         if (dir.equals(Direction.DOWN)) {
-            yPos += 1;
+            yPos += 1f;
         }
         if (dir.equals(Direction.LEFT)) {
-            xPos -= 1;
+            xPos -= 1f;
         }
         if (dir.equals(Direction.RIGHT)) {
-            xPos += 1;
+            xPos += 1f;
         }
+    }
+    
+    public void getHit() {
+        
     }
     
     public float getXPos() {

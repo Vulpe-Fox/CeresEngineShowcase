@@ -1,0 +1,21 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package ceresgame.map;
+
+import ceresgame.models.TexturedModel;
+
+/**
+ *
+ * @author pintt3963
+ */
+public class God extends GraphicalComponent {
+    
+    public God(float xPos, float yPos, float zPos, float width, float height, String imgPath, TexturedModel model) {
+        super(xPos, yPos, zPos, width, height, imgPath, model);
+        zPos = 0;
+    }
+    
+}

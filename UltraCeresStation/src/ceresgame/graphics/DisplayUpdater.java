@@ -43,7 +43,7 @@ public class DisplayUpdater {
         //Sets the viewport to be at 0,0 and the same size as the width and height of the screen
         GL11.glViewport(0, 0, WIDTH, HEIGHT);
         //Sets the background unrendered colour to be a very nice green colour
-        GL11.glClearColor(0.6F, 1.0F, 0.0F, 1.0F);
+        GL11.glClearColor(0.6F, 0.0F, 1.0F, 0.0F);
         //Enables the openGL depth test, so object behind other objects won't render (stops overlapping conflicts)
         GL11.glEnable(GL11.GL_DEPTH_TEST);
     }

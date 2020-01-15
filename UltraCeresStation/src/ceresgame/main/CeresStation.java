@@ -10,6 +10,7 @@ import ceresgame.graphics.gui.Camera;
 import ceresgame.helpers.VectorMath;
 import ceresgame.main.userinterface.Input;
 import ceresgame.map.Background;
+import ceresgame.map.God;
 import ceresgame.map.GraphicalComponent;
 import ceresgame.map.Player;
 import ceresgame.models.RawModel;
@@ -38,6 +39,7 @@ public class CeresStation{
     //initialize graphical components
     private Player player;
     private Background background;
+    private God god;
     
     //initialize threads
     private Input inputThread;
@@ -88,20 +90,25 @@ public class CeresStation{
         //create textures for graphical components
         ceresgame.textures.Texture playerTexture = new ceresgame.textures.Texture(loadTexture("resources/images/Ariff.png"));
         ceresgame.textures.Texture backgroundTexture = new ceresgame.textures.Texture(loadTexture("resources/images/Background.png"));
+        ceresgame.textures.Texture godTexture = new ceresgame.textures.Texture(loadTexture("resources/images/God.png"));
         
         //create verticies for graphical components
         float[] playerVerticies = VectorMath.genVertices(VectorMath.genVector(0, 0, 0, 5f, 5f), 5f, 5f);
         float[] backgroundVerticies = VectorMath.genVertices(VectorMath.genVector(0, 0, 1, 1080f, 720f), 1080f, 720f);
+        float[] godVerticies = VectorMath.genVertices(VectorMath.genVector(0, 0, 0, 100f, 100f), 100f, 100f);
         
         //generate the models for each graphical components
         RawModel rawPlayerModel = generateRawModel(playerVerticies, indiciesForRendering);
         TexturedModel playerModel = new TexturedModel(rawPlayerModel, playerTexture);
         RawModel rawBackgroundModel = generateRawModel(backgroundVerticies, indiciesForRendering);
         TexturedModel backgroundModel = new TexturedModel(rawBackgroundModel, backgroundTexture);
+        RawModel rawGodModel = generateRawModel(godVerticies, indiciesForRendering);
+        TexturedModel godModel = new TexturedModel(rawGodModel, godTexture);
         
         //create the objects out of the graphical components
     	player = new Player(0, 0, 0, 5f, 5f, "resources/images/Ariff.png", playerModel); 
         background = new Background(0, 0, 0, 1080f, 720F, "resources/images/Background.png", backgroundModel);
+        god = new God(0, 0, 0, 100f, 100F, "resources/images/God.png", godModel);
 	    
 	//Player component is at first position
 		
