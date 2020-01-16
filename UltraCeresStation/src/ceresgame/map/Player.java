@@ -7,6 +7,7 @@ package ceresgame.map;
 
 import ceresgame.enumeration.Direction;
 import ceresgame.models.TexturedModel;
+import org.lwjgl.util.vector.Vector3f;
 
 /**
  * The graphics and behaviour of the player character
@@ -14,8 +15,7 @@ import ceresgame.models.TexturedModel;
  */
 public class Player extends GraphicalComponent {
     
-    private float xPos;
-    private float yPos;
+    private Vector3f position;
     
     /**
      * The constructor for the player class
@@ -36,16 +36,16 @@ public class Player extends GraphicalComponent {
     
     public void movement(Direction dir) {
         if (dir.equals(Direction.UP)) {
-            yPos -= 1f;
+            this.position.y -= 1;
         }
         if (dir.equals(Direction.DOWN)) {
-            yPos += 1f;
+            this.position.y += 1;
         }
         if (dir.equals(Direction.LEFT)) {
-            xPos -= 1f;
+            this.position.x -= 1;
         }
         if (dir.equals(Direction.RIGHT)) {
-            xPos += 1f;
+            this.position.x += 1;
         }
     }
     
@@ -54,10 +54,10 @@ public class Player extends GraphicalComponent {
     }
     
     public float getXPos() {
-        return xPos;
+        return this.position.x;
     }
     
     public float getYPos() {
-        return yPos;
+        return this.position.y;
     }
 }

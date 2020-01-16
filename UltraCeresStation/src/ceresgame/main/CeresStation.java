@@ -108,12 +108,11 @@ public class CeresStation{
         //TexturedModel godModel = new TexturedModel(rawGodModel, godTexture);
         
         //create the objects out of the graphical components
-    	player = new Player(0, 0, 0, 5f, 5f, "resources/images/Ariff.png", playerModel); 
-        //background = new Background(0, 0, 0, 1080f, 720F, "resources/images/Background.png", backgroundModel);
-        //god = new God(0, 0, 0, 100f, 100F, "resources/images/God.png", godModel);
-	    
-	//Player component is at first position
-		
+    	player = new Player(0, 0, 0, height, height, playerModel); 
+        //background = new Background(0, 0, 2, 1080f, 720F, "resources/images/Background.png", backgroundModel);
+	    	
+        components.add(player);
+        
     	inputThread = new Input(this);
     	audioThread = new AudioLoop(this);
     	
@@ -140,6 +139,7 @@ public class CeresStation{
 	public static void main(String[] args) {
 		DisplayUpdater.createDisplay();
 		
+                
                 CeresStation game = new CeresStation();
                 game.camera = new Camera();
 		game.shader = new StaticShader(game);
@@ -152,6 +152,7 @@ public class CeresStation{
                         game.shader.loadViewMatrix(game.camera);
 			game.render(game.renderer, game.shader);
 			game.shader.stop();
+                        
 			DisplayUpdater.updateDisplay();
 		}
 		
@@ -166,7 +167,7 @@ public class CeresStation{
 	*@return The player object
 	*/
 	public Player getPlayer(){
-		return this.player;	
+            return this.player;	
 	}
         
         /**
@@ -212,11 +213,11 @@ public class CeresStation{
             }
 	}
         
-        private RawModel generateRawModel(float[] verticies, float[] uvVerticies, int[] indicies) {
+        private RawModel generateRawModel(float[] verticies, float[] uvCoordinates, int[] indicies) {
             int vaoID = createVAO();
 	    bindIndicesBuffer(indicies);
             storeAttributeData(0, 3, verticies);
-            storeAttributeData(1, 2, uvVerticies);
+            storeAttributeData(1, 2, uvCoordinates);
             unbindVAO();
             return new RawModel(vaoID, indicies.length);
         }
@@ -229,6 +230,7 @@ public class CeresStation{
         }
 
         private void storeAttributeData(int attributeNumber, int coordinateSize, float[] verticies) {
+            System.out.println("Storing attribute array of size: " + coordinateSize);
             int vboID = GL15.glGenBuffers();
             vbos.add(vboID);
             GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, vboID);

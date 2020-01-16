@@ -24,7 +24,6 @@ public class GraphicalComponent {
     private final float width;
     private final float height;
     
-    private String imgPath;
     private Color c;
     
     private TexturedModel model;
@@ -36,18 +35,15 @@ public class GraphicalComponent {
      * @param zPos The z position of the component
      * @param width The width of the component
      * @param height The height of the component
-     * @param imgPath The path of the image file
      * @param model The model of the component; if applicable
      */
-    public GraphicalComponent(float xPos, float yPos, float zPos, float width, float height, String imgPath, TexturedModel model){
+    public GraphicalComponent(float xPos, float yPos, float zPos, float width, float height, TexturedModel model){
         this.xPos = xPos;
         this.yPos = yPos;
         this.zPos = zPos;
         
         this.width = width;
         this.height = height;
-        
-        this.imgPath = imgPath;
         
         this.model = model;
     }
@@ -135,14 +131,6 @@ public class GraphicalComponent {
     public float getHeight() {
         return height;
     }
-    
-    /**
-     * Gets path of image
-     * @return The path of the image file
-     */
-    public String getImgPath() {
-        return imgPath;
-    }
 
     /**
      * Gets colour of component
@@ -165,13 +153,12 @@ public class GraphicalComponent {
     	return vector;
     }
 
-	public TexturedModel getModel() {
-		// TODO Auto-generated method stub
-		return this.model;
-	}
-	
-	public void setModel(TexturedModel model) {
-		this.model = model;
-	}
+    public TexturedModel getModel() {
+            return this.model;
+    }
+
+    public void setModel(TexturedModel model) {
+            this.model = model;
+    }
     
 }

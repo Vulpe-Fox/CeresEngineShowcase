@@ -22,7 +22,7 @@ public class Camera {
     public Camera(){
         this.posX = 0F;
         this.posY = 0F;
-        this.posZ = +1.0F;
+        this.posZ = 0F;
     }
     
     /**
