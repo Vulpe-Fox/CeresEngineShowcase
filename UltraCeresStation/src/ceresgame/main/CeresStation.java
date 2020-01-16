@@ -36,7 +36,8 @@ public class CeresStation{
 	
     //initialize graphical components
     private Player player;
-    //private Background background;
+    private Background background;
+    private God god;
     
     //initialize threads
     private Input inputThread;
@@ -86,17 +87,23 @@ public class CeresStation{
     public void start() {
         float height = 1f;
         
-        //ceresgame.textures.Texture backgroundTexture = new ceresgame.textures.Texture(loadTexture("resources/images/Background.png"));
+        //create textures for graphical components
+        ceresgame.textures.Texture playerTexture = new ceresgame.textures.Texture(loadTexture("resources/images/Ariff.png"));
+        ceresgame.textures.Texture backgroundTexture = new ceresgame.textures.Texture(loadTexture("resources/images/Background.png"));
+        ceresgame.textures.Texture godTexture = new ceresgame.textures.Texture(loadTexture("resources/images/God.png"));
         
         //create verticies for graphical components
-        float[] playerVerticies = VectorMath.genVertices(VectorMath.genVector(0, 0, 0, height, height), height, height);
-        //float[] backgroundVerticies = VectorMath.genVertices(VectorMath.genVector(0, 0, 2, 1080f, 720f), 1080f, 720f);
+        float[] playerVerticies = VectorMath.genVertices(VectorMath.genVector(0, 0, 0, 5f, 5f), 5f, 5f);
+        float[] backgroundVerticies = VectorMath.genVertices(VectorMath.genVector(0, 0, 1, 1080f, 720f), 1080f, 720f);
+        float[] godVerticies = VectorMath.genVertices(VectorMath.genVector(0, 0, 0, 100f, 100f), 100f, 100f);
         
         //generate the models for each graphical components
         RawModel rawPlayerModel = generateRawModel(playerVerticies, imageUVVerticies, indiciesForRendering);
-        TexturedModel playerModel = new TexturedModel(rawPlayerModel, new ceresgame.textures.Texture(loadTexture("resources/images/Ariff.png")));
-        //RawModel rawBackgroundModel = generateRawModel(backgroundVerticies, imageUVVerticies, indiciesForRendering);
+        TexturedModel playerModel = new TexturedModel(rawPlayerModel, playerTexture);
+        //RawModel rawBackgroundModel = generateRawModel(backgroundVerticies, indiciesForRendering);
         //TexturedModel backgroundModel = new TexturedModel(rawBackgroundModel, backgroundTexture);
+        //RawModel rawGodModel = generateRawModel(godVerticies, indiciesForRendering);
+        //TexturedModel godModel = new TexturedModel(rawGodModel, godTexture);
         
         //create the objects out of the graphical components
     	player = new Player(0, 0, 0, height, height, playerModel); 

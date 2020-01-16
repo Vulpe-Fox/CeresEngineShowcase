@@ -13,7 +13,7 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.PixelFormat;
 
 /**
- *
+ * Creates and handles the screen display for the game
  * @author carmc9538
  */
 public class DisplayUpdater {
