@@ -9,7 +9,6 @@ import ceresgame.graphics.Renderer;
 import ceresgame.graphics.gui.Camera;
 import ceresgame.helpers.VectorMath;
 import ceresgame.main.userinterface.Input;
-import ceresgame.map.Background;
 import ceresgame.map.GraphicalComponent;
 import ceresgame.map.Player;
 import ceresgame.models.RawModel;
@@ -85,7 +84,7 @@ public class CeresStation{
     *
     */
     public void start() {
-        float height = 2f;
+        float height = 1f;
         
         //ceresgame.textures.Texture backgroundTexture = new ceresgame.textures.Texture(loadTexture("resources/images/Background.png"));
         
