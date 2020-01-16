@@ -30,8 +30,8 @@ public class Snowflake extends GraphicalComponent {
      * @param imgPath The image path of the snowflake
      * @param model The model of the snowflake
      */
-    public Snowflake(float xPos, float yPos, float zPos, float width, float height, String imgPath, TexturedModel model) {
-        super(xPos, yPos, zPos, width, height, "resources/images/Snowflake.png", model);
+    public Snowflake(float xPos, float yPos, float zPos, float width, float height, TexturedModel model) {
+        super(xPos, yPos, zPos, width, height, model);
         amp = (int) (Math.random() * 100) + 10;
         xPos = (int) Math.random() * Display.getWidth();
         yPos = 0;

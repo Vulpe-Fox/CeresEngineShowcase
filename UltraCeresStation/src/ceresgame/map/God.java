@@ -20,11 +20,10 @@ public class God extends GraphicalComponent {
      * @param zPos The z position of god
      * @param width The width of god
      * @param height The height of god
-     * @param imgPath The image path of god
      * @param model The model of god
      */
-    public God(float xPos, float yPos, float zPos, float width, float height, String imgPath, TexturedModel model) {
-        super(xPos, yPos, zPos, width, height, imgPath, model);
+    public God(float xPos, float yPos, float zPos, float width, float height, TexturedModel model) {
+        super(xPos, yPos, zPos, width, height, model);
         zPos = 0;
     }
     

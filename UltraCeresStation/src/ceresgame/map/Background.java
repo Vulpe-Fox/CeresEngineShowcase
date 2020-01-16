@@ -20,11 +20,10 @@ public class Background extends GraphicalComponent {
      * @param zPos The z position of the background
      * @param width The width of the background
      * @param height The height of the background
-     * @param imgPath The image path of the background
      * @param model The model of the background
      */
-    public Background(float xPos, float yPos, float zPos, float width, float height, String imgPath, TexturedModel model) {
-        super(xPos, yPos, zPos, width, height, imgPath, model);
+    public Background(float xPos, float yPos, float zPos, float width, float height, TexturedModel model) {
+        super(xPos, yPos, zPos, width, height, model);
         zPos = 1;
     }
 }

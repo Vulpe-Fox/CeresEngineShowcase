@@ -36,8 +36,8 @@ public class CeresStation{
 	
     //initialize graphical components
     private Player player;
-    private Background background;
-    private God god;
+    /*private Background background;
+    private God god;*/
     
     //initialize threads
     private Input inputThread;
