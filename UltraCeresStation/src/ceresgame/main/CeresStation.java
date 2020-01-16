@@ -87,8 +87,6 @@ public class CeresStation{
     public void start() {
         float height = 2f;
         
-        //create textures for graphical components
-        ceresgame.textures.Texture playerTexture = new ceresgame.textures.Texture(loadTexture("resources/images/Ariff.png"));
         //ceresgame.textures.Texture backgroundTexture = new ceresgame.textures.Texture(loadTexture("resources/images/Background.png"));
         
         //create verticies for graphical components
@@ -97,12 +95,12 @@ public class CeresStation{
         
         //generate the models for each graphical components
         RawModel rawPlayerModel = generateRawModel(playerVerticies, imageUVVerticies, indiciesForRendering);
-        TexturedModel playerModel = new TexturedModel(rawPlayerModel, playerTexture);
+        TexturedModel playerModel = new TexturedModel(rawPlayerModel, new ceresgame.textures.Texture(loadTexture("resources/images/Ariff.png")));
         //RawModel rawBackgroundModel = generateRawModel(backgroundVerticies, imageUVVerticies, indiciesForRendering);
         //TexturedModel backgroundModel = new TexturedModel(rawBackgroundModel, backgroundTexture);
         
         //create the objects out of the graphical components
-    	player = new Player(0, 0, 0, height, height, "resources/images/Ariff.png", playerModel); 
+    	player = new Player(0, 0, 0, height, height, playerModel); 
         //background = new Background(0, 0, 2, 1080f, 720F, "resources/images/Background.png", backgroundModel);
 	    	
         components.add(player);
@@ -133,6 +131,7 @@ public class CeresStation{
 	public static void main(String[] args) {
 		DisplayUpdater.createDisplay();
 		
+                
                 CeresStation game = new CeresStation();
                 game.camera = new Camera();
 		game.shader = new StaticShader(game);
@@ -145,6 +144,7 @@ public class CeresStation{
                         game.shader.loadViewMatrix(game.camera);
 			game.render(game.renderer, game.shader);
 			game.shader.stop();
+                        
 			DisplayUpdater.updateDisplay();
 		}
 		
@@ -159,7 +159,7 @@ public class CeresStation{
 	*@return The player object
 	*/
 	public Player getPlayer(){
-		return this.player;	
+            return this.player;	
 	}
         
         /**
@@ -205,11 +205,11 @@ public class CeresStation{
             }
 	}
         
-        private RawModel generateRawModel(float[] verticies, float[] uvVerticies, int[] indicies) {
+        private RawModel generateRawModel(float[] verticies, float[] uvCoordinates, int[] indicies) {
             int vaoID = createVAO();
 	    bindIndicesBuffer(indicies);
             storeAttributeData(0, 3, verticies);
-            storeAttributeData(1, 2, uvVerticies);
+            storeAttributeData(1, 2, uvCoordinates);
             unbindVAO();
             return new RawModel(vaoID, indicies.length);
         }
@@ -222,6 +222,7 @@ public class CeresStation{
         }
 
         private void storeAttributeData(int attributeNumber, int coordinateSize, float[] verticies) {
+            System.out.println("Storing attribute array of size: " + coordinateSize);
             int vboID = GL15.glGenBuffers();
             vbos.add(vboID);
             GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, vboID);
