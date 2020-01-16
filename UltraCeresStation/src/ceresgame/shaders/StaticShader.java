@@ -5,6 +5,7 @@
  */
 package ceresgame.shaders;
 
+import ceresgame.graphics.gui.Camera;
 import org.lwjgl.util.vector.Matrix4f;
 
 import ceresgame.helpers.VectorMath;
@@ -48,8 +49,8 @@ public class StaticShader extends ShaderType {
       super.loadMatrix(location_transformationMatrix, matrix);
   }
    
-  public void loadViewMatrix(){
-      Matrix4f viewMatrix = VectorMath.createViewMatrix(game.getCamera());
+  public void loadViewMatrix(Camera camera){
+      Matrix4f viewMatrix = VectorMath.createViewMatrix(camera);
       super.loadMatrix(location_viewMatrix, viewMatrix);
   }
    

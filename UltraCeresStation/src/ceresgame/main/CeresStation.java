@@ -87,6 +87,8 @@ public class CeresStation{
     *
     */
     public void start() {
+        float height = 2f;
+        
         //create textures for graphical components
         ceresgame.textures.Texture playerTexture = new ceresgame.textures.Texture(loadTexture("resources/images/Ariff.png"));
         ceresgame.textures.Texture backgroundTexture = new ceresgame.textures.Texture(loadTexture("resources/images/Background.png"));
@@ -98,17 +100,17 @@ public class CeresStation{
         float[] godVerticies = VectorMath.genVertices(VectorMath.genVector(0, 0, 0, 100f, 100f), 100f, 100f);
         
         //generate the models for each graphical components
-        RawModel rawPlayerModel = generateRawModel(playerVerticies, indiciesForRendering);
+        RawModel rawPlayerModel = generateRawModel(playerVerticies, imageUVVerticies, indiciesForRendering);
         TexturedModel playerModel = new TexturedModel(rawPlayerModel, playerTexture);
-        RawModel rawBackgroundModel = generateRawModel(backgroundVerticies, indiciesForRendering);
-        TexturedModel backgroundModel = new TexturedModel(rawBackgroundModel, backgroundTexture);
-        RawModel rawGodModel = generateRawModel(godVerticies, indiciesForRendering);
-        TexturedModel godModel = new TexturedModel(rawGodModel, godTexture);
+        //RawModel rawBackgroundModel = generateRawModel(backgroundVerticies, indiciesForRendering);
+        //TexturedModel backgroundModel = new TexturedModel(rawBackgroundModel, backgroundTexture);
+        //RawModel rawGodModel = generateRawModel(godVerticies, indiciesForRendering);
+        //TexturedModel godModel = new TexturedModel(rawGodModel, godTexture);
         
         //create the objects out of the graphical components
     	player = new Player(0, 0, 0, 5f, 5f, "resources/images/Ariff.png", playerModel); 
-        background = new Background(0, 0, 0, 1080f, 720F, "resources/images/Background.png", backgroundModel);
-        god = new God(0, 0, 0, 100f, 100F, "resources/images/God.png", godModel);
+        //background = new Background(0, 0, 0, 1080f, 720F, "resources/images/Background.png", backgroundModel);
+        //god = new God(0, 0, 0, 100f, 100F, "resources/images/God.png", godModel);
 	    
 	//Player component is at first position
 		
@@ -147,6 +149,7 @@ public class CeresStation{
 			//Update saved positions of graphicalComponents
 			game.renderer.prepare();
 			game.shader.start();
+                        game.shader.loadViewMatrix(game.camera);
 			game.render(game.renderer, game.shader);
 			game.shader.stop();
 			DisplayUpdater.updateDisplay();
@@ -207,13 +210,13 @@ public class CeresStation{
             for(int i = 0; i < components.size(); i++){
                 renderer.render(components.get(i), shader);
             }
-            renderer.render(player, shader);
 	}
         
-        private RawModel generateRawModel(float[] verticies, int[] indicies) {
+        private RawModel generateRawModel(float[] verticies, float[] uvVerticies, int[] indicies) {
             int vaoID = createVAO();
 	    bindIndicesBuffer(indicies);
-            storeAttributeData(0, verticies);
+            storeAttributeData(0, 3, verticies);
+            storeAttributeData(1, 2, uvVerticies);
             unbindVAO();
             return new RawModel(vaoID, indicies.length);
         }
@@ -225,13 +228,13 @@ public class CeresStation{
             return vaoID;
         }
 
-        private void storeAttributeData(int attributeNumber, float[] verticies) {
+        private void storeAttributeData(int attributeNumber, int coordinateSize, float[] verticies) {
             int vboID = GL15.glGenBuffers();
             vbos.add(vboID);
             GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, vboID);
             FloatBuffer buffer = storeVerticiesInFloatBuffer(verticies);
             GL15.glBufferData(GL15.GL_ARRAY_BUFFER, buffer, GL15.GL_STATIC_DRAW);
-            GL20.glVertexAttribPointer(attributeNumber, 3, GL11.GL_FLOAT, false, 0, 0);
+            GL20.glVertexAttribPointer(attributeNumber, coordinateSize, GL11.GL_FLOAT, false, 0, 0);
             GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0);
         }
 

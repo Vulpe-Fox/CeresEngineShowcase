@@ -9,7 +9,7 @@ import ceresgame.enumeration.Direction;
 import ceresgame.models.TexturedModel;
 
 /**
- *
+ * The graphics and behaviour of the player character
  * @author pintt3963
  */
 public class Player extends GraphicalComponent {
@@ -17,6 +17,16 @@ public class Player extends GraphicalComponent {
     private float xPos;
     private float yPos;
     
+    /**
+     * The constructor for the player class
+     * @param xPos The x position of the player
+     * @param yPos The y position of the player
+     * @param zPos The z position of the player
+     * @param width The width of the player
+     * @param height The height of the player
+     * @param imgPath The image path of the player
+     * @param model The model of the player
+     */
     public Player(float xPos, float yPos, float zPos, float width, float height, String imgPath, TexturedModel model) {
         super(xPos, yPos, zPos, width, height, imgPath, model);
         this.xPos = xPos;
