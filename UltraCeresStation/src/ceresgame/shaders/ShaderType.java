@@ -35,8 +35,8 @@ public abstract class ShaderType {
     private static FloatBuffer matrixBuffer = BufferUtils.createFloatBuffer(16);
     
     public ShaderType(String vertexFile,String fragmentFile){
-        vertexShaderID = loadShader(vertexFile,GL20.GL_VERTEX_SHADER);
-        fragmentShaderID = loadShader(fragmentFile,GL20.GL_FRAGMENT_SHADER);
+        vertexShaderID = loadShader(vertexFile, GL20.GL_VERTEX_SHADER);
+        fragmentShaderID = loadShader(fragmentFile, GL20.GL_FRAGMENT_SHADER);
         typeID = GL20.glCreateProgram();
         GL20.glAttachShader(typeID, vertexShaderID);
         GL20.glAttachShader(typeID, fragmentShaderID);
@@ -80,7 +80,7 @@ public abstract class ShaderType {
     }
      
     protected void loadVector(int location, Vector3f vector){
-        GL20.glUniform3f(location,vector.x,vector.y,vector.z);
+        GL20.glUniform3f(location, vector.x, vector.y, vector.z);
     }
      
     protected void loadBoolean(int location, boolean value){
@@ -102,18 +102,18 @@ public abstract class ShaderType {
         try{
             BufferedReader reader = new BufferedReader(new FileReader(file));
             String line;
-            while((line = reader.readLine())!=null){
-                shaderSource.append(line).append("//\n");
+            while((line = reader.readLine())!= null){
+                shaderSource.append(line).append("\n");
             }
+            System.out.println(shaderSource);
             reader.close();
         }catch(IOException e){
             e.printStackTrace();
-            System.exit(-1);
         }
         int shaderID = GL20.glCreateShader(type);
         GL20.glShaderSource(shaderID, shaderSource);
         GL20.glCompileShader(shaderID);
-        if(GL20.glGetShader(shaderID, GL20.GL_COMPILE_STATUS )== GL11.GL_FALSE){
+        if(GL20.glGetShader(shaderID, GL20.GL_COMPILE_STATUS ) == GL11.GL_FALSE){
             System.out.println(GL20.glGetShaderInfoLog(shaderID, 500));
             System.err.println("Could not compile shader!!!!!!");
         }

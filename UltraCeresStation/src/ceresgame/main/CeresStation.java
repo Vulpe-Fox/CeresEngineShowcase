@@ -134,7 +134,7 @@ public class CeresStation{
                 
                 CeresStation game = new CeresStation();
                 game.camera = new Camera();
-		game.shader = new StaticShader(game);
+		game.shader = new StaticShader();
                 game.renderer = new Renderer(game.shader);
                 
 		while(!Display.isCloseRequested() && !Keyboard.isKeyDown(Keyboard.KEY_F)) {
@@ -205,11 +205,11 @@ public class CeresStation{
             }
 	}
         
-        private RawModel generateRawModel(float[] verticies, float[] uvCoordinates, int[] indicies) {
+        private RawModel generateRawModel(float[] position, float[] textureCoords, int[] indicies) {
             int vaoID = createVAO();
 	    bindIndicesBuffer(indicies);
-            storeAttributeData(0, 3, verticies);
-            storeAttributeData(1, 2, uvCoordinates);
+            storeAttributeData(0, 3, position);
+            storeAttributeData(1, 2, textureCoords);
             unbindVAO();
             return new RawModel(vaoID, indicies.length);
         }
@@ -279,9 +279,8 @@ public class CeresStation{
             } catch (IOException ex) {
                 System.out.println("IO Error loading: " + path);
             }
-            int textureID = texture.getTextureID();
-            textures.add(textureID);
-            return textureID;
+            textures.add(texture.getTextureID());
+            return texture.getTextureID();
         }
         
 

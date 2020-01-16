@@ -15,7 +15,7 @@ import org.lwjgl.util.vector.Vector3f;
  */
 public class Player extends GraphicalComponent {
     
-    private Vector3f position;
+    private Vector3f position = new Vector3f();
     
     public Player(float xPos, float yPos, float zPos, float width, float height, TexturedModel model) {
         super(xPos, yPos, zPos, width, height, model);
