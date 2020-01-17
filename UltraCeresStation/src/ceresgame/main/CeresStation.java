@@ -108,8 +108,6 @@ public class CeresStation{
         //create the objects out of the graphical components
     	player = new Player(0, 0, 0, height, height, playerModel); 
         //background = new Background(0, 0, 2, 1080f, 720F, "resources/images/Background.png", backgroundModel);
-	    	
-        components.add(player);
         
     	inputThread = new Input(this);
     	audioThread = new AudioLoop(this);
@@ -209,6 +207,7 @@ public class CeresStation{
             for(int i = 0; i < components.size(); i++){
                 renderer.render(components.get(i), shader);
             }
+            renderer.render(player, shader);
 	}
         
         private RawModel generateRawModel(float[] position, float[] textureCoords, int[] indicies) {
