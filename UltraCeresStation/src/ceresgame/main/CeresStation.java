@@ -25,6 +25,7 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL15;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
+import org.lwjgl.util.vector.Vector3f;
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 
@@ -85,31 +86,26 @@ public class CeresStation{
     *
     */
     public void start() {
-        float height = 0.2f;
         
         //create textures for graphical components
-        ceresgame.textures.ObjectTexture playerTexture = new ceresgame.textures.ObjectTexture(loadTexture("resources/images/Ariff.png"));
-        ceresgame.textures.ObjectTexture backgroundTexture = new ceresgame.textures.ObjectTexture(loadTexture("resources/images/Background.png"));
-        ceresgame.textures.ObjectTexture godTexture = new ceresgame.textures.ObjectTexture(loadTexture("resources/images/God.png"));
+        //ceresgame.textures.ObjectTexture backgroundTexture = new ceresgame.textures.ObjectTexture(loadTexture("resources/images/Background.png"));
+        //ceresgame.textures.ObjectTexture godTexture = new ceresgame.textures.ObjectTexture(loadTexture("resources/images/God.png"));
         
         //create verticies for graphical components
-        float[] playerVerticies = VectorMath.genVertices(VectorMath.genVector(0, 0, 0, height, height), height, height);
         //float[] backgroundVerticies = VectorMath.genVertices(VectorMath.genVector(0, 0, 1, 1080f, 720f), 1080f, 720f);
         //float[] godVerticies = VectorMath.genVertices(VectorMath.genVector(0, 0, 0, 100f, 100f), 100f, 100f);
         
         //generate the models for each graphical components
-        RawModel rawPlayerModel = generateRawModel(playerVerticies, imageUVVerticies, indiciesForRendering);
-        TexturedModel playerModel = new TexturedModel(rawPlayerModel, playerTexture);
         //RawModel rawBackgroundModel = generateRawModel(backgroundVerticies, indiciesForRendering);
         //TexturedModel backgroundModel = new TexturedModel(rawBackgroundModel, backgroundTexture);
         //RawModel rawGodModel = generateRawModel(godVerticies, indiciesForRendering);
         //TexturedModel godModel = new TexturedModel(rawGodModel, godTexture);
         
         //create the objects out of the graphical components
-    	player = new Player(0, 0, 0, height, height, playerModel); 
+    	player = genPlayer(new Vector3f(0, 0, 0), 0.2f, 0.2f, "resources/images/Ariff.png"); 
         //background = new Background(0, 0, 2, 1080f, 720F, "resources/images/Background.png", backgroundModel);
         
-    	inputThread = new Input(this);
+    	inputThread = new Input(this, player);
     	audioThread = new AudioLoop(this);
     	
     	inputThread.start();
@@ -157,6 +153,15 @@ public class CeresStation{
 		
 		DisplayUpdater.closeDisplay();
 	}
+        
+        private Player genPlayer(Vector3f position, float width, float height, String path){
+            ceresgame.textures.ObjectTexture texture = new ceresgame.textures.ObjectTexture(loadTexture(path));
+            float[] playerVerticies = VectorMath.genVertices(VectorMath.genVector(position.getX(), position.getY(), position.getZ(), width, height), width, height);
+            RawModel rawModel = generateRawModel(playerVerticies, imageUVVerticies, indiciesForRendering);
+            TexturedModel model = new TexturedModel(rawModel, texture);
+            Player component = new Player(position.getX(), position.getY(), position.getZ(), width, height, model);
+            return component;
+        }
 	
 	/**
 	*The method which gets the player object

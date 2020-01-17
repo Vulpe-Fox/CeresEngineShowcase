@@ -17,9 +17,7 @@ import ceresgame.models.TexturedModel;
  */
 public class GraphicalComponent {
     
-    private float xPos;
-    private float yPos;
-    private float zPos;
+    protected Vector3f position = new Vector3f();
     
     private final float width;
     private final float height;
@@ -38,9 +36,9 @@ public class GraphicalComponent {
      * @param model The model of the component; if applicable
      */
     public GraphicalComponent(float xPos, float yPos, float zPos, float width, float height, TexturedModel model){
-        this.xPos = xPos;
-        this.yPos = yPos;
-        this.zPos = zPos;
+        this.position.setX(xPos);
+        this.position.setY(yPos);
+        this.position.setZ(zPos);
         
         this.width = width;
         this.height = height;
@@ -58,9 +56,9 @@ public class GraphicalComponent {
      * @param c The colour of the component
      */
     public GraphicalComponent(float xPos, float yPos, float zPos, float width, float height, Color c){
-        this.xPos = xPos;
-        this.yPos = yPos;
-        this.zPos = zPos;
+        this.position.setX(xPos);
+        this.position.setY(yPos);
+        this.position.setZ(zPos);
         
         this.width = width;
         this.height = height;
@@ -73,7 +71,7 @@ public class GraphicalComponent {
      * @return x position
      */
     public float getxPos() {
-        return xPos;
+        return this.position.getX();
     }
     
     /**
@@ -81,7 +79,7 @@ public class GraphicalComponent {
      * @return y position
      */
     public float getyPos() {
-        return yPos;
+        return this.position.getY();
     }
     
     /**
@@ -89,7 +87,7 @@ public class GraphicalComponent {
      * @return z position
      */
     public float getzPos() {
-        return zPos;
+        return this.position.getZ();
     }
 
     /**
@@ -97,7 +95,7 @@ public class GraphicalComponent {
      * @param xPos The x position to set to
      */
     public void setxPos(float xPos) {
-        this.xPos = xPos;
+        this.position.setX(xPos);
     }
 
     /**
@@ -105,7 +103,7 @@ public class GraphicalComponent {
      * @param yPos The y position to set to
      */
     public void setyPos(float yPos) {
-        this.yPos = yPos;
+        this.position.setY(yPos);
     }
 
     /**
@@ -113,7 +111,7 @@ public class GraphicalComponent {
      * @param zPos The z position to set to
      */
     public void setzPos(float zPos) {
-        this.zPos = zPos;
+        this.position.setZ(zPos);
     }
 
     /**
@@ -149,8 +147,7 @@ public class GraphicalComponent {
     }
     
     public Vector3f getPosition() {
-    	Vector3f vector = new Vector3f(this.getxPos(), this.getyPos(), this.getzPos());
-    	return vector;
+    	return position;
     }
 
     public TexturedModel getModel() {

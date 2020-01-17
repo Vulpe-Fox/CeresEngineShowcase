@@ -15,8 +15,6 @@ import org.lwjgl.util.vector.Vector3f;
  */
 public class Player extends GraphicalComponent {
     
-    private Vector3f position = new Vector3f();
-    
     /**
      * The constructor for the player class
      * @param xPos The x position of the player
@@ -28,35 +26,24 @@ public class Player extends GraphicalComponent {
      */
     public Player(float xPos, float yPos, float zPos, float width, float height, TexturedModel model) {
         super(xPos, yPos, zPos, width, height, model);
-        this.position.x = xPos;
-        this.position.y = yPos;
-        this.position.z = 0;
     }
     
     public void movement(Direction dir) {
         if (dir.equals(Direction.UP)) {
-            this.position.y -= 0.01f;
+            this.position.y += 0.1f;
         }
         if (dir.equals(Direction.DOWN)) {
-            this.position.y += 0.01f;
+            
         }
         if (dir.equals(Direction.LEFT)) {
-            this.position.x -= 0.01f;
+            this.position.setX(this.position.getX() - 0.0000001f);
         }
         if (dir.equals(Direction.RIGHT)) {
-            this.position.x += 0.01f;
+            this.position.setX(this.position.getX() + 0.0000001f);
         }
     }
     
     public void getHit() {
         
-    }
-    
-    public float getXPos() {
-        return this.position.x;
-    }
-    
-    public float getYPos() {
-        return this.position.y;
     }
 }

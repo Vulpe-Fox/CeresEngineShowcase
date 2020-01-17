@@ -19,9 +19,9 @@ public class Input extends Thread{
         *The constructor of the input class which assigns the current player to be the actual player entity
         *@param game the runner class being input
         */
-        public Input(CeresStation game){
+        public Input(CeresStation game, Player player){
             this.game = game;
-            this.player = game.getPlayer();
+            this.player = player;
         }
     
         /**
@@ -58,7 +58,6 @@ public class Input extends Thread{
             }
             if(Keyboard.isKeyDown(Keyboard.KEY_D)){
                 player.movement(Direction.RIGHT);
-                
                 
                 //If player is on the ground, play sound effect
                 if(player.getyPos() == 0){

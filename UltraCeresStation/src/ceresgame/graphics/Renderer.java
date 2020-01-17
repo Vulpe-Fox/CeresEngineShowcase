@@ -15,7 +15,7 @@ import ceresgame.shaders.StaticShader;
 
 public class Renderer {
     
-    private static final float FOV = 80;
+    private static final float FOV = 60;
     private static final float NEAR_PLANE = 0.1f;
     private static final float FAR_PLANE = 1000;
      
@@ -35,6 +35,7 @@ public class Renderer {
     }
     
     public void render(GraphicalComponent entity, StaticShader shader) {
+        System.out.println("Rendering: " + entity.getxPos());
         TexturedModel model = entity.getModel();
         RawModel rawModel = model.getRawModel();
         GL30.glBindVertexArray(rawModel.getVaoID());

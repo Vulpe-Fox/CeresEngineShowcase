@@ -27,7 +27,7 @@ import org.lwjgl.util.vector.Vector3f;
  */
 public abstract class ShaderType {
     
-    private int typeID;
+    private int programID;
     
     private int vertexShaderID;
     private int fragmentShaderID;
@@ -37,23 +37,23 @@ public abstract class ShaderType {
     public ShaderType(String vertexFile,String fragmentFile){
         vertexShaderID = loadShader(vertexFile, GL20.GL_VERTEX_SHADER);
         fragmentShaderID = loadShader(fragmentFile, GL20.GL_FRAGMENT_SHADER);
-        typeID = GL20.glCreateProgram();
-        GL20.glAttachShader(typeID, vertexShaderID);
-        GL20.glAttachShader(typeID, fragmentShaderID);
+        programID = GL20.glCreateProgram();
+        GL20.glAttachShader(programID, vertexShaderID);
+        GL20.glAttachShader(programID, fragmentShaderID);
         bindAttributes();
-        GL20.glLinkProgram(typeID);
-        GL20.glValidateProgram(typeID);
+        GL20.glLinkProgram(programID);
+        GL20.glValidateProgram(programID);
         getAllUniformLocations();
     }
      
     protected abstract void getAllUniformLocations();
      
     protected int getUniformLocation(String uniformName){
-        return GL20.glGetUniformLocation(typeID,uniformName);
+        return GL20.glGetUniformLocation(programID,uniformName);
     }
      
     public void start(){
-        GL20.glUseProgram(typeID);
+        GL20.glUseProgram(programID);
     }
      
     public void stop(){
@@ -62,17 +62,17 @@ public abstract class ShaderType {
      
     public void delete(){
         stop();
-        GL20.glDetachShader(typeID, vertexShaderID);
-        GL20.glDetachShader(typeID, fragmentShaderID);
+        GL20.glDetachShader(programID, vertexShaderID);
+        GL20.glDetachShader(programID, fragmentShaderID);
         GL20.glDeleteShader(vertexShaderID);
         GL20.glDeleteShader(fragmentShaderID);
-        GL20.glDeleteProgram(typeID);
+        GL20.glDeleteProgram(programID);
     }
      
     protected abstract void bindAttributes();
      
     protected void bindAttribute(int attribute, String variableName){
-        GL20.glBindAttribLocation(typeID, attribute, variableName);
+        GL20.glBindAttribLocation(programID, attribute, variableName);
     }
      
     protected void loadFloat(int location, float value){
@@ -108,7 +108,7 @@ public abstract class ShaderType {
             System.out.println(shaderSource);
             reader.close();
         }catch(IOException e){
-            e.printStackTrace();
+            System.out.println("Error reading file: " + file);
         }
         int shaderID = GL20.glCreateShader(type);
         GL20.glShaderSource(shaderID, shaderSource);
