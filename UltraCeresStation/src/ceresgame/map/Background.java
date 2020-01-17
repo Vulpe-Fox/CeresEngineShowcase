@@ -24,5 +24,6 @@ public class Background extends GraphicalComponent {
      */
     public Background(float xPos, float yPos, float zPos, float width, float height, TexturedModel model) {
         super(xPos, yPos, zPos, width, height, model);
+        zPos = 1;
     }
 }

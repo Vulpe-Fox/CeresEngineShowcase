@@ -16,9 +16,9 @@ import ceresgame.shaders.StaticShader;
 public class Renderer {
     
     private static final float FOV = 80;
-    private static final float NEAR_PLANE = 0.01f;
-    private static final float FAR_PLANE = 100;
-    
+    private static final float NEAR_PLANE = 0.1f;
+    private static final float FAR_PLANE = 1000;
+     
     private Matrix4f projectionMatrix;
     
     public Renderer(StaticShader shader){
@@ -29,8 +29,9 @@ public class Renderer {
     }
     
     public void prepare() {
+        GL11.glEnable(GL11.GL_DEPTH_TEST);
         GL11.glClear(GL11.GL_COLOR_BUFFER_BIT|GL11.GL_DEPTH_BUFFER_BIT);
-        GL11.glClearColor(1.0f, 1.0f, 1.0f, 0.0f);
+        GL11.glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
     }
     
     public void render(GraphicalComponent entity, StaticShader shader) {

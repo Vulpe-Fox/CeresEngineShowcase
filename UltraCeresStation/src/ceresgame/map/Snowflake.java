@@ -30,9 +30,13 @@ public class Snowflake extends GraphicalComponent {
      */
     public Snowflake(float xPos, float yPos, float zPos, float width, float height, TexturedModel model) {
         super(xPos, yPos, zPos, width, height, model);
-        this.position.x = xPos;
-        this.position.y = yPos;
-        this.position.z = zPos;
+        amp = (int) (Math.random() * 100) + 10;
+        xPos = (int) Math.random() * Display.getWidth();
+        yPos = 0;
+        zPos = -1;
+        this.xPos = xPos;
+        this.yPos = yPos;
+        this.time = System.currentTimeMillis();
     }
     
     /**

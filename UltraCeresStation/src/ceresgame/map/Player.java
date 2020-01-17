@@ -15,7 +15,7 @@ import org.lwjgl.util.vector.Vector3f;
  */
 public class Player extends GraphicalComponent {
     
-    private Vector3f position;
+    private Vector3f position = new Vector3f();
     
     /**
      * The constructor for the player class

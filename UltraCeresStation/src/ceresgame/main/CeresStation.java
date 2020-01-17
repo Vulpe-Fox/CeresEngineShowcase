@@ -10,8 +10,6 @@ import ceresgame.graphics.gui.Camera;
 import ceresgame.helpers.Time;
 import ceresgame.helpers.VectorMath;
 import ceresgame.main.userinterface.Input;
-import ceresgame.map.Background;
-import ceresgame.map.God;
 import ceresgame.map.GraphicalComponent;
 import ceresgame.map.Player;
 import ceresgame.models.RawModel;
@@ -39,8 +37,8 @@ public class CeresStation{
 	
     //initialize graphical components
     private Player player;
-    private Background background;
-    private God god;
+    /*private Background background;
+    private God god;*/
     
     //initialize threads
     private Input inputThread;
@@ -88,6 +86,7 @@ public class CeresStation{
     *
     */
     public void start() {
+        float height = 0.2f;
         
         //create textures for graphical components
         ceresgame.textures.Texture playerTexture = new ceresgame.textures.Texture(loadTexture("resources/images/Ariff.png"));
@@ -95,9 +94,9 @@ public class CeresStation{
         ceresgame.textures.Texture godTexture = new ceresgame.textures.Texture(loadTexture("resources/images/God.png"));
         
         //create verticies for graphical components
-        float[] playerVerticies = VectorMath.genVertices(VectorMath.genVector(0, 0, 0, 5f, 5f), 5f, 5f);
-        float[] backgroundVerticies = VectorMath.genVertices(VectorMath.genVector(0, 0, 1, 1080f, 720f), 1080f, 720f);
-        float[] godVerticies = VectorMath.genVertices(VectorMath.genVector(0, 0, 0, 100f, 100f), 100f, 100f);
+        float[] playerVerticies = VectorMath.genVertices(VectorMath.genVector(0, 0, 0, height, height), height, height);
+        //float[] backgroundVerticies = VectorMath.genVertices(VectorMath.genVector(0, 0, 1, 1080f, 720f), 1080f, 720f);
+        //float[] godVerticies = VectorMath.genVertices(VectorMath.genVector(0, 0, 0, 100f, 100f), 100f, 100f);
         
         //generate the models for each graphical components
         RawModel rawPlayerModel = generateRawModel(playerVerticies, imageUVVerticies, indiciesForRendering);
@@ -142,7 +141,7 @@ public class CeresStation{
                 
                 CeresStation game = new CeresStation();
                 game.camera = new Camera();
-		game.shader = new StaticShader(game);
+		game.shader = new StaticShader();
                 game.renderer = new Renderer(game.shader);
                 
 		while(!Display.isCloseRequested() && !Keyboard.isKeyDown(Keyboard.KEY_F)) {
@@ -213,11 +212,11 @@ public class CeresStation{
             }
 	}
         
-        private RawModel generateRawModel(float[] verticies, float[] uvCoordinates, int[] indicies) {
+        private RawModel generateRawModel(float[] position, float[] textureCoords, int[] indicies) {
             int vaoID = createVAO();
 	    bindIndicesBuffer(indicies);
-            storeAttributeData(0, 3, verticies);
-            storeAttributeData(1, 2, uvCoordinates);
+            storeAttributeData(0, 3, position);
+            storeAttributeData(1, 2, textureCoords);
             unbindVAO();
             return new RawModel(vaoID, indicies.length);
         }
@@ -238,6 +237,7 @@ public class CeresStation{
             GL15.glBufferData(GL15.GL_ARRAY_BUFFER, buffer, GL15.GL_STATIC_DRAW);
             GL20.glVertexAttribPointer(attributeNumber, coordinateSize, GL11.GL_FLOAT, false, 0, 0);
             GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0);
+            System.out.println("Attrubute array stored in position: " + attributeNumber);
         }
 
         private void unbindVAO() {
@@ -287,9 +287,8 @@ public class CeresStation{
             } catch (IOException ex) {
                 System.out.println("IO Error loading: " + path);
             }
-            int textureID = texture.getTextureID();
-            textures.add(textureID);
-            return textureID;
+            textures.add(texture.getTextureID());
+            return texture.getTextureID();
         }
         
 

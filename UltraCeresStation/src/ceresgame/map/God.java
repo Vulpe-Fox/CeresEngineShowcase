@@ -27,9 +27,7 @@ public class God extends GraphicalComponent {
      */
     public God(float xPos, float yPos, float zPos, float width, float height, TexturedModel model) {
         super(xPos, yPos, zPos, width, height, model);
-        this.position.x = xPos;
-        this.position.y = yPos;
-        this.position.z = zPos;
+        zPos = 0;
     }
     
 }

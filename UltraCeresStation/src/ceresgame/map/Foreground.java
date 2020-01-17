@@ -24,5 +24,6 @@ public class Foreground extends GraphicalComponent {
      */
     public Foreground(int xPos, int yPos, int zPos, int width, int height, TexturedModel model) {
         super(xPos, yPos, zPos, width, height, model);
+        zPos = 0;
     }
 }

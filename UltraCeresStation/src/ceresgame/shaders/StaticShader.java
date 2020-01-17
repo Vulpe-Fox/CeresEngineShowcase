@@ -9,7 +9,6 @@ import ceresgame.graphics.gui.Camera;
 import org.lwjgl.util.vector.Matrix4f;
 
 import ceresgame.helpers.VectorMath;
-import ceresgame.main.CeresStation;
 
 /**
  * 
@@ -23,12 +22,9 @@ public class StaticShader extends ShaderType {
   private int location_transformationMatrix;
   private int location_projectionMatrix;
   private int location_viewMatrix;
-  
-  private CeresStation game;
 
-  public StaticShader(CeresStation game) {
+  public StaticShader() {
       super(VERTEX_SHADER_FILE, FRAGMENT_SHADER_FILE);
-      this.game = game;
   }
 
   @Override
