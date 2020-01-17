@@ -24,16 +24,19 @@ public class Player extends GraphicalComponent {
      * @param zPos The z position of the player
      * @param width The width of the player
      * @param height The height of the player
-     * @param imgPath The image path of the player
      * @param model The model of the player
      */
-    public Player(float xPos, float yPos, float zPos, float width, float height, String imgPath, TexturedModel model) {
-        super(xPos, yPos, zPos, width, height, imgPath, model);
-        this.xPos = xPos;
-        this.yPos = yPos;
-        zPos = 0;
+    public Player(float xPos, float yPos, float zPos, float width, float height, TexturedModel model) {
+        super(xPos, yPos, zPos, width, height, model);
+        this.position.x = xPos;
+        this.position.y = yPos;
+        this.position.z = zPos;
     }
     
+    /**
+     * Handles the movement of the player
+     * @param dir The direction the user is holding
+     */
     public void movement(Direction dir) {
         if (dir.equals(Direction.UP)) {
             this.position.y -= 1;

@@ -20,11 +20,9 @@ public class Foreground extends GraphicalComponent {
      * @param zPos The z position of the foreground
      * @param width The width of the foreground
      * @param height The height of the foreground
-     * @param imgPath The image path of the foreground
      * @param model The model of the foreground
      */
-    public Foreground(int xPos, int yPos, int zPos, int width, int height, String imgPath, TexturedModel model) {
-        super(xPos, yPos, zPos, width, height, imgPath, model);
-        zPos = 0;
+    public Foreground(int xPos, int yPos, int zPos, int width, int height, TexturedModel model) {
+        super(xPos, yPos, zPos, width, height, model);
     }
 }

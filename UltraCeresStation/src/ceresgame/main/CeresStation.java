@@ -7,6 +7,7 @@ import org.lwjgl.opengl.Display;
 import ceresgame.graphics.DisplayUpdater;
 import ceresgame.graphics.Renderer;
 import ceresgame.graphics.gui.Camera;
+import ceresgame.helpers.Time;
 import ceresgame.helpers.VectorMath;
 import ceresgame.main.userinterface.Input;
 import ceresgame.map.Background;
@@ -87,7 +88,6 @@ public class CeresStation{
     *
     */
     public void start() {
-        float height = 2f;
         
         //create textures for graphical components
         ceresgame.textures.Texture playerTexture = new ceresgame.textures.Texture(loadTexture("resources/images/Ariff.png"));
@@ -108,7 +108,7 @@ public class CeresStation{
         //TexturedModel godModel = new TexturedModel(rawGodModel, godTexture);
         
         //create the objects out of the graphical components
-    	player = new Player(0, 0, 0, height, height, playerModel); 
+    	//player = new Player(0, 0, 0, height, height, playerModel); 
         //background = new Background(0, 0, 2, 1080f, 720F, "resources/images/Background.png", backgroundModel);
 	    	
         components.add(player);

@@ -6,12 +6,15 @@
 package ceresgame.map;
 
 import ceresgame.models.TexturedModel;
+import org.lwjgl.util.vector.Vector3f;
 
 /**
  * The graphics and behaviour of God
  * @author pintt3963
  */
 public class God extends GraphicalComponent {
+    
+    private Vector3f position;
     
     /**
      * The constructor for the god class
@@ -20,12 +23,13 @@ public class God extends GraphicalComponent {
      * @param zPos The z position of god
      * @param width The width of god
      * @param height The height of god
-     * @param imgPath The image path of god
      * @param model The model of god
      */
-    public God(float xPos, float yPos, float zPos, float width, float height, String imgPath, TexturedModel model) {
-        super(xPos, yPos, zPos, width, height, imgPath, model);
-        zPos = 0;
+    public God(float xPos, float yPos, float zPos, float width, float height, TexturedModel model) {
+        super(xPos, yPos, zPos, width, height, model);
+        this.position.x = xPos;
+        this.position.y = yPos;
+        this.position.z = zPos;
     }
     
 }
