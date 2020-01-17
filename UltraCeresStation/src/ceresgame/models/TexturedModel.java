@@ -5,11 +5,11 @@ import ceresgame.textures.ObjectTexture;
 public class TexturedModel {
 	
     private RawModel rawModel;
-    private ObjectTexture texture;
+    private ObjectTexture objectTexture;
      
-    public TexturedModel(RawModel model, ObjectTexture texture){
+    public TexturedModel(RawModel model, ObjectTexture objectTexture){
         this.rawModel = model;
-        this.texture = texture;
+        this.objectTexture = objectTexture;
     }
  
     public RawModel getRawModel() {
@@ -17,7 +17,7 @@ public class TexturedModel {
     }
  
     public ObjectTexture getTexture() {
-        return texture;
+        return objectTexture;
     }
     
 }

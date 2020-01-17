@@ -7,7 +7,6 @@ import org.lwjgl.opengl.Display;
 import ceresgame.graphics.DisplayUpdater;
 import ceresgame.graphics.Renderer;
 import ceresgame.graphics.gui.Camera;
-import ceresgame.helpers.Time;
 import ceresgame.helpers.VectorMath;
 import ceresgame.main.userinterface.Input;
 import ceresgame.map.GraphicalComponent;
@@ -38,8 +37,9 @@ public class CeresStation{
 	
     //initialize graphical components
     private Player player;
-    /*private Background background;
-    private God god;*/
+    private GraphicalComponent background;
+    private GraphicalComponent foreground;
+    //private God god;
     
     //initialize threads
     private Input inputThread;
@@ -89,22 +89,17 @@ public class CeresStation{
     public void start() {
         
         //create textures for graphical components
-        //ceresgame.textures.ObjectTexture backgroundTexture = new ceresgame.textures.ObjectTexture(loadTexture("resources/images/Background.png"));
         //ceresgame.textures.ObjectTexture godTexture = new ceresgame.textures.ObjectTexture(loadTexture("resources/images/God.png"));
         
-        //create verticies for graphical components
-        //float[] backgroundVerticies = VectorMath.genVertices(VectorMath.genVector(0, 0, 1, 1080f, 720f), 1080f, 720f);
-        //float[] godVerticies = VectorMath.genVertices(VectorMath.genVector(0, 0, 0, 100f, 100f), 100f, 100f);
-        
-        //generate the models for each graphical components
-        //RawModel rawBackgroundModel = generateRawModel(backgroundVerticies, indiciesForRendering);
-        //TexturedModel backgroundModel = new TexturedModel(rawBackgroundModel, backgroundTexture);
-        //RawModel rawGodModel = generateRawModel(godVerticies, indiciesForRendering);
-        //TexturedModel godModel = new TexturedModel(rawGodModel, godTexture);
-        
         //create the objects out of the graphical components
-    	player = genPlayer(new Vector3f(0, 0, 0), 0.2f, 0.2f, "resources/images/Ariff.png"); 
-        //background = new Background(0, 0, 2, 1080f, 720F, "resources/images/Background.png", backgroundModel);
+    	player = genPlayer(new Vector3f(0, -0.2f, -1), 0.2f, 0.2f, "resources/images/Ariff.png");
+        background = genGraphicalComponent(new Vector3f(1.1f,-0.4f,-1.5f), 8f, 4f, "resources/images/Background.png");
+        foreground = genGraphicalComponent(new Vector3f(0.26f, -0.05f,-0.5f), 2.2f, 2f, "resources/images/snowforeground.png");
+        
+        //List components from back to front for alpha blending to work
+        components.add(background);
+        components.add(player);
+        components.add(foreground);
         
     	inputThread = new Input(this, player);
     	audioThread = new AudioLoop(this);
@@ -163,6 +158,15 @@ public class CeresStation{
             Player component = new Player(position.getX(), position.getY(), position.getZ(), width, height, model);
             return component;
         }
+        
+        private GraphicalComponent genGraphicalComponent(Vector3f position, float width, float height, String path){
+            ceresgame.textures.ObjectTexture texture = new ceresgame.textures.ObjectTexture(loadTexture(path));
+            float[] playerVerticies = VectorMath.genVertices(VectorMath.genVector(position.getX(), position.getY(), position.getZ(), width, height), width, height);
+            RawModel rawModel = generateRawModel(playerVerticies, imageUVVerticies, indiciesForRendering);
+            TexturedModel model = new TexturedModel(rawModel, texture);
+            GraphicalComponent component = new GraphicalComponent(position.getX(), position.getY(), position.getZ(), width, height, model);
+            return component;
+        }
 	
 	/**
 	*The method which gets the player object
@@ -210,10 +214,10 @@ public class CeresStation{
 	*@param shader The shader used to position the graphical components onto the visual plane
 	*/
 	public void render(Renderer renderer, StaticShader shader){
+            //renderer.render(player, shader);
             for(int i = 0; i < components.size(); i++){
                 renderer.render(components.get(i), shader);
             }
-            renderer.render(player, shader);
 	}
         
         private RawModel generateRawModel(float[] position, float[] textureCoords, int[] indicies) {

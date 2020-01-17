@@ -30,18 +30,24 @@ public class Renderer {
     
     public void prepare() {
         GL11.glEnable(GL11.GL_DEPTH_TEST);
+        GL11.glEnable(GL11.GL_BLEND);
+        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
         GL11.glClear(GL11.GL_COLOR_BUFFER_BIT|GL11.GL_DEPTH_BUFFER_BIT);
-        GL11.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+        GL11.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
     }
     
     public void render(GraphicalComponent entity, StaticShader shader) {
-        System.out.println("Rendering: " + entity.getxPos());
+        //System.out.println("Rendering: " + entity.getxPos());
         TexturedModel model = entity.getModel();
         RawModel rawModel = model.getRawModel();
         GL30.glBindVertexArray(rawModel.getVaoID());
         GL20.glEnableVertexAttribArray(0);
         GL20.glEnableVertexAttribArray(1);
-        Matrix4f transformationMatrix = VectorMath.createTransformationMatrix(entity.getPosition(), 0, 0, 0, 1);
+        Matrix4f transformationMatrix = VectorMath.createTransformationMatrix(entity.getPosition());
+        System.out.println(transformationMatrix.m00 + " " + transformationMatrix.m01 + " " + transformationMatrix.m02 + " " + transformationMatrix.m03 + "\n" 
+                + transformationMatrix.m10 + " " + transformationMatrix.m11 + " " + transformationMatrix.m12 + " " + transformationMatrix.m13 + "\n" 
+                + transformationMatrix.m20 + " " + transformationMatrix.m21 + " " + transformationMatrix.m22 + " " + transformationMatrix.m23 + "\n" 
+                + transformationMatrix.m30 + " " + transformationMatrix.m31 + " " + transformationMatrix.m32 + " " + transformationMatrix.m33 + "\n");
         shader.loadTransformationMatrix(transformationMatrix);
         GL13.glActiveTexture(GL13.GL_TEXTURE0);
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, model.getTexture().getID());

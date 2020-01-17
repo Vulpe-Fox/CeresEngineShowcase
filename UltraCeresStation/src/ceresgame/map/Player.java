@@ -6,14 +6,16 @@
 package ceresgame.map;
 
 import ceresgame.enumeration.Direction;
+import ceresgame.graphics.DisplayUpdater;
 import ceresgame.models.TexturedModel;
-import org.lwjgl.util.vector.Vector3f;
 
 /**
  * The graphics and behaviour of the player character
  * @author pintt3963
  */
 public class Player extends GraphicalComponent {
+    
+    private final float MOVE_SPEED = 0.00001f;
     
     /**
      * The constructor for the player class
@@ -34,16 +36,16 @@ public class Player extends GraphicalComponent {
      */
     public void movement(Direction dir) {
         if (dir.equals(Direction.UP)) {
-            this.position.y += 0.1f;
+            this.position.setY((this.position.getY() + MOVE_SPEED * DisplayUpdater.getDelta()));
         }
         if (dir.equals(Direction.DOWN)) {
             
         }
         if (dir.equals(Direction.LEFT)) {
-            this.position.setX(this.position.getX() - 0.0000001f);
+            this.position.setX((this.position.getX() - MOVE_SPEED * DisplayUpdater.getDelta()));
         }
         if (dir.equals(Direction.RIGHT)) {
-            this.position.setX(this.position.getX() + 0.0000001f);
+            this.position.setX((this.position.getX() + MOVE_SPEED * DisplayUpdater.getDelta()));
         }
     }
     
