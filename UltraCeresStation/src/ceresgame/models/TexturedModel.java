@@ -1,13 +1,13 @@
 package ceresgame.models;
 
-import ceresgame.textures.Texture;
+import ceresgame.textures.ObjectTexture;
 
 public class TexturedModel {
 	
     private RawModel rawModel;
-    private Texture texture;
+    private ObjectTexture texture;
      
-    public TexturedModel(RawModel model, Texture texture){
+    public TexturedModel(RawModel model, ObjectTexture texture){
         this.rawModel = model;
         this.texture = texture;
     }
@@ -16,7 +16,7 @@ public class TexturedModel {
         return rawModel;
     }
  
-    public Texture getTexture() {
+    public ObjectTexture getTexture() {
         return texture;
     }
     

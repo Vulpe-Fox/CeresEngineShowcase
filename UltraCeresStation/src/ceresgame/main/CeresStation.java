@@ -88,9 +88,9 @@ public class CeresStation{
         float height = 0.2f;
         
         //create textures for graphical components
-        ceresgame.textures.Texture playerTexture = new ceresgame.textures.Texture(loadTexture("resources/images/Ariff.png"));
-        ceresgame.textures.Texture backgroundTexture = new ceresgame.textures.Texture(loadTexture("resources/images/Background.png"));
-        ceresgame.textures.Texture godTexture = new ceresgame.textures.Texture(loadTexture("resources/images/God.png"));
+        ceresgame.textures.ObjectTexture playerTexture = new ceresgame.textures.ObjectTexture(loadTexture("resources/images/Ariff.png"));
+        ceresgame.textures.ObjectTexture backgroundTexture = new ceresgame.textures.ObjectTexture(loadTexture("resources/images/Background.png"));
+        ceresgame.textures.ObjectTexture godTexture = new ceresgame.textures.ObjectTexture(loadTexture("resources/images/God.png"));
         
         //create verticies for graphical components
         float[] playerVerticies = VectorMath.genVertices(VectorMath.genVector(0, 0, 0, height, height), height, height);

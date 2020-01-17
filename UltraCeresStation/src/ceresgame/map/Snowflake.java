@@ -6,6 +6,7 @@
 package ceresgame.map;
 
 import ceresgame.models.TexturedModel;
+import java.util.Random;
 import org.lwjgl.opengl.Display;
 
 /**
@@ -27,13 +28,13 @@ public class Snowflake extends GraphicalComponent {
      * @param zPos The z position of the snowflake
      * @param width The width of the snowflake
      * @param height The height of the snowflake
-     * @param imgPath The image path of the snowflake
      * @param model The model of the snowflake
      */
     public Snowflake(float xPos, float yPos, float zPos, float width, float height, TexturedModel model) {
         super(xPos, yPos, zPos, width, height, model);
+        Random random = new Random();
         amp = (int) (Math.random() * 100) + 10;
-        xPos = (int) Math.random() * Display.getWidth();
+        xPos = random.nextInt() * Display.getWidth();
         yPos = 0;
         zPos = -1;
         this.xPos = xPos;

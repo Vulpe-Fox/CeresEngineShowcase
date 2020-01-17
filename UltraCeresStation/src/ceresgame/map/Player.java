@@ -35,16 +35,16 @@ public class Player extends GraphicalComponent {
     
     public void movement(Direction dir) {
         if (dir.equals(Direction.UP)) {
-            this.position.y -= 1;
+            this.position.y -= 0.01f;
         }
         if (dir.equals(Direction.DOWN)) {
-            this.position.y += 1;
+            this.position.y += 0.01f;
         }
         if (dir.equals(Direction.LEFT)) {
-            this.position.x -= 1;
+            this.position.x -= 0.01f;
         }
         if (dir.equals(Direction.RIGHT)) {
-            this.position.x += 1;
+            this.position.x += 0.01f;
         }
     }
     
