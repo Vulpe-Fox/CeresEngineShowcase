@@ -7,6 +7,7 @@ import org.lwjgl.opengl.Display;
 import ceresgame.graphics.DisplayUpdater;
 import ceresgame.graphics.Renderer;
 import ceresgame.graphics.gui.Camera;
+import ceresgame.helpers.Time;
 import ceresgame.helpers.VectorMath;
 import ceresgame.main.userinterface.Input;
 import ceresgame.map.GraphicalComponent;

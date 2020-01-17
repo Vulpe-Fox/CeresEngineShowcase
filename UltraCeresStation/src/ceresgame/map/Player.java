@@ -28,6 +28,10 @@ public class Player extends GraphicalComponent {
         super(xPos, yPos, zPos, width, height, model);
     }
     
+    /**
+     * Handles the movement of the player
+     * @param dir The direction the user is holding
+     */
     public void movement(Direction dir) {
         if (dir.equals(Direction.UP)) {
             this.position.y += 0.1f;
