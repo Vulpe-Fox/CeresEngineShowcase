@@ -71,7 +71,7 @@ public class CeresStation{
     private StaticShader shader;
     private Renderer renderer;
     
-    private int area = 0;
+    private boolean area;
     
     //private Camera camera = new Camera(this); //Please feed in a CeresStation object so you can reference the player
 	
@@ -201,11 +201,11 @@ public class CeresStation{
 	*@param shader The shader used to position the graphical components onto the visual plane
 	*/
 	public void render(Renderer renderer, StaticShader shader){
-            if(area == 0){
+            if(area == true){
                 for(int i = 0; i < components.size(); i++){
                     renderer.render(components.get(i), shader);
                 }
-            } else if (area == 1){
+            } else if (area == false){
                 //Render different image ?
                 for(int i = 0; i < components.size(); i++){
                     renderer.render(components.get(i), shader);
@@ -291,13 +291,14 @@ public class CeresStation{
             return textureID;
         }
         
-
         /**
-         * Set the area to a given integer
-         * @param integer the given integer and desired area
+         * 
+         * @param area which scene will be displayed on the scene, area 1/2
+         * @return True or false, true being area 2 and false being area 1
          */
-        public void setArea(int integer){
-            this.area = integer;
+        public boolean setArea(boolean area){
+            this.area = area;
+            return area;
         }
     
 }
