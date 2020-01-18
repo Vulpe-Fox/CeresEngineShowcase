@@ -52,11 +52,13 @@ public class DisplayUpdater {
 	
     /**
     *Updates the display by erasing old information and loading new information at the rate of fps
+    * Also updates the delta time which can be referenced by other classes
     */
     public static void updateDisplay() {
         //Updates the screen in accordance to the rate of fps
         Display.sync(FPS);
         Display.update();
+        //Calculates delta
         long currentTime = getCurrentTime();
         delta = currentTime - lastTime;
         lastTime = currentTime;
@@ -71,10 +73,18 @@ public class DisplayUpdater {
         
     }
     
+    /**
+     * Gets the current system time
+     * @return The current system time in milliseconds
+     */
     private static long getCurrentTime(){
         return 1000*Sys.getTime()/Sys.getTimerResolution();
     }
     
+    /**
+     * Gets the latest delta time
+     * @return The delta in seconds
+     */
     public static float getDelta(){
         return delta/1000f;
     }
