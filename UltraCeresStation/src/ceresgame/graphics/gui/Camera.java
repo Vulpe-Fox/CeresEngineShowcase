@@ -50,14 +50,14 @@ public class Camera {
      * Move left by adding to cameras y position
      */
     public void moveLeft(){
-        this.position.x = this.position.x + 0.0000002F;
+        this.position.x = this.position.x - 0.0000002F;
     }
     
     /**
      * Move right by subtracting from cameras y position
      */
     public void moveRight(){
-        this.position.x= this.position.x - 0.0000002F;
+        this.position.x= this.position.x + 0.0000002F;
     }
     
 }
