@@ -51,7 +51,7 @@ public class Input extends Thread{
                 player.movement(Direction.LEFT);
                 
                 //If player is on the ground, play sound effect
-                if(player.getyPos() == 0){
+                if(player.getyPos() == -0.2f){
                     game.getAudioLoop().playSoundEffect("resources/audio/step.wav");
                 }
                 
@@ -60,7 +60,7 @@ public class Input extends Thread{
                 player.movement(Direction.RIGHT);
                 
                 //If player is on the ground, play sound effect
-                if(player.getyPos() == 0){
+                if(player.getyPos() == -0.2f){
                     game.getAudioLoop().playSoundEffect("resources/audio/step.wav");
                 }
             }

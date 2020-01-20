@@ -18,6 +18,10 @@ import ceresgame.models.TexturedModel;
 public class GraphicalComponent {
     
     protected Vector3f position = new Vector3f();
+    protected float rotationX = 0;
+    protected float rotationY = 0;
+    protected float rotationZ = 0;
+    
     
     private final float width;
     private final float height;
@@ -144,6 +148,54 @@ public class GraphicalComponent {
      */
     public void setC(Color c) {
         this.c = c;
+    }
+
+    /**
+     * Gets rotation around X axis
+     * @return Rotation
+     */
+    public float getRotationX() {
+        return rotationX;
+    }
+    
+    /**
+     * Gets rotation around Y axis
+     * @return Rotation
+     */
+    public float getRotationY() {
+        return rotationY;
+    }
+
+    /**
+     * Gets rotation around Z axis
+     * @return Rotation
+     */
+    public float getRotationZ() {
+        return rotationZ;
+    }
+
+    /**
+     * Sets rotation around X axis
+     * @param rotationX The rotation in degrees
+     */
+    public void setRotationX(float rotationX) {
+        this.rotationX = rotationX;
+    }
+
+    /**
+     * Sets rotation around Y axis
+     * @param rotationY The rotation in degrees
+     */
+    public void setRotationY(float rotationY) {
+        this.rotationY = rotationY;
+    }
+
+    /**
+     * Sets rotation around Z axis
+     * @param rotationZ The rotation in degrees
+     */
+    public void setRotationZ(float rotationZ) {
+        this.rotationZ = rotationZ;
     }
     
     public Vector3f getPosition() {
