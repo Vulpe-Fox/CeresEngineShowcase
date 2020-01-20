@@ -70,9 +70,13 @@ public class Input extends Thread{
                 //set the area to a different scene when holding the space bar
                 boolean spaceBar = true;
                 game.setArea(spaceBar);
+                
+                //play a different sound
+                game.getAudioLoop().playSoundEffect(null);
+            } else {
+                //return area to original scene
+                boolean spaceBar = false;
+                game.setArea(spaceBar);
             }
-            //return area to original scene
-            boolean spaceBar = false;
-            game.setArea(spaceBar);
         }
 }
