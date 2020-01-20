@@ -43,6 +43,12 @@ public class CeresStation{
     private GraphicalComponent foreground;
     private God god;
     
+    //initialize components for second world
+    private GraphicalComponent background2;
+    private GraphicalComponent foreground2;
+    
+    //private God god;
+    
     //initialize threads
     private Input inputThread;
     private AudioLoop audioThread;
@@ -72,6 +78,7 @@ public class CeresStation{
     
     private ArrayList<GraphicalComponent> components = new ArrayList<>();
     private ArrayList<Snowflake> snowflakes = new ArrayList<>();
+    private ArrayList<GraphicalComponent> components2 = new ArrayList<>();
     private StaticShader shader;
     private Renderer renderer;
     
@@ -80,6 +87,7 @@ public class CeresStation{
     private float[] snowflakeVerticies = VectorMath.genVertices(VectorMath.genVector(snowflakePosition.getX(), snowflakePosition.getY(), snowflakePosition.getZ(), 0.2f, 0.2f), 0.2f, 0.2f);
     private RawModel snowflakeRawModel = generateRawModel(snowflakeVerticies, imageUVVerticies, indiciesForRendering);
     private TexturedModel snowflakeModel = new TexturedModel(snowflakeRawModel, texture);
+    private boolean area = false;
     
     //private Camera camera = new Camera(this); //Please feed in a CeresStation object so you can reference the player
 	
@@ -106,10 +114,19 @@ public class CeresStation{
         foreground = genGraphicalComponent(new Vector3f(0.26f, -0.05f,-0.5f), 2.2f, 2f, "resources/images/snowforeground.png");
         god = genGod(new Vector3f(0, -0.2f, 0f), 0.2f, 0.2f, "resources/images/God.png");
         
+        //create objects out of fraphical components for world2
+        background2 = genGraphicalComponent(new Vector3f(1.1f,-0.4f,-1.5f), 8f, 4f, "resources/images/firebackground.png");
+        foreground2 = genGraphicalComponent(new Vector3f(0.26f, -0.05f,-0.5f), 2.2f, 2f, "resources/images/fireforeground.png");
+        
         //List components from back to front for alpha blending to work
         components.add(background);
         components.add(player);
         components.add(foreground);
+        
+        //List components from second world
+        components2.add(background2);
+        components2.add(player);
+        components2.add(foreground2);
         
     	inputThread = new Input(this, player);
     	audioThread = new AudioLoop(this);
@@ -277,6 +294,14 @@ public class CeresStation{
     public void addComponent(GraphicalComponent gc) {
         components.add(gc);
     }
+    
+    /**
+     * Adds graphical components to second list of components for world2
+     * @param gc The graphical component being added
+     */
+    public void addComponent2(GraphicalComponent gc){
+        components2.add(gc);
+    }
 
     /**
     *Renders all graphicalComponents in the list
@@ -292,6 +317,13 @@ public class CeresStation{
                 snowflakes.remove(i);
             } else {
                 renderer.render(snowflakes.get(i), shader);
+        if(this.area == false){
+            for(int i = 0; i < components.size(); i++){
+                renderer.render(components.get(i), shader);
+            }
+        }else if (this.area == true){
+            for(int i = 0; i < components2.size(); i++){
+                renderer.render(components2.get(i), shader);
             }
         }
     }
@@ -429,5 +461,15 @@ public class CeresStation{
     private void deleteSnowflake(int i) {
         snowflakes.remove(i);
     }
+        
+        /**
+         * 
+         * @param area which scene will be displayed on the scene, area 1/2
+         * @return True or false, true being area 2 and false being area 1
+         */
+        public boolean setArea(boolean area){
+            this.area = area;
+            return area;
+        }
     
 }
