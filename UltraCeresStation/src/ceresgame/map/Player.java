@@ -36,19 +36,17 @@ public class Player extends GraphicalComponent {
      */
     public void movement(Direction dir) {
         if (dir.equals(Direction.UP)) {
-            this.position.setY((this.position.getY() + MOVE_SPEED * DisplayUpdater.getDelta()));
+            this.setRotationY(this.rotationY+(0.001f * DisplayUpdater.getDelta()/1000f));
         }
         if (dir.equals(Direction.DOWN)) {
+            this.setRotationY(this.rotationY-(0.001f * DisplayUpdater.getDelta()/1000f));
             
         }
         if (dir.equals(Direction.LEFT)) {
-            this.position.setX((this.position.getX() - MOVE_SPEED * DisplayUpdater.getDelta()));
-            this.setRotationX(0);
+            this.position.setX((this.position.getX() - MOVE_SPEED * DisplayUpdater.getDelta()/1000f));
         }
         if (dir.equals(Direction.RIGHT)) {
-            this.position.setX((this.position.getX() + MOVE_SPEED * DisplayUpdater.getDelta()));
-            this.setRotationX(180);
-            this.position.setY(this.position.getY()-5);
+            this.position.setX((this.position.getX() + MOVE_SPEED * DisplayUpdater.getDelta()/1000f));
         }
     }
     

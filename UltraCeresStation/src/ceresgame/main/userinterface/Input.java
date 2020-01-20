@@ -42,7 +42,7 @@ public class Input extends Thread{
         */
         public void keyPressed() {
             if(Keyboard.isKeyDown(Keyboard.KEY_W)){
-                //player.movement(Direction.UP);
+                player.movement(Direction.UP);
             }
             if(Keyboard.isKeyDown(Keyboard.KEY_S)){
                 player.movement(Direction.DOWN);

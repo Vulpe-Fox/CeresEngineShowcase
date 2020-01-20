@@ -83,10 +83,10 @@ public class DisplayUpdater {
     
     /**
      * Gets the latest delta time
-     * @return The delta in seconds
+     * @return The delta in ms
      */
     public static float getDelta(){
-        return delta/1000f;
+        return delta;
     }
     
     
