@@ -43,9 +43,12 @@ public class Player extends GraphicalComponent {
         }
         if (dir.equals(Direction.LEFT)) {
             this.position.setX((this.position.getX() - MOVE_SPEED * DisplayUpdater.getDelta()));
+            this.setRotationX(0);
         }
         if (dir.equals(Direction.RIGHT)) {
             this.position.setX((this.position.getX() + MOVE_SPEED * DisplayUpdater.getDelta()));
+            this.setRotationX(180);
+            this.position.setY(this.position.getY()-5);
         }
     }
     

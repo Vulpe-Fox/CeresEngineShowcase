@@ -66,7 +66,7 @@ public class Renderer {
         GL20.glEnableVertexAttribArray(1);
         
         //Loads a transformation matrix which shifts objects depending on where they are
-        Matrix4f transformationMatrix = VectorMath.createTransformationMatrix(entity.getPosition());
+        Matrix4f transformationMatrix = VectorMath.createTransformationMatrix(entity.getPosition(), entity.getRotationX(), entity.getRotationY(), entity.getRotationZ());
         shader.loadTransformationMatrix(transformationMatrix);
         
         //Loads the texture and assigns the texture to the uniform sampler2D (As seen in fragment shader)
