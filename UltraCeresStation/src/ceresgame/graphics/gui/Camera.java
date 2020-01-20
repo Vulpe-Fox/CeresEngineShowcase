@@ -8,7 +8,7 @@ package ceresgame.graphics.gui;
 import org.lwjgl.util.vector.Vector3f;
 
 /**
- *
+ * Main class which returns player positions in order and assigns corresponding camera positions
  * @author bartm6529
  */
 public class Camera {
@@ -36,28 +36,28 @@ public class Camera {
      * Move up by adding to cameras x position
      */
     public void moveUp(){
-        //this.posX = posX + 1F;
+        this.position.y = this.position.y + 0.0000002F;
     }
     
     /**
      * Move down by subtracting from cameras x position
      */
     public void moveDown(){
-        //this.posX = posX - 1F;
+        this.position.y = this.position.y - 0.0000002F;
     }
     
     /**
      * Move left by adding to cameras y position
      */
     public void moveLeft(){
-        //this.posY = posY - 1F;
+        this.position.x = this.position.x - 0.0000002F;
     }
     
     /**
      * Move right by subtracting from cameras y position
      */
     public void moveRight(){
-        //this.posY = posY - 1F;
+        this.position.x= this.position.x + 0.0000002F;
     }
     
 }
