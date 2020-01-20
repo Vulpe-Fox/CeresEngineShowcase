@@ -21,10 +21,9 @@ public class Input extends Thread{
         *The constructor of the input class which assigns the current player to be the actual player entity
         *@param game the runner class being input
         */
-        public Input(CeresStation game){
+        public Input(CeresStation game, Player player){
             this.game = game;
-            this.player = game.getPlayer();
-
+            this.player = player;
         }
     
         /**
@@ -54,7 +53,7 @@ public class Input extends Thread{
                 player.movement(Direction.LEFT);
                 
                 //If player is on the ground, play sound effect
-                if(player.getyPos() == 0){
+                if(player.getyPos() == -0.2f){
                     game.getAudioLoop().playSoundEffect("resources/audio/step.wav");
                 }
             }
@@ -62,21 +61,37 @@ public class Input extends Thread{
                 player.movement(Direction.RIGHT);
                 
                 //If player is on the ground, play sound effect
-                if(player.getyPos() == 0){
+                if(player.getyPos() == -0.2f){
                     game.getAudioLoop().playSoundEffect("resources/audio/step.wav");
                 }
             }
             if(Keyboard.isKeyDown(Keyboard.KEY_SPACE)){
-                //set the area to a different scene when holding the space bar
-                boolean spaceBar = true;
-                game.setArea(spaceBar);
+                if(spaceBar != true){
+                    //set the area to a different scene when holding the space bar
+                    boolean spaceBar = true;
+                    game.setArea(spaceBar);
+                }
                 
-                //play a different sound
-                game.getAudioLoop().playSoundEffect(null);
             } else {
                 //return area to original scene
                 boolean spaceBar = false;
                 game.setArea(spaceBar);
+            }
+            
+            if(Keyboard.isKeyDown(Keyboard.KEY_LEFT)){
+                game.getCamera().moveLeft();
+            }
+            
+            if(Keyboard.isKeyDown(Keyboard.KEY_RIGHT)){
+                game.getCamera().moveRight();
+            }
+            
+            if(Keyboard.isKeyDown(Keyboard.KEY_DOWN)){
+                game.getCamera().moveDown();
+            }
+            
+            if(Keyboard.isKeyDown(Keyboard.KEY_UP)){
+                game.getCamera().moveUp();
             }
         }
 }

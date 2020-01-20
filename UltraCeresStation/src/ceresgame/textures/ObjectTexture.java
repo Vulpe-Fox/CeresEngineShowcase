@@ -4,7 +4,7 @@ package ceresgame.textures;
 *An object type which contains the identifier of a texture
 *
 */
-public class Texture {
+public class ObjectTexture {
 
 	private int textureID;
 	
@@ -12,7 +12,7 @@ public class Texture {
 	*The object of a texture which doesn't contain the actual textures, but instead contains the reference to the object
 	*@param texture The id of the texture referenced elsewhere
 	*/
-	public Texture(int texture) {
+	public ObjectTexture(int texture) {
 		this.textureID = texture;
 	}
 	/**

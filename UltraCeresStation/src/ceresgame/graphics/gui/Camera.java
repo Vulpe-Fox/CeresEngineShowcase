@@ -12,17 +12,15 @@ import org.lwjgl.util.vector.Vector3f;
  * @author bartm6529
  */
 public class Camera {
-    private Float posX;
-    private Float posY;
-    private Float posZ;
+    private Vector3f position = new Vector3f();
 
     /**
      * Assign starting camera values
      */
     public Camera(){
-        this.posX = 0F;
-        this.posY = 0F;
-        this.posZ = +1.0F;
+        this.position.setX(0);
+        this.position.setY(0);
+        this.position.setZ(0);
     }
     
     /**
@@ -30,7 +28,7 @@ public class Camera {
      * @return new vector3f
      */
     public Vector3f getPosition() {
-        return new Vector3f(this.posX, this.posY, this.posZ);
+        return this.position;
     }
     
     
@@ -38,28 +36,28 @@ public class Camera {
      * Move up by adding to cameras x position
      */
     public void moveUp(){
-        this.posX = posX + 1F;
+        //this.posX = posX + 1F;
     }
     
     /**
      * Move down by subtracting from cameras x position
      */
     public void moveDown(){
-        this.posX = posX - 1F;
+        //this.posX = posX - 1F;
     }
     
     /**
      * Move left by adding to cameras y position
      */
     public void moveLeft(){
-        this.posY = posY - 1F;
+        //this.posY = posY - 1F;
     }
     
     /**
      * Move right by subtracting from cameras y position
      */
     public void moveRight(){
-        this.posY = posY - 1F;
+        //this.posY = posY - 1F;
     }
     
 }

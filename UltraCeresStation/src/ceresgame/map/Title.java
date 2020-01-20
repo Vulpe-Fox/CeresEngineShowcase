@@ -6,7 +6,7 @@
 package ceresgame.map;
 
 /**
- *
+ * The title of the game
  * @author carmc9538
  */
 public class Title {

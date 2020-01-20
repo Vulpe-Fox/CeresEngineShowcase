@@ -9,7 +9,6 @@ import ceresgame.graphics.Renderer;
 import ceresgame.graphics.gui.Camera;
 import ceresgame.helpers.VectorMath;
 import ceresgame.main.userinterface.Input;
-import ceresgame.map.Background;
 import ceresgame.map.GraphicalComponent;
 import ceresgame.map.Player;
 import ceresgame.models.RawModel;
@@ -26,6 +25,7 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL15;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
+import org.lwjgl.util.vector.Vector3f;
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 
@@ -37,8 +37,14 @@ public class CeresStation{
 	
     //initialize graphical components
     private Player player;
-    private Background background;
-    private Background background2;
+    private GraphicalComponent background;
+    private GraphicalComponent foreground;
+    
+    //initialize components for second world
+    private GraphicalComponent background2;
+    private GraphicalComponent foreground2;
+    
+    //private God god;
     
     //initialize threads
     private Input inputThread;
@@ -68,10 +74,11 @@ public class CeresStation{
     private ArrayList<Integer> textures = new ArrayList<>();
     
     private ArrayList<GraphicalComponent> components = new ArrayList<>();
+    private ArrayList<GraphicalComponent> components2 = new ArrayList<>();
     private StaticShader shader;
     private Renderer renderer;
     
-    private boolean area;
+    private boolean area = false;
     
     //private Camera camera = new Camera(this); //Please feed in a CeresStation object so you can reference the player
 	
@@ -88,28 +95,30 @@ public class CeresStation{
     *
     */
     public void start() {
+        
         //create textures for graphical components
-        ceresgame.textures.Texture playerTexture = new ceresgame.textures.Texture(loadTexture("resources/images/Ariff.png"));
-        ceresgame.textures.Texture backgroundTexture = new ceresgame.textures.Texture(loadTexture("resources/images/Background.png"));
-        
-        //create verticies for graphical components
-        float[] playerVerticies = VectorMath.genVertices(VectorMath.genVector(0, 0, 0, 5f, 5f), 5f, 5f);
-        float[] backgroundVerticies = VectorMath.genVertices(VectorMath.genVector(0, 0, 1, 1080f, 720f), 1080f, 720f);
-        
-        //generate the models for each graphical components
-        RawModel rawPlayerModel = generateRawModel(playerVerticies, indiciesForRendering);
-        TexturedModel playerModel = new TexturedModel(rawPlayerModel, playerTexture);
-        RawModel rawBackgroundModel = generateRawModel(backgroundVerticies, indiciesForRendering);
-        TexturedModel backgroundModel = new TexturedModel(rawBackgroundModel, backgroundTexture);
+        //ceresgame.textures.ObjectTexture godTexture = new ceresgame.textures.ObjectTexture(loadTexture("resources/images/God.png"));
         
         //create the objects out of the graphical components
-    	player = new Player(0, 0, 0, 5f, 5f, "resources/images/Ariff.png", playerModel); 
-        background = new Background(0, 0, 0, 1080f, 720F, "resources/images/Background.png", backgroundModel);
-        background2 = new Background(0, 0, 0, 1080f, 720F, "resources/image/firebackground.png", backgroundModel);
-	    
-	//Player component is at first position
-		
-    	inputThread = new Input(this);
+    	player = genPlayer(new Vector3f(0, -0.2f, -1), 0.2f, 0.2f, "resources/images/Ariff.png");
+        background = genGraphicalComponent(new Vector3f(1.1f,-0.4f,-1.5f), 8f, 4f, "resources/images/Background.png");
+        foreground = genGraphicalComponent(new Vector3f(0.26f, -0.05f,-0.5f), 2.2f, 2f, "resources/images/snowforeground.png");
+        
+        //create objects out of fraphical components for world2
+        background2 = genGraphicalComponent(new Vector3f(1.1f,-0.4f,-1.5f), 8f, 4f, "resources/images/firebackground.png");
+        foreground2 = genGraphicalComponent(new Vector3f(0.26f, -0.05f,-0.5f), 2.2f, 2f, "resources/images/fireforeground.png");
+        
+        //List components from back to front for alpha blending to work
+        components.add(background);
+        components.add(player);
+        components.add(foreground);
+        
+        //List components from second world
+        components2.add(background2);
+        components2.add(player);
+        components2.add(foreground2);
+        
+    	inputThread = new Input(this, player);
     	audioThread = new AudioLoop(this);
     	
     	inputThread.start();
@@ -131,165 +140,268 @@ public class CeresStation{
         
       //TODO: Add all delete methods here^^
     }
-        
-	public static void main(String[] args) {
-		DisplayUpdater.createDisplay();
-		
-                CeresStation game = new CeresStation();
-                game.camera = new Camera();
-		game.shader = new StaticShader(game);
-                game.renderer = new Renderer(game.shader);
-                
-		while(!Display.isCloseRequested() && !Keyboard.isKeyDown(Keyboard.KEY_F)) {
-			//Update saved positions of graphicalComponents
-			game.renderer.prepare();
-			game.shader.start();
-			game.render(game.renderer, game.shader);
-			game.shader.stop();
-			DisplayUpdater.updateDisplay();
-		}
-		
-		game.close();
-		
-		
-		DisplayUpdater.closeDisplay();
-	}
-	
-	/**
-	*The method which gets the player object
-	*@return The player object
-	*/
-	public Player getPlayer(){
-		return this.player;	
-	}
-        
-        /**
-         * The method which gets the camera object
-         * @return The camera object
-         */
-        public Camera getCamera(){
-            return this.camera;
+    
+    /**
+     * The main class which runs the main game loop
+     * @param args The command line arguments
+     */    
+    public static void main(String[] args) {
+        //Creates display
+        DisplayUpdater.createDisplay();
+
+        //Creates game object, and assigns the game camera, shader, and renderer to be new objects
+        CeresStation game = new CeresStation();
+        game.camera = new Camera();
+        game.shader = new StaticShader();
+        game.renderer = new Renderer(game.shader);
+
+        //Main game loop which renders objects so long as the f key or the x button aren't pressed
+        while(!Display.isCloseRequested() && !Keyboard.isKeyDown(Keyboard.KEY_F)) {
+            //Prepares rendering settings
+            game.renderer.prepare();
+            //Preps shader for use
+            game.shader.start();
+            //Loads the view matrix based on the camera's location
+            game.shader.loadViewMatrix(game.camera);
+            //Renders all objects
+            game.render(game.renderer, game.shader);
+            //Stops the memory use by the shader
+            game.shader.stop();
+
+            //Updates the display screen to show what has been rendered
+            DisplayUpdater.updateDisplay();
         }
-	
-	/**
-	*The method which gets the input thread object
-	*@return The input thread object
-	*/
-	public Input getInput() {
-		return this.inputThread;
-	}
-	
-	/**
-	*The method which gets the audio thread object
-	*@return The audio thread object
-	*/
-	public AudioLoop getAudioLoop() {
-		return this.audioThread;
-	}
-	
-	/**
-	*Adds graphical components to the list of components being used
-	*@param gc The graphical component being added
-	*/
-        public void addComponent(GraphicalComponent gc) {
-            components.add(gc);
-        }
-	
-	/**
-	*Renders all graphicalComponents in the list
-	*@param renderer The renderer used to render the graphical components
-	*@param shader The shader used to position the graphical components onto the visual plane
-	*/
-	public void render(Renderer renderer, StaticShader shader){
-            if(area == true){
-                for(int i = 0; i < components.size(); i++){
-                    renderer.render(components.get(i), shader);
-                }
-            } else if (area == false){
-                //Render different image ?
-                for(int i = 0; i < components.size(); i++){
-                    renderer.render(components.get(i), shader);
-                }
+
+        //Stops all currently running threads and recovers memory from objects
+        game.close();
+
+        //Closes the display window
+        DisplayUpdater.closeDisplay();
+    }
+
+    /**
+     * Generates a player object
+     * @param position The (x,y,z) position vector of a player
+     * @param width The width of the player you want to display on the screen
+     * @param height The height of the player you want to display on the screen
+     * @param path The path to the player texture image file
+     * @return The player created from the above parameters
+     */
+    private Player genPlayer(Vector3f position, float width, float height, String path){
+        ceresgame.textures.ObjectTexture texture = new ceresgame.textures.ObjectTexture(loadTexture(path));
+        float[] playerVerticies = VectorMath.genVertices(VectorMath.genVector(position.getX(), position.getY(), position.getZ(), width, height), width, height);
+        RawModel rawModel = generateRawModel(playerVerticies, imageUVVerticies, indiciesForRendering);
+        TexturedModel model = new TexturedModel(rawModel, texture);
+        Player component = new Player(position.getX(), position.getY(), position.getZ(), width, height, model);
+        return component;
+    }
+
+    /**
+     * Generates a player object
+     * @param position The (x,y,z) position vector of a graphical component
+     * @param width The width of the graphical component you want to display on the screen
+     * @param height The height of the graphical component you want to display on the screen
+     * @param path The path to the graphical component texture image file
+     * @return The graphical component created from the above parameters
+     */
+    private GraphicalComponent genGraphicalComponent(Vector3f position, float width, float height, String path){
+        ceresgame.textures.ObjectTexture texture = new ceresgame.textures.ObjectTexture(loadTexture(path));
+        float[] playerVerticies = VectorMath.genVertices(VectorMath.genVector(position.getX(), position.getY(), position.getZ(), width, height), width, height);
+        RawModel rawModel = generateRawModel(playerVerticies, imageUVVerticies, indiciesForRendering);
+        TexturedModel model = new TexturedModel(rawModel, texture);
+        GraphicalComponent component = new GraphicalComponent(position.getX(), position.getY(), position.getZ(), width, height, model);
+        return component;
+    }
+
+    /**
+    *The method which gets the player object
+    *@return The player object
+    */
+    public Player getPlayer(){
+        return this.player;	
+    }
+
+    /**
+     * The method which gets the camera object
+     * @return The camera object
+     */
+    public Camera getCamera(){
+        return this.camera;
+    }
+
+    /**
+    *The method which gets the input thread object
+    *@return The input thread object
+    */
+    public Input getInput() {
+            return this.inputThread;
+    }
+
+    /**
+    *The method which gets the audio thread object
+    *@return The audio thread object
+    */
+    public AudioLoop getAudioLoop() {
+            return this.audioThread;
+    }
+
+    /**
+    *Adds graphical components to the list of components being used
+    *@param gc The graphical component being added
+    */
+    public void addComponent(GraphicalComponent gc) {
+        components.add(gc);
+    }
+    
+    /**
+     * Adds graphical components to second list of components for world2
+     * @param gc The graphical component being added
+     */
+    public void addComponent2(GraphicalComponent gc){
+        components2.add(gc);
+    }
+
+    /**
+    *Renders all graphicalComponents in the list
+    *@param renderer The renderer used to render the graphical components
+    *@param shader The shader used to position the graphical components onto the visual plane
+    */
+    public void render(Renderer renderer, StaticShader shader){
+        if(this.area == false){
+            for(int i = 0; i < components.size(); i++){
+                renderer.render(components.get(i), shader);
             }
-            renderer.render(player, shader);
-	}
-        
-        private RawModel generateRawModel(float[] verticies, int[] indicies) {
-            int vaoID = createVAO();
-	    bindIndicesBuffer(indicies);
-            storeAttributeData(0, verticies);
-            unbindVAO();
-            return new RawModel(vaoID, indicies.length);
+        }else if (this.area == true){
+            for(int i = 0; i < components2.size(); i++){
+                renderer.render(components2.get(i), shader);
+            }
         }
+    }
 
-        private int createVAO() {
-            int vaoID = GL30.glGenVertexArrays();
-            vaos.add(vaoID);
-            GL30.glBindVertexArray(vaoID);
-            return vaoID;
-        }
+    /**
+     * Generates a raw model for an object by storing its verticies in a vao (array object), then binding the vaos into a vbo (buffer object) then disposes of the vaos
+     * @param position The position vector of the object whose model is being created
+     * @param textureCoords The texture coordinates being bound (found in variable definitions at the top of this file)
+     * @param indicies The indicies which form the polys (triangles) where the textures will be rendered (found in variable definitions at the top of this file)
+     * @return The raw model generated by this method
+     */
+    private RawModel generateRawModel(float[] position, float[] textureCoords, int[] indicies) {
+        //Creates vertex array object
+        int vaoID = createVAO();
+        //Binds vao information into vertex buffer object
+        bindIndicesBuffer(indicies);
+        storeAttributeData(0, 3, position);
+        storeAttributeData(1, 2, textureCoords);
+        //Unbinds the vao
+        unbindVAO();
+        //Returns the raw model with stored vao locations and the number of indicies which need to be used to render the object (in most cases 6, 3 for each triangle of a 2D object)
+        return new RawModel(vaoID, indicies.length);
+    }
 
-        private void storeAttributeData(int attributeNumber, float[] verticies) {
-            int vboID = GL15.glGenBuffers();
-            vbos.add(vboID);
-            GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, vboID);
-            FloatBuffer buffer = storeVerticiesInFloatBuffer(verticies);
-            GL15.glBufferData(GL15.GL_ARRAY_BUFFER, buffer, GL15.GL_STATIC_DRAW);
-            GL20.glVertexAttribPointer(attributeNumber, 3, GL11.GL_FLOAT, false, 0, 0);
-            GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0);
-        }
+    /**
+     * The method to create a vao which can store the verticies
+     * @return The created vao
+     */
+    private int createVAO() {
+        int vaoID = GL30.glGenVertexArrays();
+        vaos.add(vaoID);
+        GL30.glBindVertexArray(vaoID);
+        return vaoID;
+    }
 
-        private void unbindVAO() {
-            GL30.glBindVertexArray(0);
-        }
-	
-	private void bindIndicesBuffer(int[] indicies){
-	    int vboID = GL15.glGenBuffers();
-	    vbos.add(vboID);
-	    GL15.glBindBuffer(GL15.GL_ELEMENT_ARRAY_BUFFER, vboID);
-	    IntBuffer buffer = storeVerticiesInIntBuffer(indicies);
-	    GL15.glBufferData(GL15.GL_ELEMENT_ARRAY_BUFFER, buffer, GL15.GL_STATIC_DRAW);
-	}
-	
-	private IntBuffer storeVerticiesInIntBuffer(int[] verticies){
-		IntBuffer buffer = BufferUtils.createIntBuffer(verticies.length);
-		buffer.put(verticies);
-            	buffer.flip();
-            	return buffer;
-	}
-        
-        private FloatBuffer storeVerticiesInFloatBuffer(float[] verticies){
-            FloatBuffer buffer = BufferUtils.createFloatBuffer(verticies.length);
+    /**
+     * Stores vao attributes into vbo coordinates such that the vbo can be referenced to find all the vao data
+     * @param attributeNumber The number referencing the type of attribute which the vertex shader will read in
+     * @param coordinateSize The size of each single coordinate (3 for positions, 2 for uv coordinates)
+     * @param verticies The vertex array of the vao in question (triangles used for rendering)
+     */
+    private void storeAttributeData(int attributeNumber, int coordinateSize, float[] verticies) {
+        System.out.println("Storing attribute array of size: " + coordinateSize);
+        int vboID = GL15.glGenBuffers();
+        vbos.add(vboID);
+        GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, vboID);
+        FloatBuffer buffer = storeVerticiesInFloatBuffer(verticies);
+        GL15.glBufferData(GL15.GL_ARRAY_BUFFER, buffer, GL15.GL_STATIC_DRAW);
+        GL20.glVertexAttribPointer(attributeNumber, coordinateSize, GL11.GL_FLOAT, false, 0, 0);
+        GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0);
+        System.out.println("Attrubute array stored in position: " + attributeNumber);
+    }
+    
+    /**
+     * Unbinds a vao from use, freeing up workable memory and prepping for next use
+     */
+    private void unbindVAO() {
+        GL30.glBindVertexArray(0);
+    }
+
+    /**
+     * Binds the indicies of the polys to the buffer array such that the buffer array is created and the type of buffer associated with it (verticies used to draw objects) is stored; also stores the verticies in a buffer so the program knows how each vertex associates with one another
+     * @param indicies The list of poly verticies
+     */
+    private void bindIndicesBuffer(int[] indicies){
+        int vboID = GL15.glGenBuffers();
+        vbos.add(vboID);
+        GL15.glBindBuffer(GL15.GL_ELEMENT_ARRAY_BUFFER, vboID);
+        IntBuffer buffer = storeVerticiesInIntBuffer(indicies);
+        GL15.glBufferData(GL15.GL_ELEMENT_ARRAY_BUFFER, buffer, GL15.GL_STATIC_DRAW);
+    }
+
+    /**
+     * Stores verticies in a buffer which can later be referenced to understand where each vertex connects to other verticies
+     * @param verticies The list of poly verticies
+     * @return The int buffer containing the list of poly verticies
+     */
+    private IntBuffer storeVerticiesInIntBuffer(int[] verticies){
+            IntBuffer buffer = BufferUtils.createIntBuffer(verticies.length);
             buffer.put(verticies);
             buffer.flip();
             return buffer;
+    }
+
+    /**
+     * Stores position and uv attributes to a the vbo as a float buffer
+     * @param verticies The set of positions associated with a parameter
+     * @return The buffer containing the identities of the verticies
+     */
+    private FloatBuffer storeVerticiesInFloatBuffer(float[] verticies){
+        FloatBuffer buffer = BufferUtils.createFloatBuffer(verticies.length);
+        buffer.put(verticies);
+        buffer.flip();
+        return buffer;
+    }
+
+    /**
+     * Deletes all leftover vaos, vbos, and textures at the texture locations
+     */
+    private void deleteVAOVBOTEXTURE(){
+        vaos.forEach((vao) -> {
+            GL30.glDeleteVertexArrays(vao);
+        });
+        vbos.forEach((vbo) -> {
+            GL15.glDeleteBuffers(vbo);
+        });
+        textures.forEach((texture) -> {
+            GL11.glDeleteTextures(texture);
+        });
+    }
+
+    /**
+     * Loads a texture from the path to a png file
+     * @param path The path of the png file
+     * @return Returns the id of the texture, to be stored
+     */
+    private int loadTexture(String path){
+        Texture texture = null;
+        try {
+            texture = TextureLoader.getTexture("png", new FileInputStream(path));
+        } catch (FileNotFoundException ex) {
+            System.out.println("Image: " + path + " cannot be found!");
+        } catch (IOException ex) {
+            System.out.println("IO Error loading: " + path);
         }
-        
-        private void deleteVAOVBOTEXTURE(){
-            vaos.forEach((vao) -> {
-                GL30.glDeleteVertexArrays(vao);
-            });
-            vbos.forEach((vbo) -> {
-                GL15.glDeleteBuffers(vbo);
-            });
-            textures.forEach((texture) -> {
-                GL11.glDeleteTextures(texture);
-            });
-        }
-        
-        private int loadTexture(String path){
-            Texture texture = null;
-            try {
-                texture = TextureLoader.getTexture("png", new FileInputStream(path));
-            } catch (FileNotFoundException ex) {
-                System.out.println("Image: " + path + " cannot be found!");
-            } catch (IOException ex) {
-                System.out.println("IO Error loading: " + path);
-            }
-            int textureID = texture.getTextureID();
-            textures.add(textureID);
-            return textureID;
-        }
+        textures.add(texture.getTextureID());
+        return texture.getTextureID();
+    }
         
         /**
          * 
