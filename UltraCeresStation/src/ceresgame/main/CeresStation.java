@@ -9,8 +9,10 @@ import ceresgame.graphics.Renderer;
 import ceresgame.graphics.gui.Camera;
 import ceresgame.helpers.VectorMath;
 import ceresgame.main.userinterface.Input;
+import ceresgame.map.God;
 import ceresgame.map.GraphicalComponent;
 import ceresgame.map.Player;
+import ceresgame.map.Snowflake;
 import ceresgame.models.RawModel;
 import ceresgame.models.TexturedModel;
 import ceresgame.shaders.StaticShader;
@@ -39,7 +41,7 @@ public class CeresStation{
     private Player player;
     private GraphicalComponent background;
     private GraphicalComponent foreground;
-    //private God god;
+    private God god;
     
     //initialize threads
     private Input inputThread;
@@ -69,8 +71,15 @@ public class CeresStation{
     private ArrayList<Integer> textures = new ArrayList<>();
     
     private ArrayList<GraphicalComponent> components = new ArrayList<>();
+    private ArrayList<Snowflake> snowflakes = new ArrayList<>();
     private StaticShader shader;
     private Renderer renderer;
+    
+    private Vector3f snowflakePosition = new Vector3f(0f, 0f, -0.7f);
+    private ceresgame.textures.ObjectTexture texture = new ceresgame.textures.ObjectTexture(loadTexture("resources/images/Snowflake.png"));
+    private float[] snowflakeVerticies = VectorMath.genVertices(VectorMath.genVector(snowflakePosition.getX(), snowflakePosition.getY(), snowflakePosition.getZ(), 0.2f, 0.2f), 0.2f, 0.2f);
+    private RawModel snowflakeRawModel = generateRawModel(snowflakeVerticies, imageUVVerticies, indiciesForRendering);
+    private TexturedModel snowflakeModel = new TexturedModel(snowflakeRawModel, texture);
     
     //private Camera camera = new Camera(this); //Please feed in a CeresStation object so you can reference the player
 	
@@ -92,9 +101,10 @@ public class CeresStation{
         //ceresgame.textures.ObjectTexture godTexture = new ceresgame.textures.ObjectTexture(loadTexture("resources/images/God.png"));
         
         //create the objects out of the graphical components
-    	player = genPlayer(new Vector3f(0, -0.2f, -1), 0.2f, 0.2f, "resources/images/Ariff.png");
+    	player = genPlayer(new Vector3f(0, -0.2f, -1f), 0.2f, 0.2f, "resources/images/Ariff.png");
         background = genGraphicalComponent(new Vector3f(1.1f,-0.4f,-1.5f), 8f, 4f, "resources/images/Background.png");
         foreground = genGraphicalComponent(new Vector3f(0.26f, -0.05f,-0.5f), 2.2f, 2f, "resources/images/snowforeground.png");
+        god = genGod(new Vector3f(0, -0.2f, 0f), 0.2f, 0.2f, "resources/images/God.png");
         
         //List components from back to front for alpha blending to work
         components.add(background);
@@ -140,6 +150,8 @@ public class CeresStation{
 
         //Main game loop which renders objects so long as the f key or the x button aren't pressed
         while(!Display.isCloseRequested() && !Keyboard.isKeyDown(Keyboard.KEY_F)) {
+            //Generate a snowflake
+            game.generateSnowflake();
             //Prepares rendering settings
             game.renderer.prepare();
             //Preps shader for use
@@ -178,9 +190,39 @@ public class CeresStation{
         Player component = new Player(position.getX(), position.getY(), position.getZ(), width, height, model);
         return component;
     }
+    
+    /**
+     * Generates a god object
+     * @param position The (x,y,z) position vector of the god
+     * @param width The width of the god you want to display on the screen
+     * @param height The height of the god you want to display on the screen
+     * @param path The path to the god texture image file
+     * @return The god created from the above parameters
+     */
+    private God genGod(Vector3f position, float width, float height, String path){
+        ceresgame.textures.ObjectTexture texture = new ceresgame.textures.ObjectTexture(loadTexture(path));
+        float[] godVerticies = VectorMath.genVertices(VectorMath.genVector(position.getX(), position.getY(), position.getZ(), width, height), width, height);
+        RawModel rawModel = generateRawModel(godVerticies, imageUVVerticies, indiciesForRendering);
+        TexturedModel model = new TexturedModel(rawModel, texture);
+        God component = new God(position.getX(), position.getY(), position.getZ(), width, height, model);
+        return component;
+    }
+    
+    /**
+     * Generates a snowflake object
+     * @param position The (x,y,z) position vector of a snowflake
+     * @param width The width of the snowflake you want to display on the screen
+     * @param height The height of the snowflake you want to display on the screen
+     * @param model The model of the snowflake
+     * @return The snowflake created from the above parameters
+     */
+    private Snowflake genSnowflake(Vector3f position, float width, float height, TexturedModel model){
+        Snowflake component = new Snowflake(position.getX(), position.getY(), position.getZ(), width, height, model);
+        return component;
+    }
 
     /**
-     * Generates a player object
+     * Generates a graphical component object
      * @param position The (x,y,z) position vector of a graphical component
      * @param width The width of the graphical component you want to display on the screen
      * @param height The height of the graphical component you want to display on the screen
@@ -189,8 +231,8 @@ public class CeresStation{
      */
     private GraphicalComponent genGraphicalComponent(Vector3f position, float width, float height, String path){
         ceresgame.textures.ObjectTexture texture = new ceresgame.textures.ObjectTexture(loadTexture(path));
-        float[] playerVerticies = VectorMath.genVertices(VectorMath.genVector(position.getX(), position.getY(), position.getZ(), width, height), width, height);
-        RawModel rawModel = generateRawModel(playerVerticies, imageUVVerticies, indiciesForRendering);
+        float[] objectVerticies = VectorMath.genVertices(VectorMath.genVector(position.getX(), position.getY(), position.getZ(), width, height), width, height);
+        RawModel rawModel = generateRawModel(objectVerticies, imageUVVerticies, indiciesForRendering);
         TexturedModel model = new TexturedModel(rawModel, texture);
         GraphicalComponent component = new GraphicalComponent(position.getX(), position.getY(), position.getZ(), width, height, model);
         return component;
@@ -244,6 +286,13 @@ public class CeresStation{
     public void render(Renderer renderer, StaticShader shader){
         for(int i = 0; i < components.size(); i++){
             renderer.render(components.get(i), shader);
+        }
+        for(int i = 0; i < snowflakes.size(); i++){
+            if (snowflakes.get(i).getyPos() < -1.25f) {
+                snowflakes.remove(i);
+            } else {
+                renderer.render(snowflakes.get(i), shader);
+            }
         }
     }
 
@@ -371,7 +420,14 @@ public class CeresStation{
         textures.add(texture.getTextureID());
         return texture.getTextureID();
     }
-        
 
+    private void generateSnowflake() {
+        Snowflake snowflake = genSnowflake(snowflakePosition, 0.2f, 0.2f, snowflakeModel);
+        snowflakes.add(snowflake);
+    }
+    
+    private void deleteSnowflake(int i) {
+        snowflakes.remove(i);
+    }
     
 }

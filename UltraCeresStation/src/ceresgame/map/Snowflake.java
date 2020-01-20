@@ -5,6 +5,7 @@
  */
 package ceresgame.map;
 
+import ceresgame.graphics.DisplayUpdater;
 import ceresgame.models.TexturedModel;
 import java.util.Random;
 import org.lwjgl.opengl.Display;
@@ -33,15 +34,16 @@ public class Snowflake extends GraphicalComponent {
         Random random = new Random();
         amp = (int) (Math.random() * 100) + 10;
         xPos = random.nextInt() * Display.getWidth();
-        yPos = 0;
-        zPos = -1;
+        yPos = 0f;
+        zPos = -0.7f;
     }
     
     /**
      * Handles the falling physics of the snowflakes
      */
     private void fall() {
-        //this.position.y += (int) (CeresStation.getCurrentTime() - CeresStation.getStartTime());
-        //this.position.x = (int) (amp * Math.sin(CeresStation.getCurrentTime() - CeresStation.getStartTime()));
+        this.position.y += (int) (DisplayUpdater.getDelta());
+        this.position.x = (int) (amp * Math.sin(DisplayUpdater.getDelta()));
     }
+    
 }
