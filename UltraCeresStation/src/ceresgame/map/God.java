@@ -14,8 +14,6 @@ import org.lwjgl.util.vector.Vector3f;
  */
 public class God extends GraphicalComponent {
     
-    private Vector3f position;
-    
     /**
      * The constructor for the god class
      * @param xPos The x position of god
