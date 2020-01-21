@@ -15,7 +15,7 @@ import ceresgame.models.TexturedModel;
  */
 public class Player extends GraphicalComponent {
     
-    private final float MOVE_SPEED = 0.00001f;
+    private final float MOVE_SPEED = 0.0001f;
     
     /**
      * The constructor for the player class
@@ -36,7 +36,7 @@ public class Player extends GraphicalComponent {
      */
     public void movement(Direction dir) {
         if (dir.equals(Direction.UP)) {
-            this.setRotationY(this.rotationY+(0.001f * DisplayUpdater.getDelta()/1000f));
+            this.setRotationY(180f);
         }
         if (dir.equals(Direction.DOWN)) {
             this.setRotationY(this.rotationY-(0.001f * DisplayUpdater.getDelta()/1000f));
