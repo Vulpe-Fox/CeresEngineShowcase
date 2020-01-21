@@ -51,6 +51,6 @@ public class Player extends GraphicalComponent {
     }
     
     public void getHit() {
-        
+        System.out.println("oof");
     }
 }

@@ -9,7 +9,6 @@ import ceresgame.graphics.Renderer;
 import ceresgame.graphics.gui.Camera;
 import ceresgame.helpers.VectorMath;
 import ceresgame.main.userinterface.Input;
-import ceresgame.map.God;
 import ceresgame.map.GraphicalComponent;
 import ceresgame.map.Player;
 import ceresgame.map.Snowflake;
@@ -41,13 +40,11 @@ public class CeresStation{
     private Player player;
     private GraphicalComponent background;
     private GraphicalComponent foreground;
-    private God god;
     
     //initialize components for second world
     private GraphicalComponent background2;
     private GraphicalComponent foreground2;
-    
-    //private God god;
+    private GraphicalComponent god;
     
     //initialize threads
     private Input inputThread;
@@ -112,15 +109,11 @@ public class CeresStation{
     	player = genPlayer(new Vector3f(0, -0.2f, -1f), 0.2f, 0.2f, "resources/images/Ariff.png");
         background = genGraphicalComponent(new Vector3f(1.1f,-0.4f,-1.5f), 8f, 4f, "resources/images/Background.png");
         foreground = genGraphicalComponent(new Vector3f(0.26f, -0.05f,-0.5f), 2.2f, 2f, "resources/images/snowforeground.png");
-        god = genGod(new Vector3f(0, -0.2f, 0f), 0.2f, 0.2f, "resources/images/God.png");
         
-        //create objects out of fraphical components for world2
+        //create objects out of graphical components for world2
         background2 = genGraphicalComponent(new Vector3f(1.1f,-0.4f,-1.5f), 8f, 4f, "resources/images/firebackground.png");
         foreground2 = genGraphicalComponent(new Vector3f(0.26f, -0.05f,-0.5f), 2.2f, 2f, "resources/images/fireforeground.png");
-        
-        //create objects out of fraphical components for world2
-        background2 = genGraphicalComponent(new Vector3f(1.1f,-0.4f,-1.5f), 8f, 4f, "resources/images/firebackground.png");
-        foreground2 = genGraphicalComponent(new Vector3f(0.26f, -0.05f,-0.5f), 2.2f, 2f, "resources/images/fireforeground.png");
+        god = genGraphicalComponent(new Vector3f(0, -0.2f, -1.2f), 2f, 2f, "resources/images/God.png");
         
         //List components from back to front for alpha blending to work
         components.add(background);
@@ -129,6 +122,7 @@ public class CeresStation{
         
         //List components from second world
         components2.add(background2);
+        components2.add(god);
         components2.add(player);
         components2.add(foreground2);
         
@@ -209,23 +203,6 @@ public class CeresStation{
         RawModel rawModel = generateRawModel(playerVerticies, imageUVVerticies, indiciesForRendering);
         TexturedModel model = new TexturedModel(rawModel, texture);
         Player component = new Player(position.getX(), position.getY(), position.getZ(), width, height, model);
-        return component;
-    }
-    
-    /**
-     * Generates a god object
-     * @param position The (x,y,z) position vector of the god
-     * @param width The width of the god you want to display on the screen
-     * @param height The height of the god you want to display on the screen
-     * @param path The path to the god texture image file
-     * @return The god created from the above parameters
-     */
-    private God genGod(Vector3f position, float width, float height, String path){
-        ceresgame.textures.ObjectTexture texture = new ceresgame.textures.ObjectTexture(loadTexture(path));
-        float[] godVerticies = VectorMath.genVertices(VectorMath.genVector(position.getX(), position.getY(), position.getZ(), width, height), width, height);
-        RawModel rawModel = generateRawModel(godVerticies, imageUVVerticies, indiciesForRendering);
-        TexturedModel model = new TexturedModel(rawModel, texture);
-        God component = new God(position.getX(), position.getY(), position.getZ(), width, height, model);
         return component;
     }
     
@@ -313,19 +290,20 @@ public class CeresStation{
     *@param shader The shader used to position the graphical components onto the visual plane
     */
     public void render(Renderer renderer, StaticShader shader){
-        for(int i = 0; i < components.size(); i++){
-            renderer.render(components.get(i), shader);
-        }
-        for(int i = 0; i < snowflakes.size(); i++){
-            if (snowflakes.get(i).getyPos() < -1.25f) {
-                snowflakes.remove(i);
-            } else {
-                renderer.render(snowflakes.get(i), shader);
         if(this.area == false){
             for(int i = 0; i < components.size(); i++){
                 renderer.render(components.get(i), shader);
             }
-        }else if (this.area == true){
+            for(int i = 0; i < snowflakes.size(); i++){
+                snowflakes.get(i).fall();
+                if (snowflakes.get(i).getyPos() < -1.25f) {
+                    deleteSnowflake(i);
+                } else {
+                    renderer.render(snowflakes.get(i), shader);
+                }
+            }
+        } else if (this.area == true){
+            snowflakes.clear();
             for(int i = 0; i < components2.size(); i++){
                 renderer.render(components2.get(i), shader);
             }
@@ -458,7 +436,7 @@ public class CeresStation{
     }
 
     private void generateSnowflake() {
-        Snowflake snowflake = genSnowflake(snowflakePosition, 0.2f, 0.2f, snowflakeModel);
+        Snowflake snowflake = genSnowflake(snowflakePosition, 1f, 1f, snowflakeModel);
         snowflakes.add(snowflake);
     }
     

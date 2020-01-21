@@ -48,6 +48,7 @@ public class DisplayUpdater {
         //Sets the viewport to be at 0,0 and the same size as the width and height of the screen
         GL11.glViewport(0, 0, WIDTH, HEIGHT);
         lastTime = getCurrentTime();
+        delta = 0;
     }
 	
     /**
