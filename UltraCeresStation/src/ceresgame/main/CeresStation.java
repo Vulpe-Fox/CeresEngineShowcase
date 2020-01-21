@@ -47,8 +47,6 @@ public class CeresStation{
     private GraphicalComponent background2;
     private GraphicalComponent foreground2;
     
-    //private God god;
-    
     //initialize threads
     private Input inputThread;
     private AudioLoop audioThread;
@@ -72,13 +70,13 @@ public class CeresStation{
     	3,1,2
     };
     
-    private ArrayList<Integer> vaos = new ArrayList<>();
-    private ArrayList<Integer> vbos = new ArrayList<>();
-    private ArrayList<Integer> textures = new ArrayList<>();
+    private final ArrayList<Integer> vaos = new ArrayList<>();
+    private final ArrayList<Integer> vbos = new ArrayList<>();
+    private final ArrayList<Integer> textures = new ArrayList<>();
     
-    private ArrayList<GraphicalComponent> components = new ArrayList<>();
-    private ArrayList<Snowflake> snowflakes = new ArrayList<>();
-    private ArrayList<GraphicalComponent> components2 = new ArrayList<>();
+    private final ArrayList<GraphicalComponent> components = new ArrayList<>();
+    private final ArrayList<Snowflake> snowflakes = new ArrayList<>();
+    private final ArrayList<GraphicalComponent> components2 = new ArrayList<>();
     private StaticShader shader;
     private Renderer renderer;
     
