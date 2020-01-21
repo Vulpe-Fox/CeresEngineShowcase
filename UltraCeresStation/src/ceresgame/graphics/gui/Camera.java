@@ -33,31 +33,45 @@ public class Camera {
     
     
     /**
-     * Move up by adding to cameras x position
+     * Move player up by adding to cameras y position
      */
     public void moveUp(){
         this.position.y = this.position.y + 0.0000002F;
     }
     
     /**
-     * Move down by subtracting from cameras x position
+     * Move player down by subtracting cameras y position
      */
     public void moveDown(){
         this.position.y = this.position.y - 0.0000002F;
     }
     
     /**
-     * Move left by adding to cameras y position
+     * Move player left by subtracting from cameras x position
      */
     public void moveLeft(){
         this.position.x = this.position.x - 0.0000002F;
     }
     
     /**
-     * Move right by subtracting from cameras y position
+     * Move player right by adding to cameras x position
      */
     public void moveRight(){
         this.position.x= this.position.x + 0.0000002F;
+    }
+    
+    /**
+     * Move camera forwards by subtracting from cameras z position
+     */
+    public void moveFront(){
+        this.position.z = this.position.z - 0.0000002F;
+    }
+    
+    /**
+     * Move camera backwards by adding to cameras z position
+     */
+    public void moveBack(){
+        this.position.z = this.position.z + 0.0000002F;
     }
     
 }

@@ -69,13 +69,13 @@ public class CeresStation{
     	3,1,2
     };
     
-    private ArrayList<Integer> vaos = new ArrayList<>();
-    private ArrayList<Integer> vbos = new ArrayList<>();
-    private ArrayList<Integer> textures = new ArrayList<>();
+    private final ArrayList<Integer> vaos = new ArrayList<>();
+    private final ArrayList<Integer> vbos = new ArrayList<>();
+    private final ArrayList<Integer> textures = new ArrayList<>();
     
-    private ArrayList<GraphicalComponent> components = new ArrayList<>();
-    private ArrayList<Snowflake> snowflakes = new ArrayList<>();
-    private ArrayList<GraphicalComponent> components2 = new ArrayList<>();
+    private final ArrayList<GraphicalComponent> components = new ArrayList<>();
+    private final ArrayList<Snowflake> snowflakes = new ArrayList<>();
+    private final ArrayList<GraphicalComponent> components2 = new ArrayList<>();
     private StaticShader shader;
     private Renderer renderer;
     
@@ -295,15 +295,13 @@ public class CeresStation{
                 renderer.render(components.get(i), shader);
             }
             for(int i = 0; i < snowflakes.size(); i++){
-                snowflakes.get(i).fall();
                 if (snowflakes.get(i).getyPos() < -1.25f) {
-                    deleteSnowflake(i);
+                    snowflakes.remove(i);
                 } else {
                     renderer.render(snowflakes.get(i), shader);
                 }
             }
-        } else if (this.area == true){
-            snowflakes.clear();
+        }else{
             for(int i = 0; i < components2.size(); i++){
                 renderer.render(components2.get(i), shader);
             }

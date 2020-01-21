@@ -27,17 +27,17 @@ import org.lwjgl.util.vector.Vector3f;
  */
 public abstract class ShaderType {
     
-    private int programID;
+    private final int programID;
     
-    private int vertexShaderID;
-    private int fragmentShaderID;
+    private final int vertexShaderID;
+    private final int fragmentShaderID;
     
-    private static FloatBuffer matrixBuffer = BufferUtils.createFloatBuffer(16);
+    private static final FloatBuffer matrixBuffer = BufferUtils.createFloatBuffer(16);
     
     /**
-     *
-     * @param vertexFile
-     * @param fragmentFile
+     *The constructor for any type of shader, which can each use a separate shader; in one desires
+     *@param vertexFile The vertex shader file
+     *@param fragmentFile The fragment shader file
      */
     public ShaderType(String vertexFile, String fragmentFile){
         vertexShaderID = loadShader(vertexFile, GL20.GL_VERTEX_SHADER);
@@ -57,31 +57,31 @@ public abstract class ShaderType {
     protected abstract void getAllUniformLocations();
      
     /**
-     *
-     * @param uniformName
-     * @return
+     *Used by the shader to get the uniform location of a uniform variable (e.g. projection, view, and transformation matrices)
+     *@param uniformName The name of the uniform variable
+     *@return The location of the uniform variable in stored memory
      */
     protected int getUniformLocation(String uniformName){
         return GL20.glGetUniformLocation(programID,uniformName);
     }
      
     /**
-     *
-     */
+    *Tells opengl to start using this shader
+    */
     public void start(){
         GL20.glUseProgram(programID);
     }
      
     /**
-     *
-     */
+    *Tells opengl to stop using shaders in general
+    */
     public void stop(){
         GL20.glUseProgram(0);
     }
      
     /**
-     *
-     */
+    *Deletes all shader files from system memory
+    */
     public void delete(){
         stop();
         GL20.glDetachShader(programID, vertexShaderID);
@@ -92,41 +92,41 @@ public abstract class ShaderType {
     }
      
     /**
-     *
-     */
+    *Binds an attribute name to an attribute id location (to reference vbo inputs)
+    */
     protected abstract void bindAttributes();
      
     /**
-     *
-     * @param attribute
-     * @param variableName
+     *Binds an attribute name to an attribute id location (to reference vbo inputs)
+     *@param attribute The attribute array object in a buffer
+     *@param variableName The name of the attribute
      */
     protected void bindAttribute(int attribute, String variableName){
         GL20.glBindAttribLocation(programID, attribute, variableName);
     }
      
     /**
-     *
-     * @param location
-     * @param value
+     *Used by the shader to load a float value into shader program
+     *@param location The location of the float
+     *@param value The value associated of the float
      */
     protected void loadFloat(int location, float value){
         GL20.glUniform1f(location, value);
     }
      
     /**
-     *
-     * @param location
-     * @param vector
+     *Used by the shader to load a vector into shader program
+     * @param location The location of the vector
+     * @param vector The vector from which to load coordinates from
      */
     protected void loadVector(int location, Vector3f vector){
         GL20.glUniform3f(location, vector.getX(), vector.getY(), vector.getZ());
     }
      
     /**
-     *
-     * @param location
-     * @param value
+     *Used by the shader to load a boolean value into shader program
+     * @param location The location of the boolean
+     * @param value The boolean true or false to be loaded into binary
      */
     protected void loadBoolean(int location, boolean value){
         float toLoad = 0;
@@ -137,9 +137,9 @@ public abstract class ShaderType {
     }
      
     /**
-     *
-     * @param location
-     * @param matrix
+     *Used by the shader to load a matrix into shader program
+     * @param location The location of the matrix
+     * @param matrix The matrix, by which the buffer matrix value will be transformed by
      */
     protected void loadMatrix(int location, Matrix4f matrix){
         matrix.store(matrixBuffer);
@@ -148,9 +148,9 @@ public abstract class ShaderType {
     }
     
     /**
-     * 
-     * @param file
-     * @param type
+     * Used in order to load a shader txt file into a workable glsl shader
+     * @param file The file location of the shader text file
+     * @param type The type of shader this is (vertex/fragment)
      * @return 
      */
     private static int loadShader(String file, int type){
