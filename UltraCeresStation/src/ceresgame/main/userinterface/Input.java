@@ -44,55 +44,69 @@ public class Input extends Thread{
         *
         */
         public void keyPressed() {
+            //move player up
             if(Keyboard.isKeyDown(Keyboard.KEY_W)){
                 player.movement(Direction.UP);
             }
+            //move player down
             if(Keyboard.isKeyDown(Keyboard.KEY_S)){
                 player.movement(Direction.DOWN);
             }
+            //move player left
             if(Keyboard.isKeyDown(Keyboard.KEY_A)){
                 player.movement(Direction.LEFT);
                 
                 //If player is on the ground, play sound effect
-                if(player.getyPos() == -0.2f){
+                if(player.getyPos() == -0.2f && spaceBar == false){
                     game.getAudioLoop().playSoundEffect("resources/audio/step.wav");
                 }
             }
+            //move player right
             if(Keyboard.isKeyDown(Keyboard.KEY_D)){
                 player.movement(Direction.RIGHT);
                 
                 //If player is on the ground, play sound effect
-                if(player.getyPos() == -0.2f){
+                if(player.getyPos() == -0.2f && spaceBar == false){
                     game.getAudioLoop().playSoundEffect("resources/audio/step.wav");
                 }
             }
+            
+            //Change to second world
             if(Keyboard.isKeyDown(Keyboard.KEY_SPACE)){
                 if(spaceBar != true){
                     //set the area to a different scene when holding the space bar
-                    boolean spaceBar = true;
+                    spaceBar = true;
                     game.setArea(spaceBar);
                 }
-                
             } else {
                 //return area to original scene
-                boolean spaceBar = false;
+                spaceBar = false;
                 game.setArea(spaceBar);
             }
             
+            //Move camera left
             if(Keyboard.isKeyDown(Keyboard.KEY_LEFT)){
                 game.getCamera().moveLeft();
             }
-            
+            //Move camera right
             if(Keyboard.isKeyDown(Keyboard.KEY_RIGHT)){
                 game.getCamera().moveRight();
             }
-            
+            //Move camera down
             if(Keyboard.isKeyDown(Keyboard.KEY_DOWN)){
                 game.getCamera().moveDown();
             }
-            
+            //Move camera up
             if(Keyboard.isKeyDown(Keyboard.KEY_UP)){
                 game.getCamera().moveUp();
+            }
+            //Move camera forwards
+            if(Keyboard.isKeyDown(Keyboard.KEY_NUMPAD8)){
+                game.getCamera().moveFront();
+            }
+            //Move camera backwards
+            if(Keyboard.isKeyDown(Keyboard.KEY_NUMPAD2)){
+                game.getCamera().moveBack();
             }
         }
 }
