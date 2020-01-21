@@ -198,14 +198,26 @@ public class GraphicalComponent {
         this.rotationZ = rotationZ;
     }
     
+    /**
+     *Gets the vector position of the object
+     *@return The vector
+     */
     public Vector3f getPosition() {
     	return position;
     }
 
+    /**
+     *Gets the model of the object
+     *@return The model
+     */
     public TexturedModel getModel() {
             return this.model;
     }
 
+    /**
+     * Sets the model of the object
+     * @param model The model to set it to
+     */
     public void setModel(TexturedModel model) {
             this.model = model;
     }

@@ -6,7 +6,7 @@ package ceresgame.textures;
 */
 public class ObjectTexture {
 
-	private int textureID;
+	private final int textureID;
 	
 	/**
 	*The object of a texture which doesn't contain the actual textures, but instead contains the reference to the object

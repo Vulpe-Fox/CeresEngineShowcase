@@ -36,7 +36,7 @@ public class Player extends GraphicalComponent {
      */
     public void movement(Direction dir) {
         if (dir.equals(Direction.UP)) {
-            this.setRotationY(180f);
+            this.setRotationY(this.rotationY+(0.001f * DisplayUpdater.getDelta()/1000f));
         }
         if (dir.equals(Direction.DOWN)) {
             this.setRotationY(this.rotationY-(0.001f * DisplayUpdater.getDelta()/1000f));
@@ -50,7 +50,10 @@ public class Player extends GraphicalComponent {
         }
     }
     
+    /**
+     * A memory from many eras ago...
+     */
     public void getHit() {
-        
+        System.out.println("oof");
     }
 }

@@ -17,8 +17,8 @@ import org.lwjgl.util.vector.Vector3f;
  */
 public class Snowflake extends GraphicalComponent {
     
-    private int amp = (int) (Math.random() * 100) + 10;
-    private Vector3f position;
+    private float amp;
+    private Vector3f position = new Vector3f();
     
     /**
      * The constructor for the snowflake class
@@ -32,18 +32,20 @@ public class Snowflake extends GraphicalComponent {
     public Snowflake(float xPos, float yPos, float zPos, float width, float height, TexturedModel model) {
         super(xPos, yPos, zPos, width, height, model);
         Random random = new Random();
-        amp = (int) (Math.random() * 100) + 10;
-        xPos = random.nextInt() * Display.getWidth();
+        amp = (float) (random.nextFloat() * 2) - 1;
+        xPos = 0f;
         yPos = 0f;
         zPos = -0.7f;
+        position.set(xPos, yPos, zPos);
     }
     
     /**
      * Handles the falling physics of the snowflakes
      */
-    private void fall() {
-        this.position.y += (int) (DisplayUpdater.getDelta());
-        this.position.x = (int) (amp * Math.sin(DisplayUpdater.getDelta()));
+    public void fall() {
+        System.out.println(this.position.y);
+        this.position.y += (float) (DisplayUpdater.getDelta() / 10000);
+        this.position.x = (float) (amp * Math.sin(DisplayUpdater.getDelta()));
     }
     
 }

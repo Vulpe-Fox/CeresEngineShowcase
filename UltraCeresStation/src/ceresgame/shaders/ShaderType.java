@@ -27,17 +27,17 @@ import org.lwjgl.util.vector.Vector3f;
  */
 public abstract class ShaderType {
     
-    private int programID;
+    private final int programID;
     
-    private int vertexShaderID;
-    private int fragmentShaderID;
+    private final int vertexShaderID;
+    private final int fragmentShaderID;
     
-    private static FloatBuffer matrixBuffer = BufferUtils.createFloatBuffer(16);
+    private static final FloatBuffer matrixBuffer = BufferUtils.createFloatBuffer(16);
     
     /**
-     *
-     * @param vertexFile
-     * @param fragmentFile
+     *The constructor for any type of shader, which can each use a separate shader; in one desires
+     *@param vertexFile The vertex shader file
+     *@param fragmentFile The fragment shader file
      */
     public ShaderType(String vertexFile, String fragmentFile){
         vertexShaderID = loadShader(vertexFile, GL20.GL_VERTEX_SHADER);
