@@ -56,7 +56,7 @@ public class Input extends Thread{
                 player.movement(Direction.LEFT);
                 
                 //If player is on the ground, play sound effect
-                if(player.getyPos() == -0.2f){
+                if(player.getyPos() == -0.2f && spaceBar == false){
                     game.getAudioLoop().playSoundEffect("resources/audio/step.wav");
                 }
             }
@@ -65,7 +65,7 @@ public class Input extends Thread{
                 player.movement(Direction.RIGHT);
                 
                 //If player is on the ground, play sound effect
-                if(player.getyPos() == -0.2f){
+                if(player.getyPos() == -0.2f && spaceBar == false){
                     game.getAudioLoop().playSoundEffect("resources/audio/step.wav");
                 }
             }
@@ -74,12 +74,12 @@ public class Input extends Thread{
             if(Keyboard.isKeyDown(Keyboard.KEY_SPACE)){
                 if(spaceBar != true){
                     //set the area to a different scene when holding the space bar
-                    boolean spaceBar = true;
+                    spaceBar = true;
                     game.setArea(spaceBar);
                 }
             } else {
                 //return area to original scene
-                boolean spaceBar = false;
+                spaceBar = false;
                 game.setArea(spaceBar);
             }
             
