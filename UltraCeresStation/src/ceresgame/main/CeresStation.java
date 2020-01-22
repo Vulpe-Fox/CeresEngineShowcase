@@ -40,11 +40,13 @@ public class CeresStation{
     private Player player;
     private GraphicalComponent background;
     private GraphicalComponent foreground;
+    private GraphicalComponent[] snowflake = new GraphicalComponent[10];
     
     //initialize components for second world
     private GraphicalComponent background2;
     private GraphicalComponent foreground2;
     private GraphicalComponent god;
+    private GraphicalComponent godChat;
     
     //initialize threads
     private Input inputThread;
@@ -109,20 +111,28 @@ public class CeresStation{
     	player = genPlayer(new Vector3f(0, -0.2f, -1f), 0.2f, 0.2f, "resources/images/Ariff.png");
         background = genGraphicalComponent(new Vector3f(1.1f,-0.4f,-1.5f), 8f, 4f, "resources/images/Background.png");
         foreground = genGraphicalComponent(new Vector3f(0.26f, -0.05f,-0.5f), 2.2f, 2f, "resources/images/snowforeground.png");
+        for (int i = 0; i < 10; i++) {
+            snowflake[i] = genGraphicalComponent(new Vector3f((float) (Math.random() * 0.44) - 0.22f, (float) (Math.random() * 0.30) - 0.15f,-0.4f), 0.02f, 0.02f, "resources/images/Snowflake.png");
+        }
         
         //create objects out of graphical components for world2
         background2 = genGraphicalComponent(new Vector3f(1.1f,-0.4f,-1.5f), 8f, 4f, "resources/images/firebackground.png");
         foreground2 = genGraphicalComponent(new Vector3f(0.26f, -0.05f,-0.5f), 2.2f, 2f, "resources/images/fireforeground.png");
         god = genGraphicalComponent(new Vector3f(0f, -0.1f, -1.2f), 2.5f, 2.5f, "resources/images/God.png");
+        godChat = genGraphicalComponent(new Vector3f(-0.12f, 0.2f, -1.1f), 2f, 2f, "resources/images/godhasjoinedthechat.png");
         
         //List components from back to front for alpha blending to work
         components.add(background);
         components.add(player);
         components.add(foreground);
+        for (int i = 0; i < 10; i++) {
+            components.add(snowflake[i]);
+        }
         
         //List components from second world
         components2.add(background2);
         components2.add(god);
+        components2.add(godChat);
         components2.add(player);
         components2.add(foreground2);
         
