@@ -113,7 +113,7 @@ public class CeresStation{
         //create objects out of graphical components for world2
         background2 = genGraphicalComponent(new Vector3f(1.1f,-0.4f,-1.5f), 8f, 4f, "resources/images/firebackground.png");
         foreground2 = genGraphicalComponent(new Vector3f(0.26f, -0.05f,-0.5f), 2.2f, 2f, "resources/images/fireforeground.png");
-        god = genGraphicalComponent(new Vector3f(0, -0.2f, -1.2f), 2f, 2f, "resources/images/God.png");
+        god = genGraphicalComponent(new Vector3f(0f, -0.1f, -1.2f), 2.5f, 2.5f, "resources/images/God.png");
         
         //List components from back to front for alpha blending to work
         components.add(background);
