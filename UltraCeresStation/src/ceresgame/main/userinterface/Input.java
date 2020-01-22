@@ -59,6 +59,10 @@ public class Input extends Thread{
                 //If player is on the ground, play sound effect
                 if(player.getyPos() == -0.2f && spaceBar == false){
                     game.getAudioLoop().playSoundEffect("resources/audio/step.wav");
+                    
+                    //If player is on the ground and in scene 2, play different sound
+                }else if(player.getyPos() == -0.2f && spaceBar == true){
+                    game.getAudioLoop().playSoundEffect("resources/audio/Crackling_Fireplace.wav");
                 }
             }
             //move player right
@@ -68,6 +72,10 @@ public class Input extends Thread{
                 //If player is on the ground, play sound effect
                 if(player.getyPos() == -0.2f && spaceBar == false){
                     game.getAudioLoop().playSoundEffect("resources/audio/step.wav");
+                    
+                    //If player is on the ground and in scene 2, play different sound
+                }else if(player.getyPos() == -0.2f && spaceBar == true){
+                    game.getAudioLoop().playSoundEffect("resources/audio/Crackling_Fireplace.wav");
                 }
             }
             
