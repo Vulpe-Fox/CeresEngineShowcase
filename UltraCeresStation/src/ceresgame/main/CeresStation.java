@@ -40,7 +40,7 @@ public class CeresStation{
     private Player player;
     private GraphicalComponent background;
     private GraphicalComponent foreground;
-    private GraphicalComponent[] snowflake = new GraphicalComponent[10]
+    private GraphicalComponent[] snowflake = new GraphicalComponent[10];
     private float modifierX = 0;
     private float modifierY = 0;
     
@@ -107,8 +107,8 @@ public class CeresStation{
     	player = genPlayer(new Vector3f(0, -0.2f, -1f), 0.2f, 0.2f, "resources/images/Ariff.png");
         background = genGraphicalComponent(new Vector3f(1.1f,-0.4f,-1.5f), 8f, 4f, "resources/images/Background.png");
         foreground = genGraphicalComponent(new Vector3f(0.26f, -0.05f,-0.5f), 2.2f, 2f, "resources/images/snowforeground.png");
-        for (int i = 0; i < 10; i++) {
-            snowflake[i] = genGraphicalComponent(new Vector3f((float) (Math.random() * 0.44) - 0.22f + modifierX, (float) (Math.random() * 0.30) - 0.15f + modifierY,-0.4f), 0.02f, 0.02f, "resources/images/Snowflake.png");
+        for (int i = 0; i < snowflake.length; i++) {
+            snowflake[i] = genGraphicalComponent(new Vector3f((float) (Math.random() * 0.44) - 0.22f, (float) (Math.random() * 0.30) - 0.15f,-0.4f), 0.02f, 0.02f, "resources/images/Snowflake.png");
         }
         
         //create objects out of graphical components for world2
@@ -424,15 +424,21 @@ public class CeresStation{
      */
     private void fallSnowflake() {
         //makes the snowflakes fall in a wave like pattern by applying various equations to their position
-        modifierY += (float) (DisplayUpdater.getDelta() / 10000);
-        modifierX = (float) (Math.sin(DisplayUpdater.getDelta()));
+        modifierY -= (float) (DisplayUpdater.getDelta() / 100000);
+        modifierX = (float) (Math.sin(DisplayUpdater.getDelta()) / 100);
 	    
 	//snowflakes disappear at the bottom of the screen and reappear at the top
-	for (int i = 0; i < 10; i++) {
-	    if (snowflakeY[i] + modifierY > 2f) {
-		snowflakeY[i] = -2f;
+	for (int i = 0; i < snowflake.length; i++) {
+	    if (snowflake[i].getPosition().getY() < -0.4f) {
+		snowflake[i].getPosition().setY(0.4f);
 		modifierY = 0;
 	    }
+            if (snowflake[i].getPosition().getX() < -0.6f) {
+		snowflake[i].getPosition().setX(0.6f);
+		modifierX = 0;
+	    }
+            snowflake[i].getPosition().setY(snowflake[i].getPosition().getY() + modifierY);
+            snowflake[i].getPosition().setX(snowflake[i].getPosition().getX() + modifierX);
 	}
     }
         
