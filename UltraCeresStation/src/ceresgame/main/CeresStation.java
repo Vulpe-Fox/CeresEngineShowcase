@@ -40,7 +40,14 @@ public class CeresStation{
     private Player player;
     private GraphicalComponent background;
     private GraphicalComponent foreground;
-    private GraphicalComponent[] snowflake = new GraphicalComponent[10];
+    private GraphicalComponent[] snowflake = new GraphicalComponent[10]
+    private float snowflakeX = new float[10];
+    private float snowflakeY = new float[10];
+    for (int i = 0; i < 10; i++) {
+    	snowflakeX[i] = (float) (Math.random() * 0.44) - 0.22f;
+	snowflakeY[i] = (float) (Math.random() * 0.30) - 0.15f;
+    }
+
     
     //initialize components for second world
     private GraphicalComponent background2;
@@ -76,16 +83,10 @@ public class CeresStation{
     private final ArrayList<Integer> textures = new ArrayList<>();
     
     private final ArrayList<GraphicalComponent> components = new ArrayList<>();
-    private final ArrayList<Snowflake> snowflakes = new ArrayList<>();
     private final ArrayList<GraphicalComponent> components2 = new ArrayList<>();
     private StaticShader shader;
     private Renderer renderer;
     
-    private Vector3f snowflakePosition = new Vector3f(0f, 0f, -0.7f);
-    private ceresgame.textures.ObjectTexture texture = new ceresgame.textures.ObjectTexture(loadTexture("resources/images/Snowflake.png"));
-    private float[] snowflakeVerticies = VectorMath.genVertices(VectorMath.genVector(snowflakePosition.getX(), snowflakePosition.getY(), snowflakePosition.getZ(), 0.2f, 0.2f), 0.2f, 0.2f);
-    private RawModel snowflakeRawModel = generateRawModel(snowflakeVerticies, imageUVVerticies, indiciesForRendering);
-    private TexturedModel snowflakeModel = new TexturedModel(snowflakeRawModel, texture);
     private boolean area = false;
     
     //private Camera camera = new Camera(this); //Please feed in a CeresStation object so you can reference the player
@@ -112,7 +113,7 @@ public class CeresStation{
         background = genGraphicalComponent(new Vector3f(1.1f,-0.4f,-1.5f), 8f, 4f, "resources/images/Background.png");
         foreground = genGraphicalComponent(new Vector3f(0.26f, -0.05f,-0.5f), 2.2f, 2f, "resources/images/snowforeground.png");
         for (int i = 0; i < 10; i++) {
-            snowflake[i] = genGraphicalComponent(new Vector3f((float) (Math.random() * 0.44) - 0.22f, (float) (Math.random() * 0.30) - 0.15f,-0.4f), 0.02f, 0.02f, "resources/images/Snowflake.png");
+            snowflake[i] = genGraphicalComponent(new Vector3f(snowflakeX[i] + modifierX, snowflakeY[i] + modifierY,-0.4f), 0.02f, 0.02f, "resources/images/Snowflake.png");
         }
         
         //create objects out of graphical components for world2
@@ -175,8 +176,8 @@ public class CeresStation{
 
         //Main game loop which renders objects so long as the f key or the x button aren't pressed
         while(!Display.isCloseRequested() && !Keyboard.isKeyDown(Keyboard.KEY_F)) {
-            //Generate a snowflake
-            game.generateSnowflake();
+            //Update the distance the snowflakes have fallen
+            game.fallSnowflake();
             //Prepares rendering settings
             game.renderer.prepare();
             //Preps shader for use
@@ -213,19 +214,6 @@ public class CeresStation{
         RawModel rawModel = generateRawModel(playerVerticies, imageUVVerticies, indiciesForRendering);
         TexturedModel model = new TexturedModel(rawModel, texture);
         Player component = new Player(position.getX(), position.getY(), position.getZ(), width, height, model);
-        return component;
-    }
-    
-    /**
-     * Generates a snowflake object
-     * @param position The (x,y,z) position vector of a snowflake
-     * @param width The width of the snowflake you want to display on the screen
-     * @param height The height of the snowflake you want to display on the screen
-     * @param model The model of the snowflake
-     * @return The snowflake created from the above parameters
-     */
-    private Snowflake genSnowflake(Vector3f position, float width, float height, TexturedModel model){
-        Snowflake component = new Snowflake(position.getX(), position.getY(), position.getZ(), width, height, model);
         return component;
     }
 
@@ -303,13 +291,6 @@ public class CeresStation{
         if(this.area == false){
             for(int i = 0; i < components.size(); i++){
                 renderer.render(components.get(i), shader);
-            }
-            for(int i = 0; i < snowflakes.size(); i++){
-                if (snowflakes.get(i).getyPos() < -1.25f) {
-                    snowflakes.remove(i);
-                } else {
-                    renderer.render(snowflakes.get(i), shader);
-                }
             }
         }else{
             for(int i = 0; i < components2.size(); i++){
@@ -443,17 +424,21 @@ public class CeresStation{
         return texture.getTextureID();
     }
 
-    private void generateSnowflake() {
-        Snowflake snowflake = genSnowflake(snowflakePosition, 1f, 1f, snowflakeModel);
-        snowflakes.add(snowflake);
-    }
-    
-    private void deleteSnowflake(int i) {
-        snowflakes.remove(i);
-    }
-
+    /**
+     * Handles the falling physics of the snowflakes
+     */
     private void fallSnowflake() {
-	
+        //makes the snowflakes fall in a wave like pattern by applying various equations to their position
+        modifierY += (float) (DisplayUpdater.getDelta() / 10000);
+        modifierX = (float) (Math.sin(DisplayUpdater.getDelta()));
+	    
+	//snowflakes disappear at the bottom of the screen and reappear at the top
+	for (int i = 0; i < 10; i++) {
+	    if (snowflakeY[i] + modifierY > 2f) {
+		snowflakeY[i] = -2f;
+		modifierY = 0;
+	    }
+	}
     }
         
         /**
