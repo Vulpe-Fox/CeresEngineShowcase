@@ -35,3 +35,5 @@ right while standing on the ground. Be wary, though, the fire sound lasts 4 seco
 Some next steps in the future would be to use a hashmap to render all of the same entity and so save time loading each same object over 
 and over and over. Also, I would add multiplayer compatibility by stating each player has a specific id which is tied to a user. And 
 finally, I would add the ability to input obj files for the coordinate system of a 3D model made in a program like blender.
+
+AMMENDMENT: Pressing f closes the program in order to honour and ~respect~ the program
