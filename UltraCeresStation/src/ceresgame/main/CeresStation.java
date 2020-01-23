@@ -11,7 +11,6 @@ import ceresgame.helpers.VectorMath;
 import ceresgame.main.userinterface.Input;
 import ceresgame.map.GraphicalComponent;
 import ceresgame.map.Player;
-import ceresgame.map.Snowflake;
 import ceresgame.models.RawModel;
 import ceresgame.models.TexturedModel;
 import ceresgame.shaders.StaticShader;
@@ -442,14 +441,14 @@ public class CeresStation{
 	}
     }
         
-        /**
-         * 
-         * @param area which scene will be displayed on the scene, area 1/2
-         * @return True or false, true being area 2 and false being area 1
-         */
-        public boolean setArea(boolean area){
-            this.area = area;
-            return area;
-        }
+    /**
+     * Takes the inputted area (spacebar) to change scenery
+     * @param area which scene will be displayed on the scene, area 1 or 2
+     * @return True or false, true being area 2 and false being area 1
+     */
+    public boolean setArea(boolean area){
+        this.area = area;
+        return area;
+    }
     
 }
