@@ -41,13 +41,8 @@ public class CeresStation{
     private GraphicalComponent background;
     private GraphicalComponent foreground;
     private GraphicalComponent[] snowflake = new GraphicalComponent[10]
-    private float snowflakeX = new float[10];
-    private float snowflakeY = new float[10];
-    for (int i = 0; i < 10; i++) {
-    	snowflakeX[i] = (float) (Math.random() * 0.44) - 0.22f;
-	snowflakeY[i] = (float) (Math.random() * 0.30) - 0.15f;
-    }
-
+    private float modifierX = 0;
+    private float modifierY = 0;
     
     //initialize components for second world
     private GraphicalComponent background2;
@@ -113,7 +108,7 @@ public class CeresStation{
         background = genGraphicalComponent(new Vector3f(1.1f,-0.4f,-1.5f), 8f, 4f, "resources/images/Background.png");
         foreground = genGraphicalComponent(new Vector3f(0.26f, -0.05f,-0.5f), 2.2f, 2f, "resources/images/snowforeground.png");
         for (int i = 0; i < 10; i++) {
-            snowflake[i] = genGraphicalComponent(new Vector3f(snowflakeX[i] + modifierX, snowflakeY[i] + modifierY,-0.4f), 0.02f, 0.02f, "resources/images/Snowflake.png");
+            snowflake[i] = genGraphicalComponent(new Vector3f((float) (Math.random() * 0.44) - 0.22f + modifierX, (float) (Math.random() * 0.30) - 0.15f + modifierY,-0.4f), 0.02f, 0.02f, "resources/images/Snowflake.png");
         }
         
         //create objects out of graphical components for world2
