@@ -11,7 +11,6 @@ import ceresgame.helpers.VectorMath;
 import ceresgame.main.userinterface.Input;
 import ceresgame.map.GraphicalComponent;
 import ceresgame.map.Player;
-import ceresgame.map.Snowflake;
 import ceresgame.models.RawModel;
 import ceresgame.models.TexturedModel;
 import ceresgame.shaders.StaticShader;
