@@ -31,8 +31,11 @@ public class Snowflake extends GraphicalComponent {
      */
     public Snowflake(float xPos, float yPos, float zPos, float width, float height, TexturedModel model) {
         super(xPos, yPos, zPos, width, height, model);
+        
+        //initialize amplitude of the snowflake wave fall path
         Random random = new Random();
         amp = (float) (random.nextFloat() * 2) - 1;
+        
         xPos = 0f;
         yPos = 0f;
         zPos = -0.7f;
@@ -43,7 +46,7 @@ public class Snowflake extends GraphicalComponent {
      * Handles the falling physics of the snowflakes
      */
     public void fall() {
-        System.out.println(this.position.y);
+        //makes the snowflakes fall in a wave like pattern by applying various equations to their position
         this.position.y += (float) (DisplayUpdater.getDelta() / 10000);
         this.position.x = (float) (amp * Math.sin(DisplayUpdater.getDelta()));
     }
