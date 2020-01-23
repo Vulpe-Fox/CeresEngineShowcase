@@ -451,6 +451,10 @@ public class CeresStation{
     private void deleteSnowflake(int i) {
         snowflakes.remove(i);
     }
+
+    private void fallSnowflake() {
+	
+    }
         
         /**
          * 
